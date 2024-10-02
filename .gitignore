@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+#archivos grandes
+*.zip
+*.ppm
