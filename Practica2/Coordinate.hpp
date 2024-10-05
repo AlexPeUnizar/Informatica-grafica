@@ -11,7 +11,7 @@ protected:
     double x, y, z, w;
 public:
     Coordinate(double x, double y, double z, double w);
-    Coordinate();
+    Coordinate() = default;
     ~Coordinate();
     friend std::ostream& operator<<(std::ostream& os, const Coordinate &c);
     friend std::shared_ptr<Matrix> baseChange(const Coordinate& origin, const Coordinate& u, const Coordinate& v, const Coordinate& w);

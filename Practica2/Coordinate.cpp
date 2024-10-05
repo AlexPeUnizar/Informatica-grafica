@@ -10,9 +10,6 @@ Coordinate::Coordinate(double x, double y, double z, double w){
 Coordinate::~Coordinate(){
 }
 
-Coordinate::Coordinate(){
-}
-
 std::ostream& operator<<(std::ostream& os, const Coordinate &c){
     os << "Coordinate(" << c.x << ", " << c.y << ", " << c.z << ", " << c.w << ")";
     return os;

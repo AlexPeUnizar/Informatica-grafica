@@ -23,14 +23,20 @@ private:
 
 public:
     PPM(const std::string& fileName);
-    PPM();
+    PPM() = default;
     ~PPM();
 
     void load(const std::string& fileName);
     void save(const std::string& fileName = "out.ppm");
-
+    std::vector<std::shared_ptr<Pixel>>& operator[](std::size_t idx){ return pixels[idx]; }
+    const std::vector<std::shared_ptr<Pixel>>& operator[](std::size_t idx) const{ return pixels[idx]; }
     friend std::ostream& operator<<(std::ostream& os, const PPM& image);
-    
+
+    friend void clamping(PPM& image);
+    friend void equalization(PPM& image);
+    friend void equalizationAndClamping(PPM& image);
+    friend void gamma(PPM& image);
+    friend void gammaAndClamping(PPM& image);  
 };
 
 

@@ -19,7 +19,7 @@ class Point: public Coordinate{
 public:
     Point(double x, double y, double z) : Coordinate(x, y, z, 1.0){};
     ~Point();
-    Point();
+    Point() = default;
     friend std::shared_ptr<Vector> operator-(Point const &p1, Point const &p2);
     friend std::shared_ptr<Point> operator+(int32_t const s, Point const &p);
     friend std::shared_ptr<Point> operator+(Point const &p, int32_t const s);

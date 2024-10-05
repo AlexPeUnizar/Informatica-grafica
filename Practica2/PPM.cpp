@@ -17,10 +17,6 @@ PPM::PPM(const std::string& fileName){
     this->load(fileName);
 }
 
-PPM::PPM(){
-
-}
-
 PPM::~PPM(){
 	(this->pixels).clear();
 }
@@ -76,8 +72,9 @@ void PPM::save(const std::string& fileName){
 		outFile << this->version << std::endl;
 		outFile << MAX << this->maxFileValue << std::endl;
 		outFile << this->width << ' ' << this->height << std::endl;
-		outFile << this->maxFileValue << std::endl;
+		outFile << this->maxColorValue << std::endl;
 
+		outFile << std::fixed;
 		for (int32_t i = 0; i < this->height; i++){
 			for (int32_t j = 0; j < this->width; j++){
 				Pixel p = *pixels[i][j].get();

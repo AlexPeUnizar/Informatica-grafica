@@ -1,11 +1,9 @@
 #include "Point.hpp"
 
-
 std::ostream& operator<<(std::ostream& os, const Point &p){
     os << "Point(" << p.x << ", " << p.y << ", " << p.z << ")";
     return os;
 }
-
 
 Point::~Point(){
 }
