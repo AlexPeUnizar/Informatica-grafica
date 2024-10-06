@@ -10,7 +10,7 @@ double PPM::toMemoryValue(double s){
 }
 
 double PPM::toFileValue(double v){
-	return v * (maxColorValue / realMaxColorValue);
+	return v * (maxColorValue);
 }
 
 PPM::PPM(const std::string& fileName){

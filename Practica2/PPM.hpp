@@ -36,7 +36,7 @@ public:
     friend void equalization(PPM& image);
     friend void equalizationAndClamping(PPM& image, const double clampValue);
     friend void gamma(PPM& image, double gammaValue);
-    friend void gammaAndClamping(PPM& image);  
+    friend void gammaAndClamping(PPM& image, double gammaValue);  
 };
 
 

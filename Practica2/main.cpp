@@ -12,13 +12,13 @@ using namespace std;
 
 const vector<string> files = vector<string>({
     /*
+    */
     "../files/seymour_park.ppm",
     "../files/nancy_church_3.ppm",
     "../files/nancy_church_1.ppm",
     "../files/mpi_atrium_3.ppm",
     "../files/forest_path.ppm",
     "../files/mpi_atrium_1.ppm",
-    */
     "../files/nancy_church_2.ppm",
     "../files/mpi_office.ppm"
 });
@@ -29,9 +29,10 @@ int main(){
     {
         PPM image(files[i]);
         cout << image << endl;
-        equalizationAndClamping(image, 150);
-        gamma(image, 2.2);
-        clamping(image);
+        //equalization(image);
+        equalizationAndClamping(image, 100);
+        //clamping(image);
+        gamma(image,2);
         cout << image << endl;
         image.save("out_" + to_string(i) + ".ppm");
     }

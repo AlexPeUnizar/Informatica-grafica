@@ -45,13 +45,16 @@ void gamma(PPM& image, double gammaValue){
         for (int32_t j = 0; j < image.width; j++){
             std::shared_ptr<PPM::Pixel> pixel = image[i][j];
             
-            pixel.get()->r = std::pow(pixel.get()->r, gammaValue);
-            pixel.get()->g = std::pow(pixel.get()->g, gammaValue);
-            pixel.get()->b = std::pow(pixel.get()->b, gammaValue);
+            pixel.get()->r = std::pow(pixel.get()->r, 1 / gammaValue);
+            pixel.get()->g = std::pow(pixel.get()->g, 1 / gammaValue);
+            pixel.get()->b = std::pow(pixel.get()->b, 1 / gammaValue);
         }
     }
     
     image.maxColorValue = 255;
 }
 
-void gammaAndClamping(PPM& image);
+void gammaAndClamping(PPM& image, double gammaValue){
+    gamma(image, gammaValue);
+    clamping(image);
+}
