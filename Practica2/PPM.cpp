@@ -6,11 +6,11 @@
 const std::string MAX = "#MAX=";
 
 double PPM::toMemoryValue(double s){
-	return s * (maxFileValue / maxColorValue);
+	return s * (realMaxColorValue / maxColorValue);
 }
 
 double PPM::toFileValue(double v){
-	return v * (maxColorValue / maxFileValue);
+	return v * (maxColorValue / realMaxColorValue);
 }
 
 PPM::PPM(const std::string& fileName){
@@ -32,7 +32,7 @@ void PPM::load(const std::string& fileName){
 		std::string tmp;
 		inFile >> tmp;
 		tmp = tmp.replace(tmp.begin(), tmp.begin() + MAX.size(), "");
-		this->maxFileValue = std::stod(tmp);
+		this->realMaxColorValue = std::stod(tmp);
 //		std::getchar();
 		inFile.ignore(INT64_MAX,'\n');
 		inFile.ignore(INT64_MAX,'\n');
@@ -70,11 +70,11 @@ void PPM::save(const std::string& fileName){
 
 	if(outFile.is_open()){
 		outFile << this->version << std::endl;
-		outFile << MAX << this->maxFileValue << std::endl;
+		outFile << MAX << this->realMaxColorValue << std::endl;
 		outFile << this->width << ' ' << this->height << std::endl;
 		outFile << this->maxColorValue << std::endl;
 
-		outFile << std::fixed;
+		//outFile << std::fixed;
 		for (int32_t i = 0; i < this->height; i++){
 			for (int32_t j = 0; j < this->width; j++){
 				Pixel p = *pixels[i][j].get();
@@ -89,7 +89,7 @@ void PPM::save(const std::string& fileName){
 std::ostream& operator<<(std::ostream& os, const PPM& image){
 	os << image.fileName << std::endl;
 	os << image.version << std::endl;
-	os << image.maxFileValue << std::endl;
+	os << image.realMaxColorValue << std::endl;
 	os << image.width << " " << image.height << std::endl;
 	os << image.maxColorValue << std::endl;
 	return os;

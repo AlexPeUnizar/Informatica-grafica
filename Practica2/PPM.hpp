@@ -8,7 +8,7 @@ class PPM{
 private:    
     std::string fileName;
     std::string version;
-    double maxFileValue;
+    double realMaxColorValue;
     int32_t height, width;
     int32_t maxColorValue;
     struct Pixel{
@@ -34,8 +34,8 @@ public:
 
     friend void clamping(PPM& image);
     friend void equalization(PPM& image);
-    friend void equalizationAndClamping(PPM& image);
-    friend void gamma(PPM& image);
+    friend void equalizationAndClamping(PPM& image, const double clampValue);
+    friend void gamma(PPM& image, double gammaValue);
     friend void gammaAndClamping(PPM& image);  
 };
 
