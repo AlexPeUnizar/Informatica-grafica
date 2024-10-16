@@ -32,11 +32,11 @@ public:
     const std::vector<std::shared_ptr<Pixel>>& operator[](std::size_t idx) const{ return pixels[idx]; }
     friend std::ostream& operator<<(std::ostream& os, const PPM& image);
 
-    friend void clamping(PPM& image);
+    friend void clamping(PPM& image, double clampValue);
     friend void equalization(PPM& image);
     friend void equalizationAndClamping(PPM& image, const double clampValue);
     friend void gamma(PPM& image, double gammaValue);
-    friend void gammaAndClamping(PPM& image, double gammaValue);  
+    friend void gammaAndClamping(PPM& image, double gammaValue, double clampValue);  
 };
 
 

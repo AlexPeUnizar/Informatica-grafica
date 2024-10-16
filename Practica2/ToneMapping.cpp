@@ -2,16 +2,17 @@
 #include <algorithm>
 #include <cmath>
 
-void clamping(PPM& image){
+void clamping(PPM& image, double clampValue){
     for (int32_t i = 0; i < image.height; i++){
         for (int32_t j = 0; j < image.width; j++){
             std::shared_ptr<PPM::Pixel> pixel = image[i][j];
-            pixel.get()->r = std::min(1.0, pixel.get()->r);
-            pixel.get()->g = std::min(1.0, pixel.get()->g);
-            pixel.get()->b = std::min(1.0, pixel.get()->b);
+            pixel.get()->r = std::min(clampValue, pixel.get()->r);
+            pixel.get()->g = std::min(clampValue, pixel.get()->g);
+            pixel.get()->b = std::min(clampValue, pixel.get()->b);
         }
     }
     image.maxColorValue = 255;
+    image.realMaxColorValue = clampValue;
 }
 
 void equalization(PPM& image){
@@ -28,6 +29,7 @@ void equalization(PPM& image){
 
 void equalizationAndClamping(PPM& image, double clampValue){
     //V = image.toMemoryValue(V);
+    clamping(image, clampValue);
     for (int32_t i = 0; i < image.height; i++){
         for (int32_t j = 0; j < image.width; j++){
             std::shared_ptr<PPM::Pixel> pixel = image[i][j];
@@ -36,7 +38,6 @@ void equalizationAndClamping(PPM& image, double clampValue){
             pixel.get()->b = (((pixel.get()->b) * clampValue) / (image.realMaxColorValue));
         }
     }
-    clamping(image);
 }
 void gamma(PPM& image, double gammaValue){
     equalization(image);
@@ -54,7 +55,7 @@ void gamma(PPM& image, double gammaValue){
     image.maxColorValue = 255;
 }
 
-void gammaAndClamping(PPM& image, double gammaValue){
+void gammaAndClamping(PPM& image, double gammaValue, double clampValue){
+    clamping(image, clampValue);
     gamma(image, gammaValue);
-    clamping(image);
 }

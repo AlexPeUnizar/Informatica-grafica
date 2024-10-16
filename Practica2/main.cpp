@@ -2,6 +2,8 @@
 #include <memory>
 #include <cmath>
 #include <string>
+#include <thread>
+
 #include "Vector.hpp"
 #include "Point.hpp"
 #include "Coordinate.hpp"
@@ -23,17 +25,37 @@ const vector<string> files = vector<string>({
     "../files/mpi_office.ppm"
 });
 
-int main(){
+void foo(string file, int i){
+    PPM image(file);
+    cout << image << endl;
+    //equalization(image);
+    //equalizationAndClamping(image, 100);
+    //clamping(image);
+    //gamma(image,2);
+    gammaAndClamping(image,2,1.0);
+    cout << image << endl;
+    image.save("out_" + to_string(i) + ".ppm");
+}
 
+int main(){
+    thread threads[files.size()];
     for (size_t i = 0; i < files.size(); i++)
     {
+        /*
         PPM image(files[i]);
         cout << image << endl;
         //equalization(image);
-        equalizationAndClamping(image, 100);
+        //equalizationAndClamping(image, 100);
         //clamping(image);
-        gamma(image,2);
+        //gamma(image,2);
+        gammaAndClamping(image,2,1.0);
         cout << image << endl;
         image.save("out_" + to_string(i) + ".ppm");
+        */
+       threads[i] = thread(foo,files[i],i);
+    }
+    for (size_t i = 0; i < files.size(); i++)
+    {
+        threads[i].join();
     }
 }
