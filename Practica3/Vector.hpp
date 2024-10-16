@@ -20,12 +20,12 @@ private:
 public:
     Vector(double x, double y, double z) : Coordinate(x, y, z, 0.0){};
     ~Vector();
-    Vector();
+    Vector() = default;
     friend std::ostream& operator<<(std::ostream& os, const Vector &v);
     friend std::shared_ptr<Vector> operator+(const Vector &v1, const Vector &v2);
     friend std::shared_ptr<Vector> operator-(const Vector &v1, const Vector &v2);
     friend std::shared_ptr<Vector> crossProduct(const Vector &v1, const Vector &v2);
-    friend int32_t dotProduct(const Vector &v1, const Vector &v2);
+    friend double dotProduct(const Vector &v1, const Vector &v2);
     friend std::shared_ptr<Vector> operator*(const Vector &v, const int32_t s);
     friend std::shared_ptr<Vector> operator*(const int32_t s, const Vector &v);
     friend std::shared_ptr<Vector> operator/(const Vector &v, const double s);

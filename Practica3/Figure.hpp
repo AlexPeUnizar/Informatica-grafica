@@ -1,20 +1,14 @@
 #ifndef FIGURE_HPP
 #define FIGURE_HPP
+#include "Ray.hpp"
 
 class Figure{
 private:
     /* data */
 public:
-    Figure(/* args */);
-    ~Figure();
-    virtual bool intersect() = 0;
+    Figure(/* args */) = default;
+    ~Figure() = default;
+    virtual bool isIntersectedBy(const Ray& ray);
 };
-
-Figure::Figure(/* args */){
-}
-
-Figure::~Figure(){
-}
-
 
 #endif /* FIGURE_HPP */

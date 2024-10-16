@@ -12,6 +12,21 @@
 using namespace std;
 
 int main(){
+    Point sphereCenter(0,0,0);
+    Point vecCenter(0,0,5);
 
-    Sphere a();
+    Vector rayDir = (*(Point(0,0,-5)-Point(0,0,5)));
+
+    Sphere s(sphereCenter, 2.5);
+    Ray r(vecCenter, rayDir);
+
+    cout << sphereCenter << std::endl;
+    cout << vecCenter << std::endl;
+    cout << rayDir << std::endl;
+
+    if(r.intersect(s)){
+        cout << "Si" <<endl;
+    }else{
+        cout << "No" <<endl;
+    }
 }

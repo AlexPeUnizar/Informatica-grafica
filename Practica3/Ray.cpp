@@ -1,12 +1,16 @@
 #include "Ray.hpp"
 
-Ray::Ray(const Point& o, const Vector& d){
-    this->o = o;
-    this->d = d;
+Ray::Ray(const Point& origin, const Vector& dir){
+    this->origin = origin;
+    this->dir = dir;
 }
 
 Ray::~Ray(){
-    o.~Point();
-    d.~Vector();
+    origin.~Point();
+    dir.~Vector();
+}
+
+bool Ray::intersect(Figure& figure){
+    return figure.isIntersectedBy(*this);
 }
 

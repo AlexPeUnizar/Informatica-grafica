@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "c:/Users/Alex Petrov/Desktop/UNI/Informatica grafica/Practica3",
-      "program": "c:/Users/Alex Petrov/Desktop/UNI/Informatica grafica/Practica3/build/Debug/outDebug",
+      "program": "c:/Users/Alex Petrov/Desktop/UNI/Informatica grafica/Practica3/build/Release/outRelease",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

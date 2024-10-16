@@ -24,7 +24,7 @@ std::shared_ptr<Vector> crossProduct(const Vector &v1, const Vector &v2){
                       (v1.x * v2.y - v1.y * v2.x));
 }
 
-int32_t dotProduct(const Vector &v1, const Vector &v2){
+double dotProduct(const Vector &v1, const Vector &v2){
     return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 }
 

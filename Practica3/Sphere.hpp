@@ -6,13 +6,13 @@
 
 class Sphere : Figure{
 private:
-    Point o;
+    Point origin;
     double r;
 public:
-    Sphere(const Point &o, double r);
-    Sphere(double x, double y, double z, double r):o(Point(x, y, z)), r(r){};
+    Sphere(const Point &origin, double r);
+    Sphere(double x, double y, double z, double r):origin(Point(x, y, z)), r(r){};
     ~Sphere();
-    bool intersect();
+    bool isIntersectedBy(const Ray& ray);
 };
 
 #endif /* SPHERE_HPP */
