@@ -10,7 +10,4 @@ Ray::~Ray(){
     dir.~Vector();
 }
 
-bool Ray::intersect(Figure& figure){
-    return figure.isIntersectedBy(*this);
-}
 

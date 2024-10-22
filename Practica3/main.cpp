@@ -24,7 +24,7 @@ int main(){
     cout << vecCenter << std::endl;
     cout << rayDir << std::endl;
 
-    if(r.intersect(s)){
+    if(s.isIntersectedBy(r)){
         cout << "Si" <<endl;
     }else{
         cout << "No" <<endl;

@@ -4,7 +4,7 @@
 #include "Figure.hpp"
 #include "Point.hpp"
 
-class Sphere : Figure{
+class Sphere : public Figure{
 private:
     Point origin;
     double r;
@@ -12,7 +12,7 @@ public:
     Sphere(const Point &origin, double r);
     Sphere(double x, double y, double z, double r):origin(Point(x, y, z)), r(r){};
     ~Sphere();
-    bool isIntersectedBy(const Ray& ray);
+    virtual bool isIntersectedBy(const Ray& ray) const;
 };
 
 #endif /* SPHERE_HPP */

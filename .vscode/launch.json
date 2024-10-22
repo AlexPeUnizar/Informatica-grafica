@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Alex Petrov/Desktop/UNI/Informatica grafica/Practica3",
-      "program": "c:/Users/Alex Petrov/Desktop/UNI/Informatica grafica/Practica3/build/Release/outRelease",
+      "cwd": "c:/Users/Alex/Desktop/uni/Informatica-grafica/Practica3",
+      "program": "c:/Users/Alex/Desktop/uni/Informatica-grafica/Practica3/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
