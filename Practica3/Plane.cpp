@@ -2,10 +2,13 @@
 
 
 Plane::~Plane(){
+    this->normal.~Vector();
+    this->p.~Point();
 }
 
 Plane::Plane(const Vector& normal, const Point& origin){
-    
+    this->normal = normal;
+    this->p = origin;
 }
 Plane::Plane(const Point& p1, const Point& p2, const Point& p3){
     
