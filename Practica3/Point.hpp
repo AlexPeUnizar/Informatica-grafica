@@ -24,6 +24,9 @@ public:
     friend std::shared_ptr<Point> operator+(int32_t const s, Point const &p);
     friend std::shared_ptr<Point> operator+(Point const &p, int32_t const s);
     friend std::ostream& operator<<(std::ostream& os, const Point &p);
+    
+    friend double operator*(const Point& p, const Vector &v);
+    friend double operator*(const Vector &v, const Point& p);
 
 };
 #endif /* POINT_HPP */

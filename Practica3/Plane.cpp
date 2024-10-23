@@ -3,15 +3,14 @@
 
 Plane::~Plane(){
     this->normal.~Vector();
-    this->p.~Point();
 }
 
-Plane::Plane(const Vector& normal, const Point& origin){
+Plane::Plane(const Vector& normal, const double dist){
     this->normal = normal;
-    this->p = origin;
+    this->dist = dist;
 }
 Plane::Plane(const Point& p1, const Point& p2, const Point& p3){
-    
+    this->normal = *normalize(*crossProduct(*(p1-p2), *(p3-p2)));
 }
 Plane::Plane(const Vector& t1, const Vector& t2){
     
@@ -25,8 +24,8 @@ bool Plane::isIntersectedBy(const Ray& ray) const{
     if(denom == 0){
         return false;
     }
-    double div = dotProduct(*(this->p - ray.origin), this->normal);
-    return (div/denom) >= 0;
+    double div = this->dist + (ray.origin * (this->normal));
+    return (-(div/denom)) >= 0;
 }
 
 

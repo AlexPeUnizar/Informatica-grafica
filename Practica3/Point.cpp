@@ -20,4 +20,12 @@ std::shared_ptr<Point> operator+(Point const &p, int32_t const s){
     return s+p;
 }
 
+double operator*(const Point& p, const Vector &v){
+    return v*p;
+}
+
+double operator*(const Vector &v, const Point& p){
+    return dotProduct(v, *(p - Point(0, 0, 0)));
+}
+
 
