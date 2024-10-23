@@ -15,7 +15,7 @@ public:
     Plane(const Vector& normal);
     Plane() = default;
     ~Plane();
-    virtual bool isIntersectedBy(const Ray& ray) const;
+    virtual bool isIntersectedBy(const Ray& ray, double &t) const;
 };
 
    

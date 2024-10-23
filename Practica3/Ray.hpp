@@ -11,6 +11,7 @@ public:
     Ray(const Point& origin, const Vector& dir);
     Ray(/* args */) = default;
     ~Ray();
+    friend std::ostream& operator<<(std::ostream& os, const Ray &r);
 };
 
 #endif /* RAY_HPP */

@@ -16,7 +16,10 @@ public:
     Figure(/* args */) = default;
     ~Figure() = default;
     void setColor(double r,double g, double b);
-    virtual bool isIntersectedBy(const Ray& ray) const = 0;
+    virtual bool isIntersectedBy(const Ray& ray, double &t) const = 0;
+    double getR();
+    double getG();
+    double getB();
 };
 
 #endif /* FIGURE_HPP */

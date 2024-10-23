@@ -12,7 +12,7 @@ public:
     Sphere(const Point &origin, double r);
     Sphere(double x, double y, double z, double r):origin(Point(x, y, z)), r(r){};
     ~Sphere();
-    virtual bool isIntersectedBy(const Ray& ray) const;
+    virtual bool isIntersectedBy(const Ray& ray, double &t) const;
 };
 
 #endif /* SPHERE_HPP */

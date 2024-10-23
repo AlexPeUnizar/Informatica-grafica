@@ -8,7 +8,7 @@ private:
 public:
     IntersectableFigure(/* args */) = default;
     ~IntersectableFigure() = default;
-    virtual bool isIntersectedBy(const Ray& ray) const = 0;
+    virtual bool isIntersectedBy(const Ray& ray, double &t) const = 0;
 };
 
 #endif /* INTERSECTABLEFIGURE_HPP */

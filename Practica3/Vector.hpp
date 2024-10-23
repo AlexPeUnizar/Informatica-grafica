@@ -22,16 +22,16 @@ public:
     ~Vector();
     Vector() = default;
     friend std::ostream& operator<<(std::ostream& os, const Vector &v);
-    friend std::shared_ptr<Vector> operator+(const Vector &v1, const Vector &v2);
-    friend std::shared_ptr<Vector> operator-(const Vector &v1, const Vector &v2);
-    friend std::shared_ptr<Vector> crossProduct(const Vector &v1, const Vector &v2);
+    friend Vector operator+(const Vector &v1, const Vector &v2);
+    friend Vector operator-(const Vector &v1, const Vector &v2);
+    friend Vector crossProduct(const Vector &v1, const Vector &v2);
     friend double dotProduct(const Vector &v1, const Vector &v2);
-    friend std::shared_ptr<Vector> operator*(const Vector &v, const int32_t s);
-    friend std::shared_ptr<Vector> operator*(const int32_t s, const Vector &v);
-    friend std::shared_ptr<Vector> operator/(const Vector &v, const double s);
+    friend Vector operator*(const Vector &v, const int32_t s);
+    friend Vector operator*(const int32_t s, const Vector &v);
+    friend Vector operator/(const Vector &v, const double s);
     friend double module(const Vector &v);
     friend double angle(const Vector &v1, const Vector &v2);
-    friend std::shared_ptr<Vector> normalize(const Vector &v);
+    friend Vector normalize(const Vector &v);
 
 };
 

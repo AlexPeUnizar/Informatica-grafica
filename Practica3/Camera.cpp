@@ -1,6 +1,6 @@
 #include "Camera.hpp"
 
-Camera::Camera(Vector& up, Vector& left, Vector& front, Point& o){
+Camera::Camera(const Vector& up,const Vector& left,const Vector& front,const Point& o){
     this->up = up;
     this->left = left;
     this->front = front;

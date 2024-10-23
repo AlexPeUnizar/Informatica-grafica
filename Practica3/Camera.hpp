@@ -13,7 +13,7 @@ private:
     size_t height;
     size_t width;
 public:
-    Camera(Vector& up, Vector& left, Vector& front, Point& o);
+    Camera(const Vector& up, const Vector& left,const Vector& front, const Point& o);
     ~Camera();
     Vector& getUp();    
     Vector& getLeft();    

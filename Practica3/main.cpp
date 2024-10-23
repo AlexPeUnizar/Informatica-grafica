@@ -72,6 +72,11 @@ int main(){
         Sphere rightSphere(Point(0.5, -0.7, -0.25), 0.3);
         rightSphere.setColor(0,255,255);
 
+        vector<Figure*> figures = vector<Figure*>(
+            {&leftPlane,&rightPlane,&ceilingPlane,&floorPlane,&backPlane, &leftSphere, &rightSphere}
+        );
+       
+
         //Camera 
         Point cameraOrigin(0,0, -3.5);
         Vector cameraLeftVector(-1, 0, 0);
@@ -79,11 +84,50 @@ int main(){
         Vector cameraForwardVector(0, 0, 3);
         size_t width = 256;
         size_t height = 256;
-        Camera cam(cameraUpVector, cameraLeftVector, cameraForwardVector, cameraOrigin);
+        Camera camera(cameraUpVector, cameraLeftVector, cameraForwardVector, cameraOrigin);
 
-        PPM imagen(width,height);
+        PPM image(width, height);
 
-        
+        Vector upperLeft =cameraForwardVector+ cameraLeftVector + cameraUpVector;
+        Vector lowerLeft = cameraForwardVector+cameraLeftVector + cameraUpVector*(-1);
+        Vector lowerRight =  cameraForwardVector+cameraLeftVector*(-1) + cameraUpVector*(-1);
+        Vector up = upperLeft - lowerLeft; 
+        Vector right = lowerRight - lowerLeft;
+
+        for (size_t y = 0; y < height; y++){
+            for (size_t x = 0; x < width; x++){
+                double r,g,b;                
+                Ray ray = Ray(
+                    camera.getO(),
+                    normalize(
+                        lowerLeft + 
+                        right*((y)/(height)) +
+                        up*((x)/(width))
+                    )
+                );
+                Figure *closestFig = nullptr;
+                double t = INT_MAX;
+                double min = INT_MAX-1;
+                
+                for(auto fig:figures){
+                    if(fig->isIntersectedBy(ray,t)){
+                        if(t<min){
+                            closestFig = fig;
+                            min = t;
+                        }
+                    }
+                }
+                
+                r = closestFig->getR();
+                g = closestFig->getG();
+                b = closestFig->getB();
+                 
+                image[y][x] = std::make_shared<PPM::Pixel>(PPM::Pixel{r/255, g/255, b/255});
+            
+            }
+        }
+
+        image.save();
 
         
     #endif

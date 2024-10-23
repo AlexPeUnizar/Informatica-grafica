@@ -20,9 +20,9 @@ public:
     Point(double x, double y, double z) : Coordinate(x, y, z, 1.0){};
     ~Point();
     Point() = default;
-    friend std::shared_ptr<Vector> operator-(Point const &p1, Point const &p2);
-    friend std::shared_ptr<Point> operator+(int32_t const s, Point const &p);
-    friend std::shared_ptr<Point> operator+(Point const &p, int32_t const s);
+    friend Vector operator-(Point const &p1, Point const &p2);
+    friend Point operator+(int32_t const s, Point const &p);
+    friend Point operator+(Point const &p, int32_t const s);
     friend std::ostream& operator<<(std::ostream& os, const Point &p);
     
     friend double operator*(const Point& p, const Vector &v);

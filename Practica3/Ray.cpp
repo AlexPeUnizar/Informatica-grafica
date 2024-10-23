@@ -10,4 +10,9 @@ Ray::~Ray(){
     dir.~Vector();
 }
 
+std::ostream& operator<<(std::ostream& os, const Ray &r){
+    os << "Ray(" << "Origin: " << r.origin << "; Direcction: " << r.dir << ")";
+    return os;
+}
+
 
