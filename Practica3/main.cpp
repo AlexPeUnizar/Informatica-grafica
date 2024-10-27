@@ -71,12 +71,13 @@ int main(){
         leftSphere.setColor(255,0,255);
         Sphere rightSphere(Point(0.5, -0.7, -0.25), 0.3);
         rightSphere.setColor(0,255,255);
+        Sphere upSphere(Point(0, 0.7, -0), 0.3);
+        upSphere.setColor(3,54,1);
 
         vector<Figure*> figures = vector<Figure*>(
-            {&leftPlane,&rightPlane,&ceilingPlane,&floorPlane,&backPlane, &leftSphere, &rightSphere}
+            {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &upSphere}
         );
        
-
         //Camera 
         Point cameraOrigin(0,0, -3.5);
         Vector cameraLeftVector(-1, 0, 0);
@@ -85,24 +86,25 @@ int main(){
         size_t width = 256;
         size_t height = 256;
         Camera camera(cameraUpVector, cameraLeftVector, cameraForwardVector, cameraOrigin);
+        camera.setHeight(height);
+        camera.setWidth(width);
 
         PPM image(width, height);
 
-        Vector upperLeft =cameraForwardVector+ cameraLeftVector + cameraUpVector;
-        Vector lowerLeft = cameraForwardVector+cameraLeftVector + cameraUpVector*(-1);
-        Vector lowerRight =  cameraForwardVector+cameraLeftVector*(-1) + cameraUpVector*(-1);
-        Vector up = upperLeft - lowerLeft; 
-        Vector right = lowerRight - lowerLeft;
+        Vector upperLeft = cameraForwardVector + cameraLeftVector + cameraUpVector;
+        Vector down = cameraUpVector * -2; 
+        Vector right = cameraLeftVector * -2;
 
         for (size_t y = 0; y < height; y++){
             for (size_t x = 0; x < width; x++){
-                double r,g,b;                
+                double r, g, b;
+            
                 Ray ray = Ray(
                     camera.getO(),
                     normalize(
-                        lowerLeft + 
-                        right*((y)/(height)) +
-                        up*((x)/(width))
+                        upperLeft + 
+                        right * (double(x)/double(camera.getWidth())) + 
+                        down * (double(y)/double(camera.getHeight()))
                     )
                 );
                 Figure *closestFig = nullptr;
@@ -111,7 +113,7 @@ int main(){
                 
                 for(auto fig:figures){
                     if(fig->isIntersectedBy(ray,t)){
-                        if(t<min){
+                        if(t < min){
                             closestFig = fig;
                             min = t;
                         }

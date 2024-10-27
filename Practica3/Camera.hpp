@@ -20,7 +20,9 @@ public:
     Vector& getFront();    
     Point& getO();    
     size_t& getHeight();    
-    size_t& getWidth();    
+    size_t& getWidth();
+    void setHeight(const size_t height);    
+    void setWidth(const size_t width);    
 };
 
 #endif /* CAMERA_HPP */

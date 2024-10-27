@@ -38,3 +38,10 @@ size_t& Camera::getWidth(){
     return this->width;
 }
 
+void Camera::setHeight(const size_t height){
+    this->height = height;     
+}    
+
+void Camera::setWidth(const size_t width){
+    this->width = width; 
+}

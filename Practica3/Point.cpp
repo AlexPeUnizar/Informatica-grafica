@@ -12,11 +12,11 @@ Vector operator-(Point const &p1, Point const &p2){
     return Vector(p1.x-p2.x, p1.y-p2.y, p1.z-p2.z);
 }
 
-Point operator+(int32_t const s, Point const &p){
+Point operator+(double const s, Point const &p){
     return Point(s+p.x, s+p.y, s+p.z);
 }
 
-Point operator+(Point const &p, int32_t const s){
+Point operator+(Point const &p, double const s){
     return s+p;
 }
 

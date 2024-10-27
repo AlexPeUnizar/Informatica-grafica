@@ -15,27 +15,27 @@ std::ostream& operator<<(std::ostream& os, const Coordinate &c){
     return os;
 }
 
-std::shared_ptr<Matrix> baseChange(const Coordinate& origin, const Coordinate& u, const Coordinate& v, const Coordinate& w){
-    std::shared_ptr<Matrix> m = identity();
-    (*m)[0][3] = origin.x;
-    (*m)[1][3] = origin.y;
-    (*m)[2][3] = origin.z;
+Matrix baseChange(const Coordinate& origin, const Coordinate& u, const Coordinate& v, const Coordinate& w){
+    Matrix m = identity();
+    m[0][3] = origin.x;
+    m[1][3] = origin.y;
+    m[2][3] = origin.z;
     
-    (*m)[0][0] = u.x;
-    (*m)[1][0] = u.y;
-    (*m)[2][0] = u.z;
+    m[0][0] = u.x;
+    m[1][0] = u.y;
+    m[2][0] = u.z;
 
-    (*m)[0][1] = v.x;
-    (*m)[1][1] = v.y;
-    (*m)[2][1] = v.z;
+    m[0][1] = v.x;
+    m[1][1] = v.y;
+    m[2][1] = v.z;
 
-    (*m)[0][2] = w.x;
-    (*m)[1][2] = w.y;
-    (*m)[2][2] = w.z;
+    m[0][2] = w.x;
+    m[1][2] = w.y;
+    m[2][2] = w.z;
     return m;
 }
 
-std::shared_ptr<Coordinate> operator*(const Matrix& m, const Coordinate& c){
+Coordinate operator*(const Matrix& m, const Coordinate& c){
     double new_x, new_y, new_z, new_w;
 
     new_x = m[0][0] * c.x + m[0][1] * c.y + m[0][2] * c.z + m[0][3] * c.w;
@@ -54,5 +54,5 @@ std::shared_ptr<Coordinate> operator*(const Matrix& m, const Coordinate& c){
     }
     */
 
-    return std::make_shared<Coordinate>(new_x, new_y, new_z, new_w);
+    return Coordinate(new_x, new_y, new_z, new_w);
 }

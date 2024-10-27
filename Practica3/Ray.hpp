@@ -12,6 +12,7 @@ public:
     Ray(/* args */) = default;
     ~Ray();
     friend std::ostream& operator<<(std::ostream& os, const Ray &r);
+    Point at(double t);
 };
 
 #endif /* RAY_HPP */

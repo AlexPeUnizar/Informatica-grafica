@@ -28,11 +28,11 @@ double dotProduct(const Vector &v1, const Vector &v2){
     return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 }
 
-Vector operator*(const Vector &v, const int32_t s){
+Vector operator*(const Vector &v, const double s){
     return Vector(v.x * s, v.y * s, v.z * s);
 }
 
-Vector operator*(const int32_t s, const Vector &v){
+Vector operator*(const double s, const Vector &v){
     return v*s;
 }
 

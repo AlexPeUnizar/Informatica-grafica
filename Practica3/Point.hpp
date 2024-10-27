@@ -21,8 +21,8 @@ public:
     ~Point();
     Point() = default;
     friend Vector operator-(Point const &p1, Point const &p2);
-    friend Point operator+(int32_t const s, Point const &p);
-    friend Point operator+(Point const &p, int32_t const s);
+    friend Point operator+(double const s, Point const &p);
+    friend Point operator+(Point const &p, double const s);
     friend std::ostream& operator<<(std::ostream& os, const Point &p);
     
     friend double operator*(const Point& p, const Vector &v);

@@ -26,8 +26,8 @@ public:
     friend Vector operator-(const Vector &v1, const Vector &v2);
     friend Vector crossProduct(const Vector &v1, const Vector &v2);
     friend double dotProduct(const Vector &v1, const Vector &v2);
-    friend Vector operator*(const Vector &v, const int32_t s);
-    friend Vector operator*(const int32_t s, const Vector &v);
+    friend Vector operator*(const Vector &v, const double s);
+    friend Vector operator*(const double s, const Vector &v);
     friend Vector operator/(const Vector &v, const double s);
     friend double module(const Vector &v);
     friend double angle(const Vector &v1, const Vector &v2);

@@ -98,5 +98,6 @@
     "chrono": "cpp",
     "ratio": "cpp",
     "thread": "cpp"
-  }
+  },
+  "sarif-viewer.connectToGithubCodeScanning": "off"
 }
