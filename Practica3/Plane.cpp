@@ -21,15 +21,17 @@ Plane::Plane(const Vector& normal){
 }
 */
 
-bool Plane::isIntersectedBy(const Ray& ray, double &t) const{
+bool Plane::isIntersectedBy(const Ray& ray, IntersectableFigure::Intersection& intersection) const{
     double denom = dotProduct(ray.dir, this->normal);
     if(denom == 0){
         return false;
     }
     double div = this->dist + (ray.origin * (this->normal));
-    t =-(div/denom);
-    return t >= 0;
+    intersection.t = -(div/denom);
+    intersection.normal = this->normal;
+    intersection.intersectionPoint = ray.at(intersection.t);
+    return intersection.t >= 0;
 }
 
 
-         
+           

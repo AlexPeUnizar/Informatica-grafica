@@ -14,9 +14,9 @@ protected:
     Color color = {0,0,0};
 public:
     Figure(/* args */) = default;
-    ~Figure() = default;
+    virtual ~Figure() = default;
     void setColor(double r,double g, double b);
-    virtual bool isIntersectedBy(const Ray& ray, double &t) const = 0;
+    virtual bool isIntersectedBy(const Ray& ray, Intersection& intersection) const = 0;
     double getR();
     double getG();
     double getB();

@@ -15,7 +15,7 @@ std::ostream& operator<<(std::ostream& os, const Ray &r){
     return os;
 }
 
-Point Ray::at(double t){
+Point Ray::at(double t) const{
     return Point(
         this->origin.x + t*this->dir.x,
         this->origin.y + t*this->dir.y,

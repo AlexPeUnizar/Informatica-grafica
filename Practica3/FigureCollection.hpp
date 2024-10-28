@@ -6,17 +6,21 @@
 
 class FigureCollection: public Figure{
 private:
-    std::vector<std::shared_ptr<Figure>> figureList;
+    std::vector<Figure*> figureList;
 public:
     FigureCollection();
     //FigureCollection(Figure figureList, size_t size);
-    FigureCollection(std::vector<std::shared_ptr<Figure>> figureList);
+    FigureCollection(std::vector<Figure*> figureList);
     ~FigureCollection();
-    void add(const Figure& figure);
+    void add(Figure *figure);
     void deleteAll();
     size_t size();
-    std::vector<std::shared_ptr<Figure>>::iterator iterator();
-    virtual bool isIntersectedBy(const Ray& ray) const;
+    std::vector<Figure*>::iterator iterator();
+    virtual bool isIntersectedBy(const Ray& ray, Intersection& intersection) const;
+    std::vector<Figure*>::iterator begin();
+    std::vector<Figure*>::const_iterator begin() const;
+    std::vector<Figure*>::iterator end();
+    std::vector<Figure*>::const_iterator end() const;
 };
 
 #endif /* FIGURECOLLECTION_HPP */
