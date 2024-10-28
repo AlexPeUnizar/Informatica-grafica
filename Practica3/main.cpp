@@ -20,13 +20,12 @@ int main(){
     leftSphere.setColor(255,0,255);
     Sphere rightSphere(Point(0.5, -0.7, -0.25), 0.3);
     rightSphere.setColor(0,255,255);
-    Sphere upSphere(Point(0, 0.7, -0), 0.3);
+    Sphere upSphere(Point(0, -0.5, -0), 0.3);
     upSphere.setColor(3,54,1);
-
     FigureCollection figures(vector<Figure*>(
         {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &upSphere}
     ));
-    
+
     //Camera 
     Point cameraOrigin(0,0, -3.5);
     Vector cameraLeftVector(-1, 0, 0);
@@ -37,41 +36,8 @@ int main(){
     Camera camera(cameraUpVector, cameraLeftVector, cameraForwardVector, cameraOrigin);
     camera.setHeight(height);
     camera.setWidth(width);
-
-    PPM image(width, height);
-
-    for (size_t y = 0; y < height; y++){
-        for (size_t x = 0; x < width; x++){
-            
-            double r=0, g=0, b=0;
-
-            for(int i = 0; i < MAX_RAYS_PER_PIXEL; i++){
-                Ray ray = camera.getRayToPixel(x, y);
-
-                Figure *closestFig = nullptr;
-                double min = INT_MAX-1;
-                IntersectableFigure::Intersection intersection = IntersectableFigure::Intersection();
-
-                for(auto fig:figures){
-                    if(fig->isIntersectedBy(ray, intersection)){
-                        if(intersection.t < min){
-                            closestFig = fig;
-                            min = intersection.t;
-                        }
-                    }
-                }
-                r += closestFig->getR();
-                g += closestFig->getG();
-                b += closestFig->getB();
-            }
-            
-            image[y][x] = std::make_shared<PPM::Pixel>(PPM::Pixel{
-                (r/double(MAX_RAYS_PER_PIXEL))/255.0, 
-                (g/double(MAX_RAYS_PER_PIXEL))/255.0, 
-                (b/double(MAX_RAYS_PER_PIXEL))/255.0
-            });
-        }
-    }
+    
+    PPM image = camera.render(figures);
 
     image.save();
     cout << "Done." << endl;

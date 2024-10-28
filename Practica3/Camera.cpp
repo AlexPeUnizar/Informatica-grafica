@@ -1,6 +1,8 @@
 #include "Camera.hpp"
 #include "Utils.hpp"
 
+const size_t MAX_RAYS_PER_PIXEL = 64;
+
 Camera::Camera(const Vector& up,const Vector& left,const Vector& front,const Point& o){
     this->up = up;
     this->left = left;
@@ -64,4 +66,47 @@ Ray Camera::getRayToPixel(size_t x, size_t y){
     Ray ray(this->o, p - this->o);
     
     return ray;
+}
+
+PPM Camera::render(FigureCollection& scene){
+    
+    PPM image(this->height, this->width);
+
+    for (size_t y = 0; y < this->height; y++){
+        for (size_t x = 0; x < this->width; x++){
+            
+            double r=0, g=0, b=0;
+
+            for(size_t i = 0; i < MAX_RAYS_PER_PIXEL; i++){
+                                
+                Ray ray = this->getRayToPixel(x, y);
+                
+                Figure *closestFig = nullptr;
+                double min = INT_MAX-1;
+                IntersectableFigure::Intersection intersection = IntersectableFigure::Intersection();
+                
+                for(auto fig: scene){
+                    if(fig->isIntersectedBy(ray, intersection)){
+                        if(intersection.t < min){
+                            closestFig = fig;
+                            min = intersection.t;
+                        }
+                    }
+                }
+                if(closestFig != nullptr){
+                    r += closestFig->getR();
+                    g += closestFig->getG();
+                    b += closestFig->getB();
+                }                
+            }
+                     
+            image[y][x] = std::make_shared<PPM::Pixel>(PPM::Pixel{
+                    (r/double(MAX_RAYS_PER_PIXEL))/255.0, 
+                    (g/double(MAX_RAYS_PER_PIXEL))/255.0, 
+                    (b/double(MAX_RAYS_PER_PIXEL))/255.0
+            });      
+        }
+    }
+
+    return image;
 }

@@ -3,6 +3,8 @@
 #include "Vector.hpp"
 #include "Point.hpp"
 #include "Ray.hpp"
+#include "FigureCollection.hpp"
+#include "PPM.hpp"
 
 class Camera{
 private:
@@ -24,6 +26,7 @@ public:
     void setHeight(const size_t height);    
     void setWidth(const size_t width);   
     Ray getRayToPixel(size_t x, size_t y); 
+    PPM render(FigureCollection& scene);
 };
 
 #endif /* CAMERA_HPP */

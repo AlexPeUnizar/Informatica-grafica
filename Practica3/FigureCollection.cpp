@@ -18,9 +18,8 @@ FigureCollection::FigureCollection(std::vector<Figure*> figureList){
 }
 
 FigureCollection::~FigureCollection(){
-    for(auto fig: figureList){
-        delete fig;
-        fig = nullptr;
+    for(size_t i = 0; i < figureList.size(); i++){
+        figureList[i]->~Figure();
     }
     figureList.clear();
 }

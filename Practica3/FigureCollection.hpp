@@ -15,8 +15,8 @@ public:
     void add(Figure *figure);
     void deleteAll();
     size_t size();
-    std::vector<Figure*>::iterator iterator();
     virtual bool isIntersectedBy(const Ray& ray, Intersection& intersection) const;
+    std::vector<Figure*>::iterator iterator();
     std::vector<Figure*>::iterator begin();
     std::vector<Figure*>::const_iterator begin() const;
     std::vector<Figure*>::iterator end();
