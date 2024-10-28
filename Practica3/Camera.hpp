@@ -2,7 +2,7 @@
 #define CAMERA_HPP
 #include "Vector.hpp"
 #include "Point.hpp"
-
+#include "Ray.hpp"
 
 class Camera{
 private:
@@ -22,7 +22,8 @@ public:
     size_t& getHeight();    
     size_t& getWidth();
     void setHeight(const size_t height);    
-    void setWidth(const size_t width);    
+    void setWidth(const size_t width);   
+    Ray getRayToPixel(size_t x, size_t y); 
 };
 
 #endif /* CAMERA_HPP */
