@@ -81,23 +81,13 @@ PPM Camera::render(FigureCollection& scene){
                                 
                 Ray ray = this->getRayToPixel(x, y);
                 
-                Figure *closestFig = nullptr;
-                double min = INT_MAX-1;
                 IntersectableFigure::Intersection intersection = IntersectableFigure::Intersection();
                 
-                for(auto fig: scene){
-                    if(fig->isIntersectedBy(ray, intersection)){
-                        if(intersection.t < min){
-                            closestFig = fig;
-                            min = intersection.t;
-                        }
-                    }
+                if(scene.isIntersectedBy(ray, intersection)){
+                    r += intersection.color.r;
+                    g += intersection.color.g;
+                    b += intersection.color.b;
                 }
-                if(closestFig != nullptr){
-                    r += closestFig->getR();
-                    g += closestFig->getG();
-                    b += closestFig->getB();
-                }                
             }
                      
             image[y][x] = std::make_shared<PPM::Pixel>(PPM::Pixel{

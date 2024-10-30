@@ -1,7 +1,7 @@
 #include "Figure.hpp"
 
 void Figure::setColor(double r,double g, double b){
-    this->color = Color{r,g,b};
+    this->color = Color(r,g,b);
 }
 
 double Figure::getR(){
@@ -13,3 +13,13 @@ double Figure::getG(){
 double Figure::getB(){
     return this->color.b;
 }
+
+Color Figure::getColor(){
+    return this->color;
+}
+
+void Figure::setVisible(bool visible){
+    this->visible = visible;
+}
+
+

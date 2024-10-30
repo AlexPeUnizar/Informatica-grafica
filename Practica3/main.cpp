@@ -26,6 +26,8 @@ int main(){
         {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &upSphere}
     ));
 
+    Light light(Point(0, 0.5, 0), Color(1, 1, 1));
+
     //Camera 
     Point cameraOrigin(0,0, -3.5);
     Vector cameraLeftVector(-1, 0, 0);
@@ -37,6 +39,8 @@ int main(){
     camera.setHeight(height);
     camera.setWidth(width);
     
+    upSphere.setVisible(false);
+
     PPM image = camera.render(figures);
 
     image.save();

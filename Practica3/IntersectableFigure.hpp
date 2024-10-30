@@ -1,6 +1,7 @@
 #ifndef INTERSECTABLEFIGURE_HPP
 #define INTERSECTABLEFIGURE_HPP
 #include "Ray.hpp"
+#include "Color.hpp"
 
 class IntersectableFigure{
 private:
@@ -10,6 +11,7 @@ public:
         double t = 0;
         Vector normal = Vector();
         Point intersectionPoint = Point();
+        Color color;
     };
     IntersectableFigure(/* args */) = default;
     ~IntersectableFigure() = default;

@@ -11,6 +11,9 @@ Sphere::~Sphere(){
 }
 
 bool Sphere::isIntersectedBy(const Ray& ray, Intersection& intersection) const{
+    if(!this->visible){
+        return false;
+    }
     double a = pow(module(ray.dir), 2); 
     double b = 2 * dotProduct(ray.dir, (ray.origin - this->origin));
     double c = pow(module((ray.origin-this->origin)), 2) - pow(this->r, 2);
@@ -31,6 +34,7 @@ bool Sphere::isIntersectedBy(const Ray& ray, Intersection& intersection) const{
     intersection.t = (t0 > 0 && t1 > 0) ? std::min(t0, t1) : (t0 > 0 ? t0 : (t1 > 0 ? t1 : -1));
     intersection.intersectionPoint = ray.at(intersection.t);
     intersection.normal = normalize(intersection.intersectionPoint - this->origin);
+    intersection.color = Color(color.r, color.g, color.b);
 
     //std::cout << "t0: " << t0 << "; t1: " << t1 << std::endl;
     return true;

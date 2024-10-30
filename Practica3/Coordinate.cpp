@@ -56,3 +56,51 @@ Coordinate operator*(const Matrix& m, const Coordinate& c){
 
     return Coordinate(new_x, new_y, new_z, new_w);
 }
+
+Coordinate operator*(const Coordinate& c1, const Coordinate& c2){
+    return Coordinate(
+        c1.x * c2.x,
+        c1.y * c2.y,
+        c1.z * c2.z,
+        c1.w * c2.w
+    );
+}
+
+Coordinate operator*(const Coordinate& c, const double constant){
+    return Coordinate(
+        c.x * constant,
+        c.y * constant,
+        c.z * constant,
+        c.w * constant
+    );
+}
+
+Coordinate operator*(const double constant, const Coordinate& c){
+    return c * constant;
+}
+
+Coordinate operator/(const Coordinate& c1, const Coordinate& c2){
+    return Coordinate(
+        c1.x / c2.x,
+        c1.y / c2.y,
+        c1.z / c2.z,
+        0.0
+    );
+}
+
+Coordinate operator/(const Coordinate& c, const double constant){
+    return Coordinate(
+        c.x / constant,
+        c.y / constant,
+        c.z / constant,
+        0.0
+    );
+}
+
+Coordinate& Coordinate::operator=(const Coordinate& t){
+    this->x = t.x;
+    this->y = t.y;
+    this->z = t.z;
+    this->w = t.w;
+    return *this;
+}

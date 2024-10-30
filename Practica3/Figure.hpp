@@ -1,17 +1,13 @@
 #ifndef FIGURE_HPP
 #define FIGURE_HPP
 #include "IntersectableFigure.hpp"
+#include "Color.hpp"
 
 
 class Figure: public IntersectableFigure{
 protected:
-    struct Color{
-        double r;
-        double g;
-        double b;
-    };
-
-    Color color = {0,0,0};
+    Color color;
+    bool visible = true;
 public:
     Figure(/* args */) = default;
     virtual ~Figure() = default;
@@ -20,6 +16,8 @@ public:
     double getR();
     double getG();
     double getB();
+    Color getColor();
+    void setVisible(bool visible);
 };
 
 #endif /* FIGURE_HPP */

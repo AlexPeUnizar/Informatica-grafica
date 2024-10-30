@@ -18,6 +18,8 @@
 #include "Camera.hpp"
 #include "PPM.hpp"
 #include "FigureCollection.hpp"
+#include "Light.hpp"
+
 
 /* SETTINGS */
 const size_t MAX_RAYS_PER_PIXEL = 64;

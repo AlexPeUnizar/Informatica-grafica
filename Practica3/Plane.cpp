@@ -22,6 +22,10 @@ Plane::Plane(const Vector& normal){
 */
 
 bool Plane::isIntersectedBy(const Ray& ray, IntersectableFigure::Intersection& intersection) const{
+    if(!this->visible){
+        return false;
+    }
+
     double denom = dotProduct(ray.dir, this->normal);
     if(denom == 0){
         return false;
@@ -30,6 +34,7 @@ bool Plane::isIntersectedBy(const Ray& ray, IntersectableFigure::Intersection& i
     intersection.t = -(div/denom);
     intersection.normal = this->normal;
     intersection.intersectionPoint = ray.at(intersection.t);
+    intersection.color = Color(color.r,color.g,color.b);
     return intersection.t >= 0;
 }
 
