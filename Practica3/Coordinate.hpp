@@ -21,7 +21,14 @@ public:
     friend Coordinate operator*(const double constant, const Coordinate& c);
     friend Coordinate operator/(const Coordinate& c1, const Coordinate& c2);
     friend Coordinate operator/(const Coordinate& c, const double constant);
+    friend Coordinate operator+(const Coordinate& c1, const Coordinate& c2);
+    friend Coordinate operator+(const Coordinate& c, const double constant);
+    friend Coordinate operator+(const double constant, const Coordinate& c);
+    Coordinate& operator+=(const Coordinate& c);
+    Coordinate& operator+=(const double constant);
     Coordinate& operator=(const Coordinate& t);
+    Coordinate& operator/=(const double c);
+    Coordinate& operator*=(const double c);
 };
 
 

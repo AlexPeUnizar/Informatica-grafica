@@ -1,6 +1,6 @@
 #include "Light.hpp"
 
-Light::Light(Point center, Color Power){
+Light::Light(const Point& center, const Color& power){
     this->center = center;
     this->power = power;    
 }
@@ -14,3 +14,12 @@ Light::~Light(){
     this->center.~Point();
     this->power.~Color();
 }
+
+Point& Light::getCenter(){
+    return this->center;
+}
+
+Color& Light::getPower(){
+    return this->power;
+}
+

@@ -41,7 +41,7 @@ std::vector<Figure*>::iterator FigureCollection::iterator(){
 }
 
 bool FigureCollection::isIntersectedBy(const Ray& ray, Intersection& intersection) const{
-    IntersectableFigure::Intersection tmp;
+    Intersection tmp;
     bool anyHit = false;
     double closest = INT_MAX;
 

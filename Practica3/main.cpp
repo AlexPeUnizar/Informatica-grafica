@@ -41,7 +41,7 @@ int main(){
     
     upSphere.setVisible(false);
 
-    PPM image = camera.render(figures);
+    PPM image = camera.render(figures, light);
 
     image.save();
     cout << "Done." << endl;

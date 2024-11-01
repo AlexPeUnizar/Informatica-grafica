@@ -104,3 +104,53 @@ Coordinate& Coordinate::operator=(const Coordinate& t){
     this->w = t.w;
     return *this;
 }
+
+Coordinate operator+(const Coordinate& c1, const Coordinate& c2){
+    return Coordinate(
+        c1.x + c2.x,
+        c1.y + c2.y,
+        c1.z + c2.z,
+        0.0
+    );
+}
+
+Coordinate operator+(const Coordinate& c, const double constant){
+    return Coordinate(
+        c.x + constant,
+        c.y + constant,
+        c.z + constant,
+        0.0
+    );
+}
+
+Coordinate operator+(const double constant, const Coordinate& c){
+    return c + constant;
+}
+
+Coordinate& Coordinate::operator+=(const Coordinate& c){
+    this->x += c.x;
+    this->y += c.y;
+    this->z += c.z;
+    return *this;
+}
+
+Coordinate& Coordinate::operator+=(const double constant){
+    this->x += constant;
+    this->y += constant;
+    this->z += constant;
+    return *this;
+}
+
+Coordinate& Coordinate::operator*=(const double constant){
+    this->x *= constant;
+    this->y *= constant;
+    this->z *= constant;
+    return *this;
+}
+
+Coordinate& Coordinate::operator/=(const double constant){
+    this->x /= constant;
+    this->y /= constant;
+    this->z /= constant;
+    return *this;
+}

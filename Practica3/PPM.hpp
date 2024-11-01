@@ -3,11 +3,17 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include "Color.hpp"
 
 class PPM{
 public:
     struct Pixel{
         double r, g, b;
+        Pixel(Color color){
+            this->r = color.r;
+            this->g = color.g;
+            this->b = color.b;
+        }
     };
 private:    
     std::string fileName;

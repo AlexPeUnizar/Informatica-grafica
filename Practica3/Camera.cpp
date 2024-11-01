@@ -68,33 +68,29 @@ Ray Camera::getRayToPixel(size_t x, size_t y){
     return ray;
 }
 
-PPM Camera::render(FigureCollection& scene){
+PPM Camera::render(FigureCollection& scene, Light& light){
     
     PPM image(this->height, this->width);
 
     for (size_t y = 0; y < this->height; y++){
         for (size_t x = 0; x < this->width; x++){
             
-            double r=0, g=0, b=0;
+            Color color;
 
             for(size_t i = 0; i < MAX_RAYS_PER_PIXEL; i++){
                                 
                 Ray ray = this->getRayToPixel(x, y);
                 
-                IntersectableFigure::Intersection intersection = IntersectableFigure::Intersection();
+                Intersection intersection = Intersection();
                 
                 if(scene.isIntersectedBy(ray, intersection)){
-                    r += intersection.color.r;
-                    g += intersection.color.g;
-                    b += intersection.color.b;
+                    color += intersection.material->brdf(ray, intersection, light);
                 }
             }
-                     
-            image[y][x] = std::make_shared<PPM::Pixel>(PPM::Pixel{
-                    (r/double(MAX_RAYS_PER_PIXEL))/255.0, 
-                    (g/double(MAX_RAYS_PER_PIXEL))/255.0, 
-                    (b/double(MAX_RAYS_PER_PIXEL))/255.0
-            });      
+            color /= double(MAX_RAYS_PER_PIXEL);
+            color /= 255.0;
+             
+            image[y][x] = std::make_shared<PPM::Pixel>(color);
         }
     }
 

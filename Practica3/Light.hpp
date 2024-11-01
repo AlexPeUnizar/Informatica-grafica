@@ -8,9 +8,11 @@ private:
     Point center;
     Color power;
 public:
-    Light(Point center, Color Power);
+    Light(const Point& center, const Color& power);
     Light();
     ~Light();
+    Point& getCenter();
+    Color& getPower();
 };
 
 #endif /* LIGHT_HPP */
