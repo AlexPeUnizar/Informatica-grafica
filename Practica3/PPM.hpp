@@ -14,6 +14,11 @@ public:
             this->g = color.g;
             this->b = color.b;
         }
+        Pixel(double r, double g, double b){
+            this->r = r;
+            this->g = g;
+            this->b = b;
+        }
     };
 private:    
     std::string fileName;

@@ -11,6 +11,8 @@ public:
 
     Color(double r_, double g_, double b_): Coordinate(r_, g_, b_, 0){};
     Color() : Coordinate(0.0, 0.0, 0.0, 0.0){};
+    Color(const Coordinate& c) : Color(c.x, c.y, c.z) {}
+    Color(const Color& c) : Color(c.x, c.y, c.z) {}
     ~Color();    
     Color& operator=(const Color& c);
 };

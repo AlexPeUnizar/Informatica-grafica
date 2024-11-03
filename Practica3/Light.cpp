@@ -15,11 +15,11 @@ Light::~Light(){
     this->power.~Color();
 }
 
-Point& Light::getCenter(){
+Point Light::getCenter() const{
     return this->center;
 }
 
-Color& Light::getPower(){
+Color Light::getPower() const{
     return this->power;
 }
 

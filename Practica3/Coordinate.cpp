@@ -97,14 +97,6 @@ Coordinate operator/(const Coordinate& c, const double constant){
     );
 }
 
-Coordinate& Coordinate::operator=(const Coordinate& t){
-    this->x = t.x;
-    this->y = t.y;
-    this->z = t.z;
-    this->w = t.w;
-    return *this;
-}
-
 Coordinate operator+(const Coordinate& c1, const Coordinate& c2){
     return Coordinate(
         c1.x + c2.x,

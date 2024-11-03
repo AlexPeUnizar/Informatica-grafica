@@ -1,8 +1,11 @@
 #ifndef INTERSECTABLEFIGURE_HPP
 #define INTERSECTABLEFIGURE_HPP
+#include <memory>
 #include "Ray.hpp"
 #include "Color.hpp"
 #include "Material.hpp"
+
+class Material;
 
 class Intersection{
     public:
@@ -18,7 +21,7 @@ private:
 public:
     IntersectableFigure(/* args */) = default;
     ~IntersectableFigure() = default;
-    virtual bool isIntersectedBy(const Ray& ray, Intersection& intersection) const = 0;
+    virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const = 0;
     
 };
 

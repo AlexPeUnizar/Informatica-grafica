@@ -8,8 +8,9 @@ class Plane: public Figure{
 private:
     Vector normal;
     double dist;
+
 public:
-    Plane(const Vector& normal, const double dist);
+    Plane(const Vector& normal, const double dist, const std::shared_ptr<Material>& material);
     /*
     Plane(const Point& p1, const Point& p2, const Point& p3);
     Plane(const Vector& t1, const Vector& t2);
@@ -17,7 +18,7 @@ public:
     */
     Plane() = default;
     ~Plane();
-    virtual bool isIntersectedBy(const Ray& ray, Intersection& intersection) const;
+    virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const override;
 };
 
    

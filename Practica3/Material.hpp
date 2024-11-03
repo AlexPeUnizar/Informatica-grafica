@@ -3,6 +3,9 @@
 #include "IntersectableFigure.hpp"
 #include "Light.hpp"
 
+class Intersection;
+class IntersectableFigure;
+
 class Material{
 private:
     /* data */
@@ -12,21 +15,9 @@ public:
     Material() = default;
     Material(const Color& color);
     ~Material() = default;
-    virtual Color brdf(const Ray& ray, const Intersection& intersection, const Light& light) const = 0;
-};
-namespace Materials{
-
-    
-    class Difusse: public Material{
-    private:
-        /* data */
-    public:
-        Difusse() = default;
-        Difusse(const Color& color);
-        ~Difusse() = default;
-        virtual Color brdf(const Ray& ray, const Intersection& intersection, const Light& light) const;
+    void setColor(const Color& color);
+    virtual Color emission(const Ray& ray, const Intersection& intersection, const Light& light, const IntersectableFigure& scene) const = 0;
 };
 
-} // namespace Material
 
 #endif /* MATERIAL_HPP */

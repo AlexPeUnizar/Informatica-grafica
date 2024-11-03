@@ -40,18 +40,17 @@ std::vector<Figure*>::iterator FigureCollection::iterator(){
     return this->figureList.begin();
 }
 
-bool FigureCollection::isIntersectedBy(const Ray& ray, Intersection& intersection) const{
+bool FigureCollection::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const{
     Intersection tmp;
     bool anyHit = false;
-    double closest = INT_MAX;
+    double closest = tMax;
 
     for (const auto& fig : this->figureList) {
-        if (fig->isIntersectedBy(ray, tmp)) {
+        if (fig->isIntersectedBy(ray, tMin, closest, tmp)) {
             anyHit = true;
-            if(tmp.t < closest){
-                closest = tmp.t;
-                intersection = tmp;
-            }
+            closest = tmp.t;
+            intersection = tmp;
+            
         }
     }
 

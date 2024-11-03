@@ -9,10 +9,10 @@ private:
     Point origin;
     double r;
 public:
-    Sphere(const Point &origin, double r);
-    Sphere(double x, double y, double z, double r):origin(Point(x, y, z)), r(r){};
+    Sphere(const Point &origin, double r, const std::shared_ptr<Material>& material);
+    Sphere(double x, double y, double z, double r, const std::shared_ptr<Material>& material): Figure(material), origin(Point(x, y, z)), r(r){};
     ~Sphere();
-    virtual bool isIntersectedBy(const Ray& ray, Intersection& intersection) const;
+    virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const override;
 };
 
 #endif /* SPHERE_HPP */

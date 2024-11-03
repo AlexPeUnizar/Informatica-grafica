@@ -62,11 +62,9 @@ void PPM::load(const std::string& fileName){
 			for (int32_t j = 0; j < this->width; j++){
 				inFile >> r >> g >> b;
 				this->pixels[i][j] = std::make_shared<Pixel>(
-										Pixel{
 											toMemoryValue(r),
 											toMemoryValue(g),
-											toMemoryValue(b),
-										}
+											toMemoryValue(b)
 									);
 			}
 		}

@@ -1,25 +1,17 @@
 #include "Figure.hpp"
 
-void Figure::setColor(double r,double g, double b){
-    this->color = Color(r,g,b);
+Figure::Figure(const std::shared_ptr<Material>& material){
+    this->material = material;
 }
 
-double Figure::getR(){
-    return this->color.r;
-}
-double Figure::getG(){
-    return this->color.g;
-}
-double Figure::getB(){
-    return this->color.b;
-}
-
-Color Figure::getColor(){
-    return this->color;
+void Figure::setColor(double r, double g, double b){
+    this->material.get()->setColor(Color(r, g, b));
 }
 
 void Figure::setVisible(bool visible){
     this->visible = visible;
 }
 
-
+void Figure::setMaterial(const std::shared_ptr<Material>& material){
+    this->material = material;
+}

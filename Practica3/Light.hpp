@@ -11,8 +11,8 @@ public:
     Light(const Point& center, const Color& power);
     Light();
     ~Light();
-    Point& getCenter();
-    Color& getPower();
+    Point getCenter() const;
+    Color getPower() const;
 };
 
 #endif /* LIGHT_HPP */

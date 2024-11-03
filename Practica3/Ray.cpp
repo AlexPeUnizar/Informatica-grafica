@@ -2,7 +2,7 @@
 
 Ray::Ray(const Point& origin, const Vector& dir){
     this->origin = origin;
-    this->dir = dir;
+    this->dir = normalize(dir);
 }
 
 Ray::~Ray(){

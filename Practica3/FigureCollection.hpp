@@ -15,7 +15,7 @@ public:
     void add(Figure *figure);
     void deleteAll();
     size_t size();
-    virtual bool isIntersectedBy(const Ray& ray, Intersection& intersection) const;
+    virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const override;
     std::vector<Figure*>::iterator iterator();
     std::vector<Figure*>::iterator begin();
     std::vector<Figure*>::const_iterator begin() const;
