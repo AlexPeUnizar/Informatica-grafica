@@ -27,7 +27,7 @@ Color Materials::Lambertian::emission(const Ray& ray, const Intersection& inters
     Color term1 = (this->color * light.getPower() / pow(module(shadowRayDirection), 2));
 
     double term2 = this->kd / M_PI;
-    double term3 = (
+    double term3 = abs(
         dotProduct(
             intersection.normal,
             (shadowRayDirection) / module(shadowRayDirection)
