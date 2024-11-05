@@ -27,7 +27,7 @@ public:
     void setHeight(const size_t height);    
     void setWidth(const size_t width);   
     Ray getRayToPixel(size_t x, size_t y); 
-    PPM render(FigureCollection& scene, Light& light);
+    PPM render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>& light);
 };
 
 #endif /* CAMERA_HPP */

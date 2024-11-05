@@ -68,7 +68,7 @@ Ray Camera::getRayToPixel(size_t x, size_t y){
     return ray;
 }
 
-PPM Camera::render(FigureCollection& scene, Light& light){
+PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>& lights){
     PPM image(this->height, this->width);
 
     for (size_t y = 0; y < this->height; y++){
@@ -83,7 +83,7 @@ PPM Camera::render(FigureCollection& scene, Light& light){
                 Intersection intersection = Intersection();
                 
                 if(scene.isIntersectedBy(ray, 0.00001f, INT_MAX, intersection)){
-                    color += intersection.material->emission(ray, intersection, light, scene);
+                    color += intersection.material->emission(ray, intersection, lights, scene);
                 }
             }
 
