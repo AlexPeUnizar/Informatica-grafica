@@ -83,7 +83,7 @@ PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>&
                 Intersection intersection = Intersection();
                 
                 if(scene.isIntersectedBy(ray, 0.00001f, INT_MAX, intersection)){
-                    color += intersection.material->emission(ray, intersection, lights, scene);
+                    color += intersection.material->getColor(ray, intersection, lights, scene);
                 }
             }
 

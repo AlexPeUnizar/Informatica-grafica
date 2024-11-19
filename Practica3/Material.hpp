@@ -5,6 +5,8 @@
 #include "IntersectableFigure.hpp"
 #include "Light.hpp"
 
+const int MAX_BOUNCES = 4;
+
 class Intersection;
 class IntersectableFigure;
 
@@ -18,7 +20,11 @@ public:
     Material(const Color& color);
     ~Material() = default;
     void setColor(const Color& color);
-    virtual Color emission(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& light, const IntersectableFigure& scene) const = 0;
+    Vector randomDirection(const Ray& ray, const Intersection& intersection) const;
+    virtual Color getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth = 0) const = 0;
+    virtual Color brdf(const Ray& ray, const Intersection& intersection) const = 0;
+    Color nextEvent(const std::vector<std::shared_ptr<Light>>& lights, const Intersection& intersection, const IntersectableFigure& scene) const;
+
 };
 
 
