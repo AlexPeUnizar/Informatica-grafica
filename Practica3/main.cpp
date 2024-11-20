@@ -20,7 +20,7 @@ int main(){
         {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &upSphere}
     ));
 
-    Light light(Point(0, 0.5, 0), Color(1, 1, 1));
+    Light light(Point(0, 0.5, 0), Color(255, 255, 255));
     vector<shared_ptr<Light>> lights = vector<shared_ptr<Light>>({
         make_shared<Light>(light)
     });
@@ -38,7 +38,7 @@ int main(){
     upSphere.setVisible(false);
 
     PPM image = camera.render(figures, lights);
-    gammaAndClamping(image, 0.5, 1);
+    gamma(image, 2.2);
     image.save();
 
     cout << "Done." << endl;

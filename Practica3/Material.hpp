@@ -6,6 +6,7 @@
 #include "Light.hpp"
 
 const int MAX_BOUNCES = 4;
+const int MAX_PATHS = 1;
 
 class Intersection;
 class IntersectableFigure;

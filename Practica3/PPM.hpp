@@ -10,9 +10,9 @@ public:
     struct Pixel{
         double r, g, b;
         Pixel(Color color){
-            this->r = color.r;
-            this->g = color.g;
-            this->b = color.b;
+            this->r = color.r*255.0;
+            this->g = color.g*255.0;
+            this->b = color.b*255.0;
         }
         Pixel(double r, double g, double b){
             this->r = r;

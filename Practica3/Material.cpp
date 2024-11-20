@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include "Material.hpp"
 #include "Utils.hpp"

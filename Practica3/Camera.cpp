@@ -1,6 +1,9 @@
+#include <future>
+#include <thread>
 #include "Camera.hpp"
 #include "Utils.hpp"
 #include "progressbar.hpp"
+#include "ThreadPool.hpp"
 
 
 const size_t MAX_RAYS_PER_PIXEL = 64;
@@ -73,29 +76,42 @@ Ray Camera::getRayToPixel(size_t x, size_t y){
 PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>& lights){
     PPM image(this->height, this->width);
     progressbar pb(this->height * this->width);
-    
+    const int numThreads = std::thread::hardware_concurrency();
+
+    ThreadPool pool(numThreads);
+
+    std::vector<std::future<void>> futures;
+
+
     for (size_t y = 0; y < this->height; y++){
+
         for (size_t x = 0; x < this->width; x++){
-            
-            Color color;
+            futures.emplace_back(pool.enqueue([&, x, y]() {
+                Color color;
 
-            for(size_t i = 0; i < MAX_RAYS_PER_PIXEL; i++){
-                                
-                Ray ray = this->getRayToPixel(x, y);
-                
-                Intersection intersection = Intersection();
-                
-                if(scene.isIntersectedBy(ray, 0.00001f, INT_MAX, intersection)){
-                    color += intersection.material->getColor(ray, intersection, lights, scene);
+                for(size_t i = 0; i < MAX_RAYS_PER_PIXEL; i++){
+                                    
+                    Ray ray = this->getRayToPixel(x, y);
+                    
+                    Intersection intersection = Intersection();
+                    
+                    if(scene.isIntersectedBy(ray, 0.00001f, INT_MAX, intersection)){
+                        color += intersection.material->getColor(ray, intersection, lights, scene);
+                    }
                 }
-            }
 
-            color /= double(MAX_RAYS_PER_PIXEL);
-            color /= 255.0;
-             
-            image[y][x] = std::make_shared<PPM::Pixel>(color);
-            pb.update();
+                color /= double(MAX_RAYS_PER_PIXEL);
+                color /= 255.0;
+                
+                image[y][x] = std::make_shared<PPM::Pixel>(color);
+                //pb.update();
+                    
+            }));
+
         }
+    }
+    for (auto &f : futures) {
+        f.get();
     }
 
     return image;

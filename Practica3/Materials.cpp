@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #include <math.h>
 #include <limits.h>
 #include "Materials.hpp"
@@ -52,7 +54,7 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
     */
     Color final(0,0,0);
     Color luzDirecta = this->nextEvent(lights, intersection, scene);
-    for(int path = 0; path < MAX_BOUNCES; path++){
+    for(int path = 0; path < MAX_PATHS; path++){
         Vector randomVector = randomDirection(ray, intersection);
 
         Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
@@ -64,7 +66,7 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
         }
 
 
-        final += M_PI * ( this->brdf(ray, intersection)) + luzIndirecta /* * abs(dotProduct(intersection.normal, randomVector))*/;
+        final +=  luzDirecta + (luzIndirecta * M_PI * this->brdf(ray,intersection)) /* * abs(dotProduct(intersection.normal, randomVector))*/;
     }
     return final / MAX_BOUNCES;
 
