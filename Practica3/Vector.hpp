@@ -19,6 +19,8 @@ private:
 
 public:
     Vector(double x, double y, double z) : Coordinate(x, y, z, 0.0){};
+    Vector(const Coordinate& c) : Coordinate(c.x, c.y, c.z, 0.0) {};
+
     ~Vector() = default;
     Vector() = default;
     friend std::ostream& operator<<(std::ostream& os, const Vector &v);

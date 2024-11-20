@@ -18,6 +18,7 @@
 class Point: public Coordinate{
 public:
     Point(double x, double y, double z) : Coordinate(x, y, z, 1.0){};
+    Point(const Coordinate& c) : Coordinate(c.x, c.y, c.z, 1.0) {};
     ~Point();
     Point() = default;
     friend Vector operator-(Point const &p1, Point const &p2);

@@ -1,10 +1,11 @@
 #include "PathTracing.hpp"
+#include <iostream>
 
 using namespace std;
 
 int main(){
     srand(time(NULL));
-
+  
     Plane leftPlane(Vector(1, 0, 0), 1, std::make_shared<Materials::Lambertian>(Color(255,0,0)));
     Plane rightPlane(Vector(-1, 0, 0), 1, std::make_shared<Materials::Lambertian>(Color(0,255,0)));
     Plane floorPlane(Vector(0, 1, 0), 1, std::make_shared<Materials::Lambertian>(Color(211,211,211)));
@@ -19,7 +20,7 @@ int main(){
         {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &upSphere}
     ));
 
-    Light light(Point(0, 0.5, 0), Color(2, 2, 2));
+    Light light(Point(0, 0.5, 0), Color(1, 1, 1));
     vector<shared_ptr<Light>> lights = vector<shared_ptr<Light>>({
         make_shared<Light>(light)
     });
@@ -37,7 +38,7 @@ int main(){
     upSphere.setVisible(false);
 
     PPM image = camera.render(figures, lights);
-    gammaAndClamping(image, 2.2, 1);
+    gammaAndClamping(image, 0.5, 1);
     image.save();
 
     cout << "Done." << endl;

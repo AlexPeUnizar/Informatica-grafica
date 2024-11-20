@@ -1,5 +1,7 @@
 #include "Camera.hpp"
 #include "Utils.hpp"
+#include "progressbar.hpp"
+
 
 const size_t MAX_RAYS_PER_PIXEL = 64;
 
@@ -70,7 +72,8 @@ Ray Camera::getRayToPixel(size_t x, size_t y){
 
 PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>& lights){
     PPM image(this->height, this->width);
-
+    progressbar pb(this->height * this->width);
+    
     for (size_t y = 0; y < this->height; y++){
         for (size_t x = 0; x < this->width; x++){
             
@@ -91,6 +94,7 @@ PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>&
             color /= 255.0;
              
             image[y][x] = std::make_shared<PPM::Pixel>(color);
+            pb.update();
         }
     }
 

@@ -50,22 +50,23 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
 
     return finalColor;
     */
-    Vector randomVector = baseChange(
-        normalize(),
-        normalize(),
-        intersection.normal,
-        intersection.intersectionPoint
-    ) * randomDirection(ray, intersection);
-    Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
-    Intersection randomRayIntersection;
-    Color luzIndirecta(0,0,0);
-    if(scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection) && depth < MAX_BOUNCES){
-        luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, depth+1);
-    }
-
+    Color final(0,0,0);
     Color luzDirecta = this->nextEvent(lights, intersection, scene);
+    for(int path = 0; path < MAX_BOUNCES; path++){
+        Vector randomVector = randomDirection(ray, intersection);
 
-    return (luzDirecta + luzIndirecta) * this->brdf(ray, intersection) * abs(dotProduct(intersection.normal, randomVector));
+        Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
+        Intersection randomRayIntersection;
+        Color luzIndirecta(0,0,0);
+
+        if(scene.isIntersectedBy(randomRay, 0.00001f, 2.0f, randomRayIntersection) && depth < MAX_BOUNCES){
+            luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, depth+1);
+        }
+
+
+        final += M_PI * ( this->brdf(ray, intersection)) + luzIndirecta /* * abs(dotProduct(intersection.normal, randomVector))*/;
+    }
+    return final / MAX_BOUNCES;
 
 }
 

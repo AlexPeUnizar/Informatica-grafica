@@ -20,8 +20,22 @@ Vector Material::randomDirection(const Ray& ray, const Intersection& intersectio
         sin(theta) * sin(phi),
         cos(theta)
     );
-    
-    return random;
+    Vector randomBaseVector(0,1,0);
+    double alpha = angle(intersection.normal, randomBaseVector);
+    if(alpha == M_PI || alpha == 0.0){
+        randomBaseVector = Vector(1,0,0);
+    }
+    Vector T = normalize(crossProduct(intersection.normal, randomBaseVector));
+    Vector B = normalize(crossProduct(intersection.normal, T));
+
+    Vector randomVector = baseChange(
+        T,
+        B,
+        intersection.normal,
+        intersection.intersectionPoint
+    ) * random;
+
+    return randomVector;
 }
 
 Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, const Intersection& intersection, const IntersectableFigure& scene) const{
@@ -39,7 +53,7 @@ Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, con
         if(scene.isIntersectedBy(shadowRay, 0.00001f, module(shadowRayDirection), shadowIntersection)){
             finalColor += Color(0, 0, 0);
         }else {
-            Color term1 = (this->color * light->getPower() / pow(module(shadowRayDirection), 2));
+            Color term1 = (light->getPower() / pow(module(shadowRayDirection), 2));
 
             Color term2 = this->brdf(Ray(), intersection);
             double term3 = abs(
