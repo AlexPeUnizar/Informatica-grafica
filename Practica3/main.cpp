@@ -5,7 +5,11 @@ using namespace std;
 
 int main(){
     srand(time(NULL));
-  
+    /*
+        x -> left-right
+        y -> up-down
+        z -> front-back
+    */
     Plane leftPlane(Vector(1, 0, 0), 1, std::make_shared<Materials::Lambertian>(Color(255,0,0)));
     Plane rightPlane(Vector(-1, 0, 0), 1, std::make_shared<Materials::Lambertian>(Color(0,255,0)));
     Plane floorPlane(Vector(0, 1, 0), 1, std::make_shared<Materials::Lambertian>(Color(211,211,211)));
@@ -14,13 +18,13 @@ int main(){
 
     Sphere leftSphere(Point(-0.5, -0.7, 0.25), 0.3, std::make_shared<Materials::Lambertian>(Color(255,0,255)));
     Sphere rightSphere(Point(0.5, -0.7, -0.25), 0.3, std::make_shared<Materials::Lambertian>(Color(0,255,255)));
-    Sphere upSphere(Point(0, -0.5, -0), 0.3, std::make_shared<Materials::Lambertian>(Color(3,54,1)));
+    Sphere upSphere(Point(0, 0, -0), 0.3, std::make_shared<Materials::Lambertian>(Color(3,54,1)));
 
     FigureCollection figures(vector<Figure*>(
         {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &upSphere}
     ));
 
-    Light light(Point(0, 0.5, 0), Color(255, 255, 255));
+    Light light(Point(0, 0.5, 0), Color(20,20,20));
     vector<shared_ptr<Light>> lights = vector<shared_ptr<Light>>({
         make_shared<Light>(light)
     });
@@ -29,16 +33,16 @@ int main(){
     Vector cameraLeftVector(-1, 0, 0);
     Vector cameraUpVector(0, 1, 0);
     Vector cameraForwardVector(0, 0, 3);
-    size_t width = 256;
-    size_t height = 256;
+    size_t width = 1024;
+    size_t height = 1024;
     Camera camera(cameraUpVector, cameraLeftVector, cameraForwardVector, cameraOrigin);
     camera.setHeight(height);
     camera.setWidth(width);
     
-    upSphere.setVisible(false);
+    //upSphere.setVisible(false);
 
     PPM image = camera.render(figures, lights);
-    gamma(image, 2.2);
+    gammaAndClamping(image, 2.5, 1);
     image.save();
 
     cout << "Done." << endl;

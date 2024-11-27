@@ -61,12 +61,12 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
         Intersection randomRayIntersection;
         Color luzIndirecta(0,0,0);
 
-        if(scene.isIntersectedBy(randomRay, 0.00001f, 2.0f, randomRayIntersection) && depth < MAX_BOUNCES){
+        if(scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection) && depth < MAX_BOUNCES){
             luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, depth+1);
         }
 
 
-        final +=  luzDirecta + (luzIndirecta * M_PI * this->brdf(ray,intersection)) /* * abs(dotProduct(intersection.normal, randomVector))*/;
+        final +=  luzDirecta + (luzIndirecta/255 * M_PI * this->brdf(ray,intersection)) /* * abs(dotProduct(intersection.normal, randomVector))*/;
     }
     return final / MAX_BOUNCES;
 

@@ -9,7 +9,7 @@
 namespace Materials{
     class Lambertian: public Material{
     private:
-        double kd = 0.2;
+        double kd = 1.0;
     public:
         Lambertian() = default;
         Lambertian(const Color& color);

@@ -41,6 +41,7 @@
 #include <ostream>
 #include <string>
 #include <stdexcept>
+#include <mutex>
 
 class progressbar {
 
@@ -87,6 +88,7 @@ class progressbar {
       std::string closing_bracket_char;
 
       std::ostream& output;
+      std::mutex pb_mutex;
 };
 
 inline progressbar::progressbar() :
@@ -128,7 +130,7 @@ inline void progressbar::set_niter(int niter) {
 }
 
 inline void progressbar::update() {
-
+    std::scoped_lock<std::mutex> lock{pb_mutex};
     if (n_cycles == 0) throw std::runtime_error(
             "progressbar::update: number of cycles not set");
 
@@ -146,7 +148,9 @@ inline void progressbar::update() {
 
     // compute percentage, if did not change, do nothing and return
     perc = progress*100./(n_cycles-1);
-    if (perc < last_perc) return;
+    if (perc < last_perc){
+        return;
+    } 
 
     // update percentage each unit
     if (perc == last_perc + 1) {

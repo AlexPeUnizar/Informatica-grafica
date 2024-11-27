@@ -23,6 +23,6 @@
 
 
 /* SETTINGS */
-const size_t MAX_RAYS_PER_PIXEL = 64;
+const size_t MAX_RAYS_PER_PIXEL = 512;
 
 #endif /* PATHTRACING_HPP */
