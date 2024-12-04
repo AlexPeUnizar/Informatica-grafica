@@ -8,10 +8,10 @@ const std::string MAX = "#MAX=";
 PPM::PPM(int32_t height, int32_t width){
 	this->fileName = "file.ppm";
 	this->version = "P3";
-	this->realMaxColorValue = 1;
+	this->realMaxColorValue = 1.0;
 	this->height = height;
 	this->width = width;
-	this->maxColorValue = 255;
+	this->maxColorValue = 255.0;
 	this->pixels = std::vector<std::vector<std::shared_ptr<Pixel>>>(this->height);
 	for (int32_t i = 0; i < this->height; i++){
 		this->pixels[i] = std::vector<std::shared_ptr<Pixel>>(this->width);

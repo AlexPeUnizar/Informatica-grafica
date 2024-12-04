@@ -55,20 +55,32 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
     Color final(0,0,0);
     Color luzDirecta = this->nextEvent(lights, intersection, scene);
     for(int path = 0; path < MAX_PATHS; path++){
-        Vector randomVector = randomDirection(ray, intersection);
-
-        Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
-        Intersection randomRayIntersection;
         Color luzIndirecta(0,0,0);
 
-        if(scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection) && depth < MAX_BOUNCES){
+        //random ray
+        Vector randomVector = randomDirection(ray, intersection);
+        Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
+        Intersection randomRayIntersection;
+
+        if(depth < MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, 9999999.0, randomRayIntersection)){
             luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, depth+1);
+            std::cout << randomRayIntersection.figureName <<std::endl;
+            
+        }else{
+            std::cout << "It does not intersect" << std::endl;
+            if(depth<MAX_BOUNCES){
+                //std::cout<<"No hit.  "<< randomRay<< std::endl; 
+            }
         }
 
+        final += luzDirecta + (luzIndirecta * M_PI * this->brdf(ray,intersection)) /* * abs(dotProduct(intersection.normal, randomVector))*/;
 
-        final +=  luzDirecta + (luzIndirecta/255 * M_PI * this->brdf(ray,intersection)) /* * abs(dotProduct(intersection.normal, randomVector))*/;
     }
-    return final / MAX_BOUNCES;
+    //final /= double(MAX_BOUNCES);
+    // final *= 255.0;
+    //std::cout<<"Depth: "<< depth<< " "<< final <<std::endl;
+
+    return final;
 
 }
 

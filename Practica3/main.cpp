@@ -24,7 +24,7 @@ int main(){
         {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &upSphere}
     ));
 
-    Light light(Point(0, 0.5, 0), Color(20,20,20));
+    Light light(Point(0, 0.5, 0), Color(255,255,255));
     vector<shared_ptr<Light>> lights = vector<shared_ptr<Light>>({
         make_shared<Light>(light)
     });
@@ -33,14 +33,13 @@ int main(){
     Vector cameraLeftVector(-1, 0, 0);
     Vector cameraUpVector(0, 1, 0);
     Vector cameraForwardVector(0, 0, 3);
-    size_t width = 1024;
-    size_t height = 1024;
+    size_t width = 512;
+    size_t height = 512;
     Camera camera(cameraUpVector, cameraLeftVector, cameraForwardVector, cameraOrigin);
     camera.setHeight(height);
     camera.setWidth(width);
     
-    //upSphere.setVisible(false);
-
+    upSphere.setVisible(false);
     PPM image = camera.render(figures, lights);
     gammaAndClamping(image, 2.5, 1);
     image.save();

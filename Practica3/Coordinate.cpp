@@ -71,7 +71,7 @@ Coordinate operator*(const Coordinate& c, const double constant){
         c.x * constant,
         c.y * constant,
         c.z * constant,
-        c.w * constant
+        c.w
     );
 }
 

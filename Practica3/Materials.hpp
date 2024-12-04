@@ -15,7 +15,7 @@ namespace Materials{
         Lambertian(const Color& color);
         Lambertian(double r, double g, double b);
         ~Lambertian() = default;
-        virtual Color getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& light, const IntersectableFigure& scene, int depth) const override;
+        virtual Color getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& light, const IntersectableFigure& scene, int depth = 0) const override;
         virtual Color brdf(const Ray& ray, const Intersection& intersection) const override;
     };
 

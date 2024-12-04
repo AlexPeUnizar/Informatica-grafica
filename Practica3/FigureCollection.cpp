@@ -50,7 +50,6 @@ bool FigureCollection::isIntersectedBy(const Ray& ray, double tMin, double tMax,
             anyHit = true;
             closest = tmp.t;
             intersection = tmp;
-            
         }
     }
 

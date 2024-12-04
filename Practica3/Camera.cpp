@@ -86,8 +86,11 @@ PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>&
     for (size_t y = 0; y < this->height; y++){
 
         for (size_t x = 0; x < this->width; x++){
+            #define th 0
+            #if th
             futures.emplace_back(pool.enqueue([&, x, y]() {
-                Color color;
+            #endif
+                Color color(0,0,0);
 
                 for(size_t i = 0; i < MAX_RAYS_PER_PIXEL; i++){
                                     
@@ -96,23 +99,29 @@ PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>&
                     Intersection intersection = Intersection();
                     
                     if(scene.isIntersectedBy(ray, 0.00001f, INT_MAX, intersection)){
-                        color += intersection.material->getColor(ray, intersection, lights, scene);
+                        Color newc = intersection.material->getColor(ray, intersection, lights, scene); 
+                        color += newc;
+                        //std::cout<<newc<<std::endl;
+                        //std::cin.get();
                     }
                 }
 
                 color /= double(MAX_RAYS_PER_PIXEL);
-                color /= 255.0;
-                
+                //std::cout<<"Final: "<<color.r<<" "<<color.g<<" "<<color.b<<" "<<std::endl;
+                color *= 255.0;
                 image[y][x] = std::make_shared<PPM::Pixel>(color);
+                #if !th
                 //pb.update();
-                    
+                #endif
+            #if th                    
             }));
-
+            #endif
         }
     }
+    #if th
     for (auto &f : futures) {
         f.get();
     }
-
+    #endif
     return image;
 }

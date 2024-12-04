@@ -12,4 +12,7 @@ Color& Color::operator=(const Color& c){
     return *this;
 }
 
-
+std::ostream& operator<<(std::ostream& os, const Color &c){
+    os << "Color(" << c.r << ", " << c.g << ", " << c.b << ")";
+    return os;
+}

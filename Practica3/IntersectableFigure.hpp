@@ -13,6 +13,7 @@ class Intersection{
         Vector normal = Vector();
         Point intersectionPoint = Point();
         std::shared_ptr<Material> material;
+        std::string figureName = ""; 
 };
 
 class IntersectableFigure{

@@ -23,7 +23,7 @@ Vector Material::randomDirection(const Ray& ray, const Intersection& intersectio
     );
     Vector randomBaseVector(0,1,0);
     double alpha = angle(intersection.normal, randomBaseVector);
-    if(alpha == M_PI || alpha == 0.0){
+    if(alpha == M_PI || alpha == 0.0000000001f){
         randomBaseVector = Vector(1,0,0);
     }
     Vector T = normalize(crossProduct(intersection.normal, randomBaseVector));
@@ -67,7 +67,7 @@ Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, con
             finalColor += term1 * term2 * term3;   
         }
     }
-    finalColor /= lights.size();
+    finalColor /= double(lights.size());
 
     return finalColor;
 }

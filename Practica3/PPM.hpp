@@ -25,7 +25,7 @@ private:
     std::string version;
     double realMaxColorValue;
     int32_t height, width;
-    int32_t maxColorValue;    
+    double maxColorValue;    
     std::vector<std::vector<std::shared_ptr<Pixel>>> pixels;
 
 private:
