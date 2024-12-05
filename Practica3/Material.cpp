@@ -63,6 +63,8 @@ Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, con
                     (shadowRayDirection) / module(shadowRayDirection)
                 )
             );
+            //std::cout << term1 << " " << term2 << " " << term3 << std::endl;
+
 
             finalColor += term1 * term2 * term3;   
         }

@@ -86,7 +86,7 @@ PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>&
     for (size_t y = 0; y < this->height; y++){
 
         for (size_t x = 0; x < this->width; x++){
-            #define th 0
+            #define th 1
             #if th
             futures.emplace_back(pool.enqueue([&, x, y]() {
             #endif
@@ -108,7 +108,6 @@ PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>&
 
                 color /= double(MAX_RAYS_PER_PIXEL);
                 //std::cout<<"Final: "<<color.r<<" "<<color.g<<" "<<color.b<<" "<<std::endl;
-                color *= 255.0;
                 image[y][x] = std::make_shared<PPM::Pixel>(color);
                 #if !th
                 //pb.update();

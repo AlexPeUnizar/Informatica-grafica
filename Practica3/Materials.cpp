@@ -54,6 +54,8 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
     */
     Color final(0,0,0);
     Color luzDirecta = this->nextEvent(lights, intersection, scene);
+    //std::cout << luzDirecta << std::endl;;
+    //std::cin.get();
     for(int path = 0; path < MAX_PATHS; path++){
         Color luzIndirecta(0,0,0);
 
@@ -64,10 +66,10 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
 
         if(depth < MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, 9999999.0, randomRayIntersection)){
             luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, depth+1);
-            std::cout << randomRayIntersection.figureName <<std::endl;
+            //std::cout << randomRayIntersection.figureName <<std::endl;
             
         }else{
-            std::cout << "It does not intersect" << std::endl;
+           // std::cout << "It does not intersect" << std::endl;
             if(depth<MAX_BOUNCES){
                 //std::cout<<"No hit.  "<< randomRay<< std::endl; 
             }
