@@ -75,43 +75,38 @@ Ray Camera::getRayToPixel(size_t x, size_t y){
 
 PPM Camera::render(FigureCollection& scene, std::vector<std::shared_ptr<Light>>& lights){
     PPM image(this->height, this->width);
-    progressbar pb(this->height * this->width);
+    
+    #define th 1
+    #if th
     const int numThreads = std::thread::hardware_concurrency();
-
     ThreadPool pool(numThreads);
-
     std::vector<std::future<void>> futures;
-
-
+    #endif
+    
     for (size_t y = 0; y < this->height; y++){
-
         for (size_t x = 0; x < this->width; x++){
-            #define th 1
             #if th
             futures.emplace_back(pool.enqueue([&, x, y]() {
             #endif
-                Color color(0,0,0);
+            Color color(0,0,0);
 
-                for(size_t i = 0; i < MAX_RAYS_PER_PIXEL; i++){
-                                    
-                    Ray ray = this->getRayToPixel(x, y);
-                    
-                    Intersection intersection = Intersection();
-                    
-                    if(scene.isIntersectedBy(ray, 0.00001f, INT_MAX, intersection)){
-                        Color newc = intersection.material->getColor(ray, intersection, lights, scene); 
-                        color += newc;
-                        //std::cout<<newc<<std::endl;
-                        //std::cin.get();
-                    }
+            for(size_t i = 0; i < MAX_RAYS_PER_PIXEL; i++){
+                                
+                Ray ray = this->getRayToPixel(x, y);
+                
+                Intersection intersection = Intersection();
+                
+                if(scene.isIntersectedBy(ray, 0.00001f, INT_MAX, intersection)){
+                    color += intersection.material->getColor(ray, intersection, lights, scene);
                 }
+            }
 
-                color /= double(MAX_RAYS_PER_PIXEL);
-                //std::cout<<"Final: "<<color.r<<" "<<color.g<<" "<<color.b<<" "<<std::endl;
-                image[y][x] = std::make_shared<PPM::Pixel>(color);
-                #if !th
-                //pb.update();
-                #endif
+            color /= double(MAX_RAYS_PER_PIXEL);
+            //std::cout<<"Final: "<<color.r<<" "<<color.g<<" "<<color.b<<" "<<std::endl;
+            image[y][x] = std::make_shared<PPM::Pixel>(color);
+            #if !th
+            pb.update();
+            #endif
             #if th                    
             }));
             #endif

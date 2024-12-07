@@ -36,7 +36,7 @@ bool Plane::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersecti
     intersection.normal = this->normal;
     intersection.intersectionPoint = ray.at(intersection.t);
     intersection.material = this->material;
-    intersection.figureName = "Plane";
+    intersection.figureName = typeid(this).name();
 
 
     return (intersection.t >= 0 && intersection.t > tMin && intersection.t < tMax);

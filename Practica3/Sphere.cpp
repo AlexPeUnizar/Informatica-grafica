@@ -42,7 +42,7 @@ bool Sphere::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersect
         intersection.intersectionPoint = ray.at(intersection.t);
         intersection.normal = normalize(intersection.intersectionPoint - this->origin);
         intersection.material = this->material;
-        intersection.figureName = "Sphere";
+        intersection.figureName = typeid(this).name();
         return true;
     }
     return false;

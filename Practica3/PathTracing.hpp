@@ -14,12 +14,14 @@
 #include "Matrix.hpp"
 #include "Figure.hpp"
 #include "Sphere.hpp"
+#include "Cylinder.hpp"
 #include "Plane.hpp"
 #include "Camera.hpp"
 #include "PPM.hpp"
 #include "FigureCollection.hpp"
 #include "Light.hpp"
 #include "Materials.hpp"
+#include "Color.hpp"
 
 
 /* SETTINGS */

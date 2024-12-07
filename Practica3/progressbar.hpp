@@ -88,7 +88,6 @@ class progressbar {
       std::string closing_bracket_char;
 
       std::ostream& output;
-      std::mutex pb_mutex;
 };
 
 inline progressbar::progressbar() :
@@ -130,7 +129,6 @@ inline void progressbar::set_niter(int niter) {
 }
 
 inline void progressbar::update() {
-    std::scoped_lock<std::mutex> lock{pb_mutex};
     if (n_cycles == 0) throw std::runtime_error(
             "progressbar::update: number of cycles not set");
 

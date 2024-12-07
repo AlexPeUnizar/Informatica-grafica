@@ -23,17 +23,17 @@ Vector Material::randomDirection(const Ray& ray, const Intersection& intersectio
     );
     Vector randomBaseVector(0,1,0);
     double alpha = angle(intersection.normal, randomBaseVector);
-    if(alpha == M_PI || alpha == 0.0000000001f){
-        randomBaseVector = Vector(1,0,0);
-    }
+    if (std::abs(alpha - M_PI) < 1e-6 || std::abs(alpha) < 1e-6) {
+        randomBaseVector = Vector(1, 0, 0);
+    }   
     Vector T = normalize(crossProduct(intersection.normal, randomBaseVector));
     Vector B = normalize(crossProduct(intersection.normal, T));
 
     Vector randomVector = baseChange(
+        intersection.intersectionPoint,
         T,
         B,
-        intersection.normal,
-        intersection.intersectionPoint
+        intersection.normal
     ) * random;
 
     return randomVector;
@@ -55,7 +55,6 @@ Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, con
             finalColor += Color(0, 0, 0);
         }else {
             Color term1 = (light->getPower() / pow(module(shadowRayDirection), 2));
-
             Color term2 = this->brdf(Ray(), intersection);
             double term3 = abs(
                 dotProduct(
@@ -63,8 +62,6 @@ Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, con
                     (shadowRayDirection) / module(shadowRayDirection)
                 )
             );
-            //std::cout << term1 << " " << term2 << " " << term3 << std::endl;
-
 
             finalColor += term1 * term2 * term3;   
         }

@@ -99,7 +99,18 @@
     "chrono": "cpp",
     "ratio": "cpp",
     "thread": "cpp",
-    "mutex": "cpp"
+    "mutex": "cpp",
+    "bit": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "condition_variable": "cpp",
+    "functional": "cpp",
+    "iterator": "cpp",
+    "numeric": "cpp",
+    "random": "cpp",
+    "future": "cpp",
+    "ranges": "cpp",
+    "stop_token": "cpp"
   },
   "sarif-viewer.connectToGithubCodeScanning": "off",
   "C_Cpp_Runner.cppStandard": "c++17"
