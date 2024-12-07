@@ -8,7 +8,7 @@ int main(){
     /* FIGURES */
     /*
         x -> left(-)-right(+)
-        y -> up(-)-down(+)
+        y -> down(-)-up(+)
         z -> front(-)-back(+)
     */
     Color gris = Color::fromRGB(211,211,211);
@@ -20,10 +20,28 @@ int main(){
 
     Sphere leftSphere(Point(-0.5, -0.7, 0.25), 0.3, std::make_shared<Materials::Lambertian>(Color::fromRGB(255,0,255)));
     Sphere rightSphere(Point(0.5, -0.7, -0.25), 0.3, std::make_shared<Materials::Lambertian>(Color::fromRGB(0,255,255)));
-    Cylinder middleCylinder(Point(0, 0, 0.7), Vector(0, -0, -1), 0.3, 0.5, std::make_shared<Materials::Lambertian>(Color::fromRGB(102, 51, 0)));
+    /*
+    */
+    vector<shared_ptr<Point>> vertices = {
+        make_shared<Point>(0-0.5, 0-0.5, 0),      // Base inferior izquierda
+        make_shared<Point>(1-0.5, 0-0.5, 0),      // Base inferior derecha
+        make_shared<Point>(0.5-0.5, 0-0.5, 1),    // Base superior
+        make_shared<Point>(0.5-0.5, 1-0.5, 0.5)   // Pico de la pirámide
+    };
+
+    vector<int> indices = {
+        0, 1, 2, // Base
+        0, 1, 3, // Cara 1
+        1, 2, 3, // Cara 2
+        2, 0, 3  // Cara 3
+    };
+
+    auto material = std::make_shared<Materials::Lambertian>(Color::fromRGB(255,255,0));
+    TriangleMesh pyramidMesh(vertices, indices, material);
+
 
     FigureCollection figures(vector<Figure*>(
-        {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &middleCylinder}
+        {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &pyramidMesh}
     ));
 
     /* LIGHTS */
@@ -43,11 +61,13 @@ int main(){
     camera.setHeight(height);
     camera.setWidth(width);
     
-    //middleCylinder.setVisible(false);
+    //triangle.setVisible(false);
+    leftSphere.setVisible(false);
+    rightSphere.setVisible(false);
     PPM image = camera.render(figures, lights);
     gammaAndClamping(image, 2.2, 1);
     image.save();
-
+    
     cout << "Done." << endl;
     return 0;
 }   

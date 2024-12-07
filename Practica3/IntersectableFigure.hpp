@@ -21,7 +21,7 @@ private:
     /* data */
 public:
     IntersectableFigure(/* args */) = default;
-    ~IntersectableFigure() = default;
+    virtual ~IntersectableFigure() = default;
     virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const = 0;
     
 };

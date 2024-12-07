@@ -11,7 +11,7 @@ public:
     FigureCollection();
     //FigureCollection(Figure figureList, size_t size);
     FigureCollection(std::vector<Figure*> figureList);
-    ~FigureCollection();
+    virtual ~FigureCollection();
     void add(Figure *figure);
     void deleteAll();
     size_t size();

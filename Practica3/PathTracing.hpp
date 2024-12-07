@@ -15,6 +15,8 @@
 #include "Figure.hpp"
 #include "Sphere.hpp"
 #include "Cylinder.hpp"
+#include "Triangle.hpp"
+#include "TriangleMesh.hpp"
 #include "Plane.hpp"
 #include "Camera.hpp"
 #include "PPM.hpp"
