@@ -34,7 +34,9 @@ public:
     friend double module(const Vector &v);
     friend double angle(const Vector &v1, const Vector &v2);
     friend Vector normalize(const Vector &v);
-
+    friend Vector reflect(const Vector& incident, const Vector& normal);
+    friend Vector refract(const Vector& incident, const Vector& normal, double ior_ratio);
+    friend Vector operator-(const Vector& v);
 };
 
 

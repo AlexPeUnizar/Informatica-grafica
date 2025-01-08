@@ -28,6 +28,8 @@ public:
     Coordinate& operator+=(const double constant);
     Coordinate& operator/=(const double c);
     Coordinate& operator*=(const double c);
+    friend double maxComponent(const Coordinate& c);
+
 };
 
 

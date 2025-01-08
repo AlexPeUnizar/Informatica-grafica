@@ -18,10 +18,12 @@ int main(){
     Plane ceilingPlane(Vector(0, -1, 0), 1, std::make_shared<Materials::Lambertian>(gris));
     Plane backPlane(Vector(0, 0, -1), 1, std::make_shared<Materials::Lambertian>(gris));
 
-    Sphere leftSphere(Point(-0.5, -0.7, 0.25), 0.3, std::make_shared<Materials::Lambertian>(Color::fromRGB(255,0,255)));
-    Sphere rightSphere(Point(0.5, -0.7, -0.25), 0.3, std::make_shared<Materials::Lambertian>(Color::fromRGB(0,255,255)));
+    Sphere leftSphere(Point(-0.5, -0.7, 0.25), 0.3, std::make_shared<Material>(Color(0.0, 0.0, 1.0),  // Color azul para difuso (kd)
+                                     Color(0.5, 0.5, 1.0),  // Color azul claro para especular (ks)
+                                     Color(0.0, 0.0, 0.0),  // Sin componente refractiva (kt)
+                                     1.5));
+    Sphere rightSphere(Point(0.5, -0.7, -0.25), 0.3, std::make_shared<Material>(Color::fromRGB(255,255,255), Color(0.6,0.6,0.6),  Color(0.4,0.4,0.4), 1.5));
     /*
-    */
     vector<shared_ptr<Point>> vertices = {
         make_shared<Point>(0-0.5, 0-0.5, 0),      // Base inferior izquierda
         make_shared<Point>(1-0.5, 0-0.5, 0),      // Base inferior derecha
@@ -38,10 +40,10 @@ int main(){
 
     auto material = std::make_shared<Materials::Lambertian>(Color::fromRGB(255,255,0));
     TriangleMesh pyramidMesh(vertices, indices, material);
-
-
+    */
+    
     FigureCollection figures(vector<Figure*>(
-        {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere, &pyramidMesh}
+        {&leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, &leftSphere, &rightSphere}
     ));
 
     /* LIGHTS */
@@ -62,13 +64,20 @@ int main(){
     camera.setWidth(width);
     
     //triangle.setVisible(false);
-    leftSphere.setVisible(false);
-    rightSphere.setVisible(false);
-    PPM image = camera.render(figures, lights);
+    //leftSphere.setVisible(false);
+    //rightSphere.setVisible(false);
+    PPM image;
+    
+    {
+        ScopedTimer timer("Render Timer");
+        image = camera.render(figures, lights);
+    }
+
     gammaAndClamping(image, 2.2, 1);
     image.save();
     
     cout << "Done." << endl;
+    
     return 0;
 }   
 

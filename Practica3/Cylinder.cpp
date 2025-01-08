@@ -31,7 +31,7 @@ bool Cylinder::isIntersectedBy(const Ray& ray, double tMin, double tMax, Interse
                     intersection.t = t;
                     intersection.intersectionPoint = pCuerpo;
                     Vector outwardNormal = normalize(pCuerpo - (Point)((Coordinate)baseCenter + (Coordinate)(axis * hCuerpo)));
-                    intersection.normal = dotProduct(outwardNormal, ray.dir) < 0 ? outwardNormal : (-1)*outwardNormal;
+                    intersection.normal = dotProduct(outwardNormal, ray.dir) < 0 ? outwardNormal : -outwardNormal;
                     intersection.material = this->material;
                     intersection.figureName = "Cylinder";
                     return true;
@@ -51,7 +51,7 @@ bool Cylinder::isIntersectedBy(const Ray& ray, double tMin, double tMax, Interse
             if (module(pTapa - centerTapa) <= radius) {
                 intersection.t = tTapa;
                 intersection.intersectionPoint = pTapa;
-                intersection.normal = (i == 0) ? (-1)*axis : axis;
+                intersection.normal = (i == 0) ? -axis : axis;
                 intersection.material = this->material;
                 intersection.figureName = "Cylinder";
                 return true;

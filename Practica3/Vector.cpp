@@ -48,4 +48,25 @@ Vector normalize(const Vector &v){
     return v/module(v);
 }
 
+Vector reflect(const Vector& incident, const Vector& normal) {
+    return incident - 2.0f * dotProduct(incident, normal) * normal;
+}
 
+Vector refract(const Vector& incident, const Vector& normal, double ior_ratio) {
+    double cosi = dotProduct(incident, normal);
+    double etai = 1;
+    double etat = ior_ratio;
+    if (cosi > 0){
+        std::swap(etai, etat);
+    } 
+    double eta = etai / etat;
+    double k = 1 - eta * eta * (1 - cosi * cosi);
+    if (k < 0){
+        return Vector(0, 0, 0);  // Total internal reflexion
+    }
+    return eta * incident + (eta * cosi - sqrt(k)) * normal;
+}
+
+Vector operator-(const Vector& v){
+    return Vector(-v.x, -v.y, -v.z);
+}

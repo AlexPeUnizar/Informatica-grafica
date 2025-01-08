@@ -146,3 +146,7 @@ Coordinate& Coordinate::operator/=(const double constant){
     this->z /= constant;
     return *this;
 }
+
+double maxComponent(const Coordinate& c){
+    return std::max(c.x, std::max(c.y, c.z));
+}
