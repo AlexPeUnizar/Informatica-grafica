@@ -11,6 +11,23 @@ const int MAX_PATHS = 1;
 class Intersection;
 class IntersectableFigure;
 
+/* RUSSIAN ROULETTE */
+enum RR_EventType{
+    DIFUSSE,
+    SPECULAR,
+    REFRACTIVE,
+    ABSORTION
+};
+
+struct RR_Event{
+    RR_EventType eventType;
+    double probability;
+};
+
+/* FUNCTIONS */
+
+RR_Event russianRoulette(Color kdWeight, Color ksWeight, Color ktWeight);
+
 class Material{
 private:
     Color kd;
@@ -29,13 +46,9 @@ public:
     virtual Color getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth = 0) const;
     virtual Color brdf(const Ray& ray, const Intersection& intersection) const;
     Color nextEvent(const std::vector<std::shared_ptr<Light>>& lights, const Intersection& intersection, const IntersectableFigure& scene) const;
-    //virtual Color bsdf(const Ray& ray, const Intersection& intersection) const = 0;
+    Vector getSacterredVector(const Ray &ray, const Intersection &intersection, const RR_Event event) const;
+    Color bsdf(const Ray& ray, const Intersection& intersection, const RR_Event event) const;
 
-    Color computeDifusse(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth = 0)const;
-    Color computeSpecular(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth = 0)const;
-    Color computeRefractive(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth = 0)const;
-    double computeRussianRoulette() const;
-    double fresnelSchlick(double cosTheta, double ior);
 
 };
 

@@ -5,12 +5,14 @@
 #include "Materials.hpp"
 #include "FigureCollection.hpp"
 
-Materials::Lambertian::Lambertian(const Color& color){
+Materials::Lambertian::Lambertian(const Color& color): Material(color){
+    this->kd = color;
     this->color = color;
 }
 
-Materials::Lambertian::Lambertian(double r, double g, double b){
+Materials::Lambertian::Lambertian(double r, double g, double b): Material(Color::fromRGB(r,g,b)){
     this->color = Color(r,g,b);
+    this->kd = color;
 }
 
 Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth) const{
@@ -38,15 +40,17 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
 }
 
 Color Materials::Lambertian::brdf(const Ray& ray, const Intersection& intersection) const{
-    return this->color * (this->kd / M_PI);
+    return (this->kd / M_PI);
 }
 
-Materials::Metal::Metal(const Color& color){
+Materials::Metal::Metal(const Color& color): Material(color){
+    this->kd = color;
     this->color = color;
 }
 
-Materials::Metal::Metal(double r, double g, double b){
+Materials::Metal::Metal(double r, double g, double b): Material(Color::fromRGB(r,g,b)){
     this->color = Color(r,g,b);
+    this->kd = color;
 }
 
 Color Materials::Metal::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth) const{
@@ -56,7 +60,7 @@ Color Materials::Metal::getColor(const Ray& ray, const Intersection& intersectio
     for(int path = 0; path < MAX_PATHS; path++){
         Color luzIndirecta(0,0,0);
 
-        Vector reflectedVector = refract(ray.dir, intersection.normal, 1.5);
+        Vector reflectedVector = reflect(ray.dir, intersection.normal);
         Ray reflectedRay = Ray(intersection.intersectionPoint, reflectedVector);
         Intersection reflectedRayIntersection;
 
@@ -73,6 +77,6 @@ Color Materials::Metal::getColor(const Ray& ray, const Intersection& intersectio
 }
 
 Color Materials::Metal::brdf(const Ray& ray, const Intersection& intersection) const{
-    return this->color * (this->kd / M_PI);
+    return (this->kd / M_PI);
 }
 

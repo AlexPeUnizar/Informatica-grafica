@@ -31,20 +31,5 @@ namespace Materials{
         virtual Color brdf(const Ray& ray, const Intersection& intersection) const ;
     };
 
-    class BaseMaterial: public Material{
-    private:
-        Color kd;
-        Color ks;
-        Color kt;
-    public:
-        BaseMaterial() = default;
-        BaseMaterial(const Color& ks, const Color& kd, const Color& kt);
-        ~BaseMaterial() = default;
-        virtual Color getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& light, const IntersectableFigure& scene, int depth = 0) const override;
-        virtual Color brdf(const Ray& ray, const Intersection& intersection) const ;
-
-        Color bsdf(const Ray& ray, const Intersection& intersection) const;
-
-    };
 } // namespace Materials
 #endif /* MATERIALS_HPP */

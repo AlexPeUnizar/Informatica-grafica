@@ -1,6 +1,6 @@
 #include <iostream>
 #include <memory>
-#include <cmath>
+#include <math.h>
 #include "Vector.hpp"
 #include "Point.hpp"
 #include "Coordinate.hpp"

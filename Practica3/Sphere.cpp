@@ -1,5 +1,5 @@
 #include "Sphere.hpp"
-#include <cmath>
+#include <math.h>
 
 Sphere::Sphere(const Point &origin, double r, const std::shared_ptr<Material>& material): Figure(material){
     this->origin = origin;

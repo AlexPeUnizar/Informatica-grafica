@@ -1,5 +1,5 @@
 #include "Vector.hpp"
-#include <cmath>
+#include <math.h>
 
 std::ostream& operator<<(std::ostream& os, const Vector &v){
     os << "Vector(" << v.x << ", " << v.y << ", " << v.z << ")";
@@ -53,18 +53,28 @@ Vector reflect(const Vector& incident, const Vector& normal) {
 }
 
 Vector refract(const Vector& incident, const Vector& normal, double ior_ratio) {
-    double cosi = dotProduct(incident, normal);
-    double etai = 1;
+    Vector incidentNorm = normalize(incident);
+    Vector normalNorm = normalize(normal);
+
+    double cosi = dotProduct(incidentNorm, normalNorm);
+    if (cosi < -1.0) cosi = -1.0;
+    if (cosi > 1.0) cosi = 1.0;
+
+    double etai = 1.0;
     double etat = ior_ratio;
-    if (cosi > 0){
+    if (cosi > 0) {
+        normalNorm = -normalNorm;
         std::swap(etai, etat);
-    } 
-    double eta = etai / etat;
-    double k = 1 - eta * eta * (1 - cosi * cosi);
-    if (k < 0){
-        return Vector(0, 0, 0);  // Total internal reflexion
     }
-    return eta * incident + (eta * cosi - sqrt(k)) * normal;
+
+    double eta = etai / etat;
+    double k = 1.0 - eta * eta * (1.0 - cosi * cosi);
+
+    if (k < 0.0) {
+        return Vector(0, 0, 0);  // Reflexión total interna
+    }
+
+    return eta * incidentNorm + (eta * cosi - sqrt(k)) * normalNorm;
 }
 
 Vector operator-(const Vector& v){

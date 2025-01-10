@@ -1,6 +1,6 @@
 #include "ToneMapping.hpp"
 #include <algorithm>
-#include <cmath>
+#include <math.h>
 
 void clamping(PPM& image, double clampValue){
     for (int32_t i = 0; i < image.height; i++){

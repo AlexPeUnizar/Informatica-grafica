@@ -1,5 +1,5 @@
 #include "Matrix.hpp"
-#include <cmath>
+#include <math.h>
 #include <iomanip>
 
 Matrix::Matrix(){

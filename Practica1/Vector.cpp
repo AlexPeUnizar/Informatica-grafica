@@ -1,5 +1,5 @@
 #include "Vector.hpp"
-#include <cmath>
+#include <math.h>
 
 Vector::~Vector(){
     
