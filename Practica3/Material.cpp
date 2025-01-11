@@ -143,7 +143,7 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
 }
 
 Color Material::brdf(const Ray& ray, const Intersection& intersection) const{
-    return this->ks / M_PI;
+    return this->kd / M_PI;
 }
 
 Color Material::bsdf(const Ray& ray, const Intersection& intersection, const RR_Event event) const{
