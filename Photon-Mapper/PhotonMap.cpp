@@ -1,6 +1,6 @@
 #include "PhotonMap.hpp"
 
-Photon::Photon(const Point &pos, const Vector& incident, const double& flux){
+Photon::Photon(const Point &pos, const Vector& incident, const Color& flux){
     this->pos = pos;    
     this->incident = incident;    
     this->flux = flux;    
@@ -18,3 +18,7 @@ std::vector<const Photon*> search_nearest(const PhotonMap& map, const Point& que
     );
 }
 
+std::ostream& operator<<(std::ostream& os, const Photon &p) {
+    os << "Photon(Position: " << p.pos << ", Incident: " << p.incident << ", Flux: " << p.flux << ")";
+    return os;
+}

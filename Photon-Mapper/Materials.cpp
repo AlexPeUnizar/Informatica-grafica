@@ -37,13 +37,14 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
     }
     final /= double(MAX_PATHS);
     return final;*/
+    
     if (depth >= MAX_BOUNCES) return Color(0, 0, 0); // Caso base de recursión
 
     // Calcula la iluminación directa utilizando el método nextEvent
     Color directLighting = nextEvent(lights, intersection, scene);
 
     // Estimación de la iluminación indirecta utilizando el mapa de fotones
-    auto nearestPhotons = search_nearest(photonMap, intersection.intersectionPoint, 50, 0.25); // 50 fotones y radio de 0.1
+    auto nearestPhotons = search_nearest(photonMap, intersection.intersectionPoint, 50, 0.2); // 50 fotones y radio de 0.1
     Color indirectLighting = calculateIllumination(nearestPhotons, intersection);
     
     // Combine direct and indirect lighting

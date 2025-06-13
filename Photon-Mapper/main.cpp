@@ -12,21 +12,22 @@ int main(){
         z -> front(-)-back(+)
     */
     Color gris = Color::fromRGB(211,211,211);
-    Plane leftPlane(Vector(1, 0, 0), 1, std::make_shared<Materials::Lambertian>(Color::fromRGB(255,0,0)));
-    Plane rightPlane(Vector(-1, 0, 0), 1, std::make_shared<Materials::Lambertian>(Color::fromRGB(0,255,0)));
-    Plane floorPlane(Vector(0, 1, 0), 1, std::make_shared<Materials::Lambertian>(gris));
-    Plane ceilingPlane(Vector(0, -1, 0), 1, std::make_shared<Materials::Lambertian>(gris));
-    Plane backPlane(Vector(0, 0, -1), 1, std::make_shared<Materials::Lambertian>(gris));
+    Plane leftPlane(Vector(1, 0, 0), 1, std::make_shared<Material>(Color::fromRGB(255,0,0)));
+    Plane rightPlane(Vector(-1, 0, 0), 1, std::make_shared<Material>(Color::fromRGB(0,255,0)));
+    Plane floorPlane(Vector(0, 1, 0), 1, std::make_shared<Material>(gris));
+    Plane ceilingPlane(Vector(0, -1, 0), 1, std::make_shared<Material>(gris));
+    Plane backPlane(Vector(0, 0, -1), 1, std::make_shared<Material>(gris));
 
+    /*
     Sphere leftSphere(Point(-0.5, -0.7, 0.25), 0.3, std::make_shared<Materials::Lambertian>(Color::fromRGB(255,0,255)));
     Sphere rightSphere(Point(0.5, -0.7, -0.25), 0.3, std::make_shared<Materials::Lambertian>(Color::fromRGB(0,255,255)));
-/*
+    */
     Sphere leftSphere(
         Point(-0.5, -0.7, 0.25),
         0.3,
-        std::make_shared<Materials::Lambertian>(
-            Color(0.0, 0.7, 0.7),  // kd: Azul
-            Color(0.3, 0.3, 0.3),  // ks: Moderada reflectividad
+        std::make_shared<Material>(
+            Color::fromRGB(255,0,255),  // kd: Azul
+            Color(0, 0, 0),  // ks: Moderada reflectividad
             Color(0.0, 0.0, 0.0),  // kt: Sin refracción
             1.0                    // ior
         )
@@ -37,20 +38,19 @@ int main(){
         Point(0.5, -0.7, -0.25),
         0.3,
         std::make_shared<Material>(
-            Color(0.0, 0.0, 0.0),  // kd: Sin difusa
-            Color(0.1, 0.1, 0.1),  // ks: Baja reflectividad
-            Color(0.9, 0.9, 0.9),  // kt: Alta transparencia
+            Color::fromRGB(0,255,255),  // kd: Sin difusa
+            Color(0, 0, 0),  // ks: Baja reflectividad
+            Color(0, 0, 0),  // kt: Alta transparencia
             1.5                    // ior (índice de refracción)
         )
     );
-    */
     // Integración en el FigureCollection
-FigureCollection figures(vector<Figure*>(
-    {
-        &leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, 
-        &leftSphere, &rightSphere
-    }
-));
+    FigureCollection figures(vector<Figure*>(
+        {
+            &leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, 
+            &leftSphere, &rightSphere
+        }
+    ));
 
     /*
     vector<shared_ptr<Point>> vertices = {
@@ -133,7 +133,7 @@ FigureCollection figures(vector<Figure*>(
     image.save();
     
     cout << "Done." << endl;
-    system("\"C:/Program Files/GIMP 2/bin/gimp-2.10.exe\" out.ppm");
+    system("\"C:/Program Files/GIMP 3/bin/gimp-3.0.exe\" out.ppm");
     return 0;
 }   
 

@@ -38,7 +38,7 @@ Vector operator/(const Vector &v, const double s){
 }
 
 double module(const Vector &v){
-    return sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2));
+    return sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
 }
 
 double angle(const Vector &v1, const Vector &v2){

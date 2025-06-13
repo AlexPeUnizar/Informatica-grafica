@@ -5,6 +5,7 @@
 #include "Utils.hpp"
 #include "progressbar.hpp"
 #include "ThreadPool.hpp"
+#include "ScopedTimer.hpp"
 #include <math.h>
 
 const size_t MAX_RAYS_PER_PIXEL = 64;
@@ -76,7 +77,11 @@ Ray Camera::getRayToPixel(size_t x, size_t y){
 
 PPM Camera::render(const FigureCollection& scene, const std::vector<std::shared_ptr<Light>>& lights){
     PPM image(this->height, this->width);
-    PhotonMap photonMap = generatePhotonMap(scene, lights, MAX_PHOTONS);
+    PhotonMap photonMap;
+    {
+        ScopedTimer timer("PhotonMap Generation Timer");
+        photonMap = generatePhotonMap(scene, lights, MAX_PHOTONS);
+    }
     #define th 1
     #if th
     const int numThreads = std::thread::hardware_concurrency();
@@ -127,19 +132,22 @@ PhotonMap Camera::generatePhotonMap(const FigureCollection& scene, const std::ve
     for (const auto& light : lights) {
         totalPower += light->intensity();
     }
-
     for (const auto& light : lights) {
-        size_t photonsPerLight = 4096 * (light->intensity()/totalPower);
-
+        size_t photonsPerLight = totalPhotons * (light->intensity()/totalPower);
+        
         for (size_t i = 0; i < photonsPerLight; ++i) {
             Point origin = light->getCenter();
             Vector direction = randomDirection(); 
-            double flux = 4 * M_PI * light->intensity() / photonsPerLight;
-
+            Color flux = 4 * M_PI * light->getPower() / photonsPerLight;
+            
             Ray photonRay(origin, direction);
             Intersection intersection;
             size_t bounce = 0;
-            while (bounce++ < MAX_BOUNCES && scene.isIntersectedBy(photonRay, 0.001, INT_MAX, intersection)) {
+            // Dispersión difusa
+            //direction = randomDirection(intersection.intersectionPoint, intersection.normal);
+            //photonRay = Ray(intersection.intersectionPoint, direction);
+            while (bounce++ < MAX_BOUNCES && scene.isIntersectedBy(photonRay, 1e-6f, INT_MAX, intersection)) {
+                flux = flux*intersection.material->brdf(photonRay, intersection);
                 photons.push_back(Photon(intersection.intersectionPoint, photonRay.dir, flux));
 
                 // Dispersión difusa

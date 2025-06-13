@@ -34,3 +34,6 @@
 #archivos grandes
 *.zip
 *.ppm
+Practica3/.vscode/c_cpp_properties.json
+Practica3/.vscode/launch.json
+Practica3/.vscode/settings.json

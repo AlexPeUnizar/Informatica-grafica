@@ -24,5 +24,5 @@ Color Light::getPower() const{
 }
 
 double Light::intensity() const{
-    return (power.r + power.g+ power.b ) / 3.0;
+    return (power.r + power.g + power.b ) / 3.0;
 }

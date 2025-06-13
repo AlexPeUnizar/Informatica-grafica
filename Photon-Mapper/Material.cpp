@@ -88,20 +88,26 @@ Color Material::calculateIllumination(const std::vector<const Photon*>& nearestP
     Color result(0, 0, 0);
     int numPhotons = nearestPhotons.size();
 
-    for (const Photon* photon : nearestPhotons) {
+    double r = -1;
+    if (numPhotons > 0) {
+        // Calcula el radio promedio de los fotones
+        for (const Photon* photon : nearestPhotons) {
+            double distance = module(photon->getPosition() - intersection.intersectionPoint);
+            if (distance > r) {
+                r = distance;
+            }
+        }
+    }
 
+    for (const Photon* photon : nearestPhotons) {
             // Asumimos que brdf necesita un rayo; aquí usamos un rayo con dirección dummy
             // Asegúrate de que la dirección sea consistente con cómo se esperan los argumentos de brdf
             Vector incoming = normalize(intersection.intersectionPoint - photon->getPosition());
             Ray incomingRay(photon->getPosition(), incoming);
-            Color photonContribution = photon->getFlux() * intersection.material->brdf(incomingRay, intersection);
+            Color photonContribution = photon->getFlux() /(M_PI * r * r);
 
             result += photonContribution;
         
-    }
-
-    if (numPhotons > 0) {
-        result /= numPhotons;  // Promedia la contribución de los fotones, considera quitar si se maneja la normalización correctamente
     }
 
     return result;
@@ -110,11 +116,14 @@ Color Material::calculateIllumination(const std::vector<const Photon*>& nearestP
 
 Color Material::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, const PhotonMap& photonMap, int depth) const{
     
-    //auto nearestPhotons = search_nearest(photonMap, intersection.intersectionPoint, 50, 0.1);
-    if (depth >= MAX_BOUNCES) return Color(0, 0, 0);
+    if (depth >= MAX_BOUNCES){
+        //auto nearestPhotons = search_nearest(photonMap, intersection.intersectionPoint, 50, 0.1); // 50 fotones y radio de 0.1
+        //return calculateIllumination(nearestPhotons, intersection);
+        return Color(0, 0, 0); // Caso base de recursión
+    } 
 
     Color final(0,0,0);
-    Color luzDirecta = this->nextEvent(lights, intersection, scene);
+    //Color luzDirecta = this->nextEvent(lights, intersection, scene);
     
     for(int path = 0; path < MAX_PATHS; path++){
         Color luzIndirecta(0,0,0);
@@ -129,11 +138,13 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
         Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
         Intersection randomRayIntersection;
 
-        if(depth < MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
-            luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, photonMap, depth+1);            
+        if(scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
+            auto nearestPhotons = search_nearest(photonMap, intersection.intersectionPoint, 500, 0.1); // 50 fotones y radio de 0.1
+            luzIndirecta = calculateIllumination(nearestPhotons, intersection);
+            //luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, photonMap, depth+1);            
         }
         
-        final += luzDirecta + (luzIndirecta * bsdf(randomRay, intersection, event) ) ;
+        final += (luzIndirecta * bsdf(randomRay, intersection, event) ) ;
         
     }
     final /= double(MAX_PATHS);

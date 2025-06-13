@@ -6,24 +6,25 @@
 #include "list"
 #include "vector"
 #include "Point.hpp"
+#include "Color.hpp"
 
-const size_t MAX_PHOTONS = 100000;
+const size_t MAX_PHOTONS = 1000000;
 
 class Photon{
 private:
     Point pos;
     Vector incident;
-    double flux;
+    Color flux;
 
 public:
     Photon() = delete;
-    Photon(const Point &pos, const Vector& incident, const double& flux);
+    Photon(const Point &pos, const Vector& incident, const Color& flux);
     ~Photon() = default;
     double position(std::size_t i) const { return pos[i]; }
-    double getFlux() const { return flux; }
+    Color getFlux() const { return flux; }
     Vector getIncident() const { return incident; }
     Point getPosition() const { return pos; }
-
+    friend std::ostream& operator<<(std::ostream& os, const Photon &p);
 };
 
 struct PhotonAxisPosition {
