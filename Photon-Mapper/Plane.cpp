@@ -42,5 +42,18 @@ bool Plane::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersecti
     return (intersection.t >= 0 && intersection.t > tMin && intersection.t < tMax);
 }
 
+void Plane::applyTransform(const Matrix& m) {
+    // Elegir un punto sobre el plano
+    Point pointOnPlane = Point(normal * -dist); // punto p tal que n·p + d = 0
 
-           
+    // Transformar ese punto
+    Point newPoint = m * pointOnPlane;
+
+    // Transformar la normal usando el inverso transpuesto (solo válido si m es afín)
+    Matrix inverseTransposed = transpose(inverse(m));
+    Vector newNormal = normalize(Vector(inverseTransposed * normal));
+
+    // Recalcular la nueva distancia al origen
+    dist = -dotProduct(newNormal, newPoint);
+    normal = newNormal;
+}

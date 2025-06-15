@@ -41,3 +41,9 @@ bool TriangleMesh::isIntersectedBy(const Ray& ray, double tMin, double tMax, Int
 
     return hitAnything;
 }
+
+void TriangleMesh::applyTransform(const Matrix& t) {
+    for (auto& triangle : triangles) {
+        triangle->applyTransform(t);
+    }
+}

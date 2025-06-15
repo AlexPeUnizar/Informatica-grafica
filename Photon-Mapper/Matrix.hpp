@@ -17,6 +17,8 @@ public:
     friend Matrix operator*(const Matrix& m1, const Matrix& m2);
     friend Matrix operator*(const Matrix& m, const double c);
     friend Matrix operator*(const double c, const Matrix& m);
+    friend Matrix inverse(const Matrix& m);
+    friend Matrix transpose(const Matrix& m);
 };
 
 Matrix identity();

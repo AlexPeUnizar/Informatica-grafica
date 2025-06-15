@@ -17,6 +17,10 @@ RR_Event russianRoulette(Color kdWeight, Color ksWeight, Color ktWeight){
     else return {ABSORTION, rand};
 }
 
+RR_Event russianRoulette(Material& material){
+    return russianRoulette(material.kd, material.ks, material.kt);
+}
+
 Vector Material::getSacterredVector(const Ray &ray, const Intersection &intersection, const RR_Event event) const{
     switch (event.eventType){
         case DIFUSSE:
@@ -102,15 +106,27 @@ Color Material::calculateIllumination(const std::vector<const Photon*>& nearestP
     for (const Photon* photon : nearestPhotons) {
             // Asumimos que brdf necesita un rayo; aquí usamos un rayo con dirección dummy
             // Asegúrate de que la dirección sea consistente con cómo se esperan los argumentos de brdf
+            /*
             Vector incoming = normalize(intersection.intersectionPoint - photon->getPosition());
             Ray incomingRay(photon->getPosition(), incoming);
             Color photonContribution = photon->getFlux() /(M_PI * r * r);
-
+            
+            */
+           
+            double dist = module(photon->getPosition() - intersection.intersectionPoint);
+            double alpha = 0.918;
+            double beta = 1.953;
+            double u = 1 - std::exp(-beta * (dist * dist) / (2 * r * r));
+            double d = 1 - std::exp(-beta);
+            double kernelWeight = alpha * (1 - (u / d));
+            //Vector incoming = normalize(intersection.intersectionPoint - photon->getPosition());
+            //Ray incomingRay(photon->getPosition(), incoming);
+            
+            Color photonContribution = photon->getFlux() * kernelWeight;
             result += photonContribution;
-        
     }
 
-    return result;
+    return result / (M_PI * r * r);
 }
 
 
@@ -133,19 +149,25 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
         if(event.eventType == ABSORTION){
             continue;
         }
+        
+        Intersection randomRayIntersection = intersection;
+        Ray randomRay = ray;
+        
+        if(event.eventType != DIFUSSE){
 
-        Vector randomVector = getSacterredVector(ray, intersection, event);
-        Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
-        Intersection randomRayIntersection;
-
-        if(scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
-            auto nearestPhotons = search_nearest(photonMap, intersection.intersectionPoint, 500, 0.1); // 50 fotones y radio de 0.1
-            luzIndirecta = calculateIllumination(nearestPhotons, intersection);
-            //luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, photonMap, depth+1);            
+            Vector randomVector = getSacterredVector(ray, intersection, event);
+            Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
+            
+            if (scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
+                luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, photonMap, depth + 1);
+            }
+           
+        } else{
+            auto nearestPhotons = search_nearest(photonMap, randomRayIntersection.intersectionPoint, 100); // 50 fotones y radio de 0.1
+            luzIndirecta = calculateIllumination(nearestPhotons, randomRayIntersection);
         }
         
-        final += (luzIndirecta * bsdf(randomRay, intersection, event) ) ;
-        
+        final += (luzIndirecta * bsdf(randomRay, intersection, event)) ;      
     }
     final /= double(MAX_PATHS);
     return final;

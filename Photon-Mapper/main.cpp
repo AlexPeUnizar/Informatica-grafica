@@ -17,11 +17,12 @@ int main(){
     Plane floorPlane(Vector(0, 1, 0), 1, std::make_shared<Material>(gris));
     Plane ceilingPlane(Vector(0, -1, 0), 1, std::make_shared<Material>(gris));
     Plane backPlane(Vector(0, 0, -1), 1, std::make_shared<Material>(gris));
-
+            
     /*
     Sphere leftSphere(Point(-0.5, -0.7, 0.25), 0.3, std::make_shared<Materials::Lambertian>(Color::fromRGB(255,0,255)));
     Sphere rightSphere(Point(0.5, -0.7, -0.25), 0.3, std::make_shared<Materials::Lambertian>(Color::fromRGB(0,255,255)));
     */
+   /*
     Sphere leftSphere(
         Point(-0.5, -0.7, 0.25),
         0.3,
@@ -44,11 +45,60 @@ int main(){
             1.5                    // ior (índice de refracción)
         )
     );
+*/
+    Sphere leftSphere(
+        Point(-0.5, -0.7, 0.25),
+        0.3,
+        std::make_shared<Material>(
+            Color(0.0, 0.6, 0.6),  // kd: Azul
+            Color(0.4, 0.4, 0.4),  // ks: Moderada reflectividad
+            Color(0.0, 0.0, 0.0),  // kt: Sin refracción
+            1.0                    // ior
+        )
+    );
+
+    
+    Sphere rightSphere(
+        Point(0.5, -0.7, -0.25),
+        0.3,
+        std::make_shared<Material>(
+            Color(0.0, 0.0, 0.0),  // kd: Sin difusa
+            Color(0.1, 0.1, 0.1),  // ks: Baja reflectividad
+            Color(0.9, 0.9, 0.9),  // kt: Alta transparencia
+            1.5                    // ior (índice de refracción)
+        )
+    );
+
+    auto glassMaterial = std::make_shared<Material>(
+        Color(0, 0.5, 0.5),    // kd: sin difusa
+        Color(1, 0.5, 0.5), // ks: reflejo débil
+        Color(0, 0, 0), // kt: casi totalmente transparente
+        1.5                     // ior: como el vidrio real
+    );
+
+    Cylinder glassCylinder1(
+    Point(-0.5, -0.85, 0.0),          // base más cerca del espectador
+    Vector(0, 0, 1),                  // eje hacia el fondo
+    0.3,                              // radio
+    0.6,                              // longitud (en z)
+    glassMaterial
+);
+
+// Cilindro diagonal inclinado
+Cylinder glassCylinder2(
+    Point(0.4, -1.0, 0.2),            // base sobre el suelo
+    normalize(Vector(1, 1, -1)),      // eje diagonal (hacia arriba y atrás)
+    0.3,
+    0.5,
+    glassMaterial
+);
+
     // Integración en el FigureCollection
     FigureCollection figures(vector<Figure*>(
         {
             &leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, 
-            &leftSphere, &rightSphere
+            &leftSphere, &rightSphere,
+    &glassCylinder1, &glassCylinder2
         }
     ));
 
@@ -103,7 +153,7 @@ int main(){
 
 
     /* LIGHTS */
-    Light light(Point(0, 0.5, 0), Color(1,1,1));
+    Light light(Point(0, 0.5, 0), Color(1,1,1)); // Light source with a pinkish color
     vector<shared_ptr<Light>> lights = vector<shared_ptr<Light>>({
         make_shared<Light>(light)
     });
@@ -119,9 +169,20 @@ int main(){
     camera.setHeight(height);
     camera.setWidth(width);
     
+
+    leftSphere.applyTransform(
+        traslation(0,0.7,0) 
+    );
+
+    leftSphere.applyTransform(
+        scale(2, 2, 2)
+    );
+
     //triangle.setVisible(false);
     //leftSphere.setVisible(false);
     //rightSphere.setVisible(false);
+    glassCylinder1.setVisible(false);
+    glassCylinder2.setVisible(false);
     PPM image;
     
     {

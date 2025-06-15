@@ -111,7 +111,7 @@ PPM Camera::render(const FigureCollection& scene, const std::vector<std::shared_
             //std::cout<<"Final: "<<color.r<<" "<<color.g<<" "<<color.b<<" "<<std::endl;
             image[y][x] = std::make_shared<PPM::Pixel>(color);
             #if !th
-            pb.update();
+            //pb.update();
             #endif
             #if th                    
             }));
@@ -146,13 +146,24 @@ PhotonMap Camera::generatePhotonMap(const FigureCollection& scene, const std::ve
             // Dispersión difusa
             //direction = randomDirection(intersection.intersectionPoint, intersection.normal);
             //photonRay = Ray(intersection.intersectionPoint, direction);
-            while (bounce++ < MAX_BOUNCES && scene.isIntersectedBy(photonRay, 1e-6f, INT_MAX, intersection)) {
-                flux = flux*intersection.material->brdf(photonRay, intersection);
-                photons.push_back(Photon(intersection.intersectionPoint, photonRay.dir, flux));
 
-                // Dispersión difusa
-                direction = randomDirection(intersection.intersectionPoint, intersection.normal);
-                photonRay = Ray(intersection.intersectionPoint, direction);
+
+            while (bounce < MAX_BOUNCES && scene.isIntersectedBy(photonRay, 1e-6f, INT_MAX, intersection)) {
+                RR_Event event = russianRoulette(*intersection.material);
+                
+                if(event.eventType == ABSORTION){
+                    continue;
+                }
+
+                flux = flux * intersection.material->bsdf(photonRay, intersection, event);
+                
+                if(event.eventType == DIFUSSE){
+                    photons.push_back(Photon(intersection.intersectionPoint, photonRay.dir, flux));
+                }
+                bounce++;
+                
+                Vector randomVector = intersection.material->getSacterredVector(photonRay, intersection, event);
+                photonRay = Ray(intersection.intersectionPoint, randomVector);
             }
         }
     }

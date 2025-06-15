@@ -40,3 +40,9 @@ bool Triangle::isIntersectedBy(const Ray& ray, double tMin, double tMax, Interse
 
     return true;
 }
+
+void Triangle::applyTransform(const Matrix& m) {
+    v0 = m * v0;
+    v1 = m * v1;
+    v2 = m * v2;
+}

@@ -19,6 +19,7 @@ public:
     Plane() = default;
     ~Plane();
     virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const override;
+    virtual void applyTransform(const Matrix& t) override;
 };
 
    

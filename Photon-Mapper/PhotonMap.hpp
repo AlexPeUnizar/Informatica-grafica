@@ -8,7 +8,7 @@
 #include "Point.hpp"
 #include "Color.hpp"
 
-const size_t MAX_PHOTONS = 1000000;
+const size_t MAX_PHOTONS = 100000;
 
 class Photon{
 private:
@@ -37,6 +37,8 @@ using PhotonMap = nn::KDTree<Photon, 3, PhotonAxisPosition>;
 
 PhotonMap newPhotonMap(const std::list<Photon>& photons);
 std::vector<const Photon*> search_nearest(const PhotonMap& map, const Point& query_position, unsigned long nphotons_estimate, float radius_estimate);
+std::vector<const Photon*> search_nearest(const PhotonMap& map, const Point& query_position, unsigned long nphotons_estimate);
+
 
 
 #endif /* PHOTONMAP_HPP */

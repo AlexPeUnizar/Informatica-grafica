@@ -3,6 +3,9 @@
 
 bool Cylinder::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const {
     // Vector hacia la base del cilindro
+    if (!this->visible) {
+        return false;
+    }
     Vector delta = ray.origin - baseCenter;
 
     // Direcciones ortogonales a la proyección en el eje del cilindro
@@ -60,4 +63,25 @@ bool Cylinder::isIntersectedBy(const Ray& ray, double tMin, double tMax, Interse
     }
 
     return false;
+}
+
+void Cylinder::applyTransform(const Matrix& t) {
+    baseCenter = t * baseCenter;
+
+    Vector newAxis = t * axis;
+    double axisScale = module(newAxis); 
+    axis = normalize(newAxis);
+
+    Vector tangent;
+    if (std::abs(axis.x) < 0.99)
+        tangent = crossProduct(axis, Vector(1,0,0));
+    else
+        tangent = crossProduct(axis, Vector(0,1,0));
+    tangent = normalize(tangent);
+
+    Vector transformedTangent = t * tangent;
+    double radialScale = module(transformedTangent);
+
+    radius *= radialScale;
+    height *= axisScale;
 }

@@ -58,6 +58,16 @@ Matrix identity(){
     return m;
 }
 
+Matrix transpose(const Matrix& m){
+    Matrix result;
+    for (std::size_t i = 0; i < 4; i++) {
+        for (std::size_t j = 0; j < 4; j++) {
+            result[i][j] = m[j][i];
+        }
+    }
+    return result;
+}
+
 Matrix traslation(const double new_x, const double new_y, const double new_z){
     Matrix m = identity();
     m[0][3] = new_x;
@@ -129,5 +139,134 @@ Matrix operator*(const double c, const Matrix& m){
     return m * c;
 }
 
+Matrix inverse(const Matrix& m){
+    Matrix inv;
+    double det;
+    double invOut[16];
 
+    const double* a = &m.mat[0][0]; // Acceso plano a los datos
 
+    invOut[0] =  a[5]  * a[10] * a[15] - 
+                 a[5]  * a[11] * a[14] - 
+                 a[9]  * a[6]  * a[15] + 
+                 a[9]  * a[7]  * a[14] +
+                 a[13] * a[6]  * a[11] - 
+                 a[13] * a[7]  * a[10];
+
+    invOut[4] = -a[4]  * a[10] * a[15] + 
+                 a[4]  * a[11] * a[14] + 
+                 a[8]  * a[6]  * a[15] - 
+                 a[8]  * a[7]  * a[14] - 
+                 a[12] * a[6]  * a[11] + 
+                 a[12] * a[7]  * a[10];
+
+    invOut[8] =  a[4]  * a[9] * a[15] - 
+                 a[4]  * a[11] * a[13] - 
+                 a[8]  * a[5] * a[15] + 
+                 a[8]  * a[7] * a[13] + 
+                 a[12] * a[5] * a[11] - 
+                 a[12] * a[7] * a[9];
+
+    invOut[12] = -a[4]  * a[9] * a[14] + 
+                  a[4]  * a[10] * a[13] +
+                  a[8]  * a[5] * a[14] - 
+                  a[8]  * a[6] * a[13] - 
+                  a[12] * a[5] * a[10] + 
+                  a[12] * a[6] * a[9];
+
+    invOut[1] = -a[1]  * a[10] * a[15] + 
+                 a[1]  * a[11] * a[14] + 
+                 a[9]  * a[2] * a[15] - 
+                 a[9]  * a[3] * a[14] - 
+                 a[13] * a[2] * a[11] + 
+                 a[13] * a[3] * a[10];
+
+    invOut[5] =  a[0]  * a[10] * a[15] - 
+                 a[0]  * a[11] * a[14] - 
+                 a[8]  * a[2] * a[15] + 
+                 a[8]  * a[3] * a[14] + 
+                 a[12] * a[2] * a[11] - 
+                 a[12] * a[3] * a[10];
+
+    invOut[9] = -a[0]  * a[9] * a[15] + 
+                 a[0]  * a[11] * a[13] + 
+                 a[8]  * a[1] * a[15] - 
+                 a[8]  * a[3] * a[13] - 
+                 a[12] * a[1] * a[11] + 
+                 a[12] * a[3] * a[9];
+
+    invOut[13] = a[0]  * a[9] * a[14] - 
+                 a[0]  * a[10] * a[13] - 
+                 a[8]  * a[1] * a[14] + 
+                 a[8]  * a[2] * a[13] + 
+                 a[12] * a[1] * a[10] - 
+                 a[12] * a[2] * a[9];
+
+    invOut[2] =  a[1]  * a[6] * a[15] - 
+                 a[1]  * a[7] * a[14] - 
+                 a[5]  * a[2] * a[15] + 
+                 a[5]  * a[3] * a[14] + 
+                 a[13] * a[2] * a[7] - 
+                 a[13] * a[3] * a[6];
+
+    invOut[6] = -a[0]  * a[6] * a[15] + 
+                 a[0]  * a[7] * a[14] + 
+                 a[4]  * a[2] * a[15] - 
+                 a[4]  * a[3] * a[14] - 
+                 a[12] * a[2] * a[7] + 
+                 a[12] * a[3] * a[6];
+
+    invOut[10] = a[0]  * a[5] * a[15] - 
+                 a[0]  * a[7] * a[13] - 
+                 a[4]  * a[1] * a[15] + 
+                 a[4]  * a[3] * a[13] + 
+                 a[12] * a[1] * a[7] - 
+                 a[12] * a[3] * a[5];
+
+    invOut[14] = -a[0]  * a[5] * a[14] + 
+                  a[0]  * a[6] * a[13] + 
+                  a[4]  * a[1] * a[14] - 
+                  a[4]  * a[2] * a[13] - 
+                  a[12] * a[1] * a[6] + 
+                  a[12] * a[2] * a[5];
+
+    invOut[3] = -a[1] * a[6] * a[11] + 
+                 a[1] * a[7] * a[10] + 
+                 a[5] * a[2] * a[11] - 
+                 a[5] * a[3] * a[10] - 
+                 a[9] * a[2] * a[7] + 
+                 a[9] * a[3] * a[6];
+
+    invOut[7] =  a[0] * a[6] * a[11] - 
+                 a[0] * a[7] * a[10] - 
+                 a[4] * a[2] * a[11] + 
+                 a[4] * a[3] * a[10] + 
+                 a[8] * a[2] * a[7] - 
+                 a[8] * a[3] * a[6];
+
+    invOut[11] = -a[0] * a[5] * a[11] + 
+                  a[0] * a[7] * a[9] + 
+                  a[4] * a[1] * a[11] - 
+                  a[4] * a[3] * a[9] - 
+                  a[8] * a[1] * a[7] + 
+                  a[8] * a[3] * a[5];
+
+    invOut[15] = a[0] * a[5] * a[10] - 
+                 a[0] * a[6] * a[9] - 
+                 a[4] * a[1] * a[10] + 
+                 a[4] * a[2] * a[9] + 
+                 a[8] * a[1] * a[6] - 
+                 a[8] * a[2] * a[5];
+
+    det = a[0] * invOut[0] + a[1] * invOut[4] + a[2] * invOut[8] + a[3] * invOut[12];
+
+    if (det == 0.0)
+        throw std::runtime_error("Matrix is singular and cannot be inverted.");
+
+    det = 1.0 / det;
+
+    for (int i = 0; i < 16; i++)
+        reinterpret_cast<double*>(&inv)[i] = invOut[i] * det;
+
+    return inv;
+}

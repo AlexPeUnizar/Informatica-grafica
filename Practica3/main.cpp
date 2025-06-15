@@ -16,8 +16,13 @@ int main(){
     Plane rightPlane(Vector(-1, 0, 0), 1, std::make_shared<Materials::Lambertian>(Color::fromRGB(0,255,0)));
     Plane floorPlane(Vector(0, 1, 0), 1, std::make_shared<Materials::Lambertian>(gris));
     Plane ceilingPlane(Vector(0, -1, 0), 1, std::make_shared<Materials::Lambertian>(gris));
-    Plane backPlane(Vector(0, 0, -1), 1, std::make_shared<Materials::Lambertian>(gris));
-/*
+    Plane backPlane(Vector(0, 0, -1), 1, std::make_shared<Material>(
+            Color(0.0, 0, 0),  // kd: Azul
+            Color(1, 1, 1),  // ks: Moderada reflectividad
+            Color(0.0, 0.0, 0.0),  // kt: Sin refracción
+            1.0                    // ior
+        ));
+
     Sphere leftSphere(
         Point(-0.5, -0.7, 0.25),
         0.3,
@@ -47,6 +52,7 @@ FigureCollection figures(vector<Figure*>(
         &leftSphere, &rightSphere
     }
 ));
+/*
     */
 
     /*
@@ -66,7 +72,7 @@ FigureCollection figures(vector<Figure*>(
 
     auto material = std::make_shared<Materials::Lambertian>(Color::fromRGB(255,255,0));
     TriangleMesh pyramidMesh(vertices, indices, material);
-    */
+    
  // Define materials
     auto triangleMaterial = std::make_shared<Material>(
         Color(0.0, 0.0, 0.0),  // kd: Sin difusa
@@ -96,7 +102,7 @@ FigureCollection figures(vector<Figure*>(
         &leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane,
         &sphere1, &sphere2, &sphere3, &cylinder1, &cylinder2, &cylinder3
     }));
-
+*/
 
 
     /* LIGHTS */
@@ -110,8 +116,8 @@ FigureCollection figures(vector<Figure*>(
     Vector cameraLeftVector(-1, 0, 0);
     Vector cameraUpVector(0, 1, 0);
     Vector cameraForwardVector(0, 0, 3);
-    size_t width = 2048;
-    size_t height = 2048;
+    size_t width = 1024;
+    size_t height = 1024;
     Camera camera(cameraUpVector, cameraLeftVector, cameraForwardVector, cameraOrigin);
     camera.setHeight(height);
     camera.setWidth(width);
@@ -130,7 +136,7 @@ FigureCollection figures(vector<Figure*>(
     image.save();
     
     cout << "Done." << endl;
-    system("\"C:/Program Files/GIMP 2/bin/gimp-2.10.exe\" out.ppm");
+    system("\"C:/Program Files/GIMP 3/bin/gimp-3.0.exe\" out.ppm");
     return 0;
 }   
 

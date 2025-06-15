@@ -56,6 +56,12 @@ bool FigureCollection::isIntersectedBy(const Ray& ray, double tMin, double tMax,
     return anyHit;      
 }
 
+void FigureCollection::applyTransform(const Matrix& t) {
+    for (auto& figure : figureList) {
+        figure->applyTransform(t);
+    }
+}
+
 std::vector<Figure*>::iterator FigureCollection::begin(){
     return this->figureList.begin();    
 }

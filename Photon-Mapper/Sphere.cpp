@@ -14,6 +14,7 @@ bool Sphere::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersect
     if(!this->visible){
         return false;
     }
+
     Vector vectorToCenter = ray.origin - this->origin;
     double a = dotProduct(ray.dir, ray.dir);
     double b = 2 * dotProduct(vectorToCenter, ray.dir);
@@ -60,3 +61,16 @@ bool Sphere::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersect
     return (intersection.t >= tMin && intersection.t <= tMax);
     */
 }
+
+void Sphere::applyTransform(const Matrix& m) {
+    origin = Point(m * origin);
+
+    // Extraer escalas en cada eje
+    double sx = module(Vector(m * Vector(1, 0, 0)));
+    double sy = module(Vector(m * Vector(0, 1, 0)));
+    double sz = module(Vector(m * Vector(0, 0, 1)));
+
+    double scale = (sx + sy + sz) / 3.0;
+    r *= scale;
+}
+

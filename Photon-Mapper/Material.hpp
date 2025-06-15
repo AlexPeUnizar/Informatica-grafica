@@ -26,7 +26,6 @@ struct RR_Event{
 };
 
 /* FUNCTIONS */
-
 RR_Event russianRoulette(Color kdWeight, Color ksWeight, Color ktWeight);
 
 class Material{
@@ -49,7 +48,9 @@ public:
     Vector getSacterredVector(const Ray &ray, const Intersection &intersection, const RR_Event event) const;
     Color bsdf(const Ray& ray, const Intersection& intersection, const RR_Event event) const;
     Color calculateIllumination(const std::vector<const Photon*>& nearestPhotons, const Intersection& intersection) const;
+    friend RR_Event russianRoulette(Material& material);
 };
+
 
 
 #endif /* MATERIAL_HPP */

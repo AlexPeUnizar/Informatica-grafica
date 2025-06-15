@@ -14,6 +14,7 @@ public:
     virtual ~Triangle() = default;
 
     virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const override;
+    virtual void applyTransform(const Matrix& m) override;
 };
 
 #endif /* TRIANGLE_HPP */

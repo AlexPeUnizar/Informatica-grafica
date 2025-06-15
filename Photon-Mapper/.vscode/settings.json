@@ -115,5 +115,6 @@
     "list": "cpp"
   },
   "sarif-viewer.connectToGithubCodeScanning": "off",
-  "C_Cpp.errorSquiggles": "enabled"
+  "C_Cpp.errorSquiggles": "enabled",
+  "C_Cpp_Runner.cppStandard": "c++17"
 }

@@ -18,6 +18,13 @@ std::vector<const Photon*> search_nearest(const PhotonMap& map, const Point& que
     );
 }
 
+std::vector<const Photon*> search_nearest(const PhotonMap& map, const Point& query_position, unsigned long nphotons_estimate){
+    return map.nearest_neighbors(
+        query_position,
+        nphotons_estimate
+    );
+}
+
 std::ostream& operator<<(std::ostream& os, const Photon &p) {
     os << "Photon(Position: " << p.pos << ", Incident: " << p.incident << ", Flux: " << p.flux << ")";
     return os;
