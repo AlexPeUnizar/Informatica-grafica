@@ -42,6 +42,8 @@
 #include <string>
 #include <stdexcept>
 #include <mutex>
+#include <sstream>
+#include <iomanip>
 
 class progressbar {
 
@@ -74,6 +76,9 @@ class progressbar {
       inline void set_output_stream(const std::ostream& stream) {output.rdbuf(stream.rdbuf());}
       // main function
       inline void update();
+      void setProgress(int done, int total);
+      void finish();
+
 
     private:
       int progress;
@@ -88,6 +93,7 @@ class progressbar {
       std::string closing_bracket_char;
 
       std::ostream& output;
+      std::mutex mtx;
 };
 
 inline progressbar::progressbar() :
@@ -129,6 +135,7 @@ inline void progressbar::set_niter(int niter) {
 }
 
 inline void progressbar::update() {
+    std::lock_guard<std::mutex> lock(mtx);
     if (n_cycles == 0) throw std::runtime_error(
             "progressbar::update: number of cycles not set");
 
@@ -190,6 +197,45 @@ inline void progressbar::update() {
         output << std::endl;
     }
     return;
+}
+
+/**
+ * @brief Establece manualmente el progreso de la barra.
+ * 
+ * @param done Número de elementos completados.
+ * @param total Número total de elementos a completar.
+ */
+void progressbar::setProgress(int done, int total) {
+    std::lock_guard<std::mutex> lock(mtx);
+
+    // Calcula porcentaje [0..100]
+    int perc = (total > 0) ? (100 * done / total) : 100;
+    if (perc > 100) perc = 100;
+
+    // Ancho fijo de la barra
+    const int bar_width = 50;
+    int done_chars = (perc * bar_width) / 100;
+    int todo_chars = bar_width - done_chars;
+
+    // Monta la línea completa en memoria
+    std::ostringstream oss;
+    oss << '\r'                                // vuelta al inicio de línea
+        << opening_bracket_char               // “[”
+        << std::string(done_chars,
+                       done_char.empty() ? '=' : done_char[0])
+        << std::string(todo_chars,
+                       todo_char.empty() ? ' ' : todo_char[0])
+        << closing_bracket_char              // “]”
+        << ' ' << std::setw(3) << perc << '%';// “  XX%”
+
+    // Emite y fuerza el flush de una sola vez
+    output << oss.str() << std::flush;
+}
+
+
+void progressbar::finish() {
+  std::lock_guard<std::mutex> lock(mtx);
+  std::cout << '\n';
 }
 
 #endif

@@ -1,3 +1,13 @@
+/**
+ * @file PathTracing.hpp
+ * @brief Definiciones y configuraciones principales para el motor de Path Tracing.
+ *
+ * Este archivo contiene las inclusiones de cabecera necesarias y las constantes de configuración
+ * para la implementación del algoritmo de Path Tracing en gráficos por computadora.
+ * 
+ * @author Alex
+ * @date 18-6-2025
+ */
 #ifndef PATHTRACING_HPP
 #define PATHTRACING_HPP
 
@@ -26,10 +36,5 @@
 #include "Color.hpp"
 #include "ScopedTimer.hpp"
 #include "Utils.hpp"
-
-/* SETTINGS */
-const size_t MAX_RAYS_PER_PIXEL = 512;
-
-
 
 #endif /* PATHTRACING_HPP */

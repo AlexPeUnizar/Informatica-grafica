@@ -1,3 +1,13 @@
+/**
+ * @file TriangleMesh.hpp
+ * @brief Declaración de la clase TriangleMesh para representar una malla de triángulos en gráficos por computadora.
+ *
+ * Esta clase permite almacenar y manipular una colección de triángulos definidos por vértices e índices,
+ * facilitando operaciones como la intersección con rayos y la gestión de materiales asociados a la malla.
+ *
+ * @author Alex
+ * @date 18-6-2025
+ */
 #ifndef TRIANGLEMESH_HPP
 #define TRIANGLEMESH_HPP
 
@@ -6,6 +16,15 @@
 #include "Triangle.hpp"
 #include "Figure.hpp"
 
+/**
+ * @class TriangleMesh
+ * @brief Clase que representa una malla de triángulos en el espacio tridimensional.
+ *
+ * Esta clase permite definir una malla compuesta por múltiples triángulos, cada uno definido por sus vértices e índices.
+ * Proporciona métodos para verificar intersecciones con rayos y gestionar materiales asociados a la malla.
+ *
+ * @see Figure
+ */
 class TriangleMesh : public Figure {
 private:
     std::vector<std::shared_ptr<Point>> vertices;          // Lista de vértices

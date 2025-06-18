@@ -1,6 +1,27 @@
+/**
+ * @file Cylinder.cpp
+ * @brief Implementación de la clase Cylinder para la detección de intersecciones con rayos en un cilindro.
+ * 
+ * Este archivo contiene la lógica para calcular la intersección de un rayo con un cilindro, incluyendo tanto el cuerpo como las tapas del cilindro.
+ * 
+ * @author Alex
+ * @date 18-6-2025
+ */
 #include "Cylinder.hpp"
 #include <math.h>
 
+/**
+ * @brief Verifica si un rayo intersecta con el cilindro.
+ * 
+ * Este método calcula la intersección de un rayo con el cilindro, considerando tanto el cuerpo del cilindro como sus tapas.
+ * Si hay una intersección, se actualiza el objeto Intersection con los detalles de la intersección.
+ * 
+ * @param ray El rayo a verificar para la intersección.
+ * @param tMin El valor mínimo de t para considerar la intersección.
+ * @param tMax El valor máximo de t para considerar la intersección.
+ * @param intersection Objeto Intersection donde se almacenarán los detalles de la intersección si ocurre.
+ * @return true Si el rayo intersecta con el cilindro, false en caso contrario.
+ */
 bool Cylinder::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const {
     // Vector hacia la base del cilindro
     Vector delta = ray.origin - baseCenter;

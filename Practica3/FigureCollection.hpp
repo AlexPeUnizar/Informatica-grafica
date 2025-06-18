@@ -1,9 +1,29 @@
+/**
+ * @file FigureCollection.hpp
+ * @brief Declaración de la clase FigureCollection, que representa una colección de figuras geométricas.
+ * 
+ * Esta clase permite gestionar un conjunto de objetos de tipo Figure, proporcionando métodos para añadir,
+ * eliminar y recorrer las figuras almacenadas. Además, implementa la interfaz para comprobar intersecciones
+ * con un rayo, útil en aplicaciones de gráficos por computadora y trazado de rayos.
+ * 
+ * @author Alex
+ * @date 18-6-2025
+ */
 #ifndef FIGURECOLLECTION_HPP
 #define FIGURECOLLECTION_HPP
 #include "Figure.hpp"
 #include <vector>
 #include <memory>
 
+/**
+ * @class FigureCollection
+ * @brief Clase que representa una colección de figuras geométricas.
+ * 
+ * Esta clase hereda de Figure y permite almacenar múltiples objetos de tipo Figure,
+ * proporcionando métodos para añadir, eliminar y verificar intersecciones con rayos.
+ * 
+ * @see Figure
+ */
 class FigureCollection: public Figure{
 private:
     std::vector<Figure*> figureList;
