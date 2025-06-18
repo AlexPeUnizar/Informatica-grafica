@@ -48,9 +48,9 @@ int main(){
         Point(0.5, -0.7, -0.25),
         0.3,
         std::make_shared<Material>(
-            Color(0.2, 0.0, 0.2),  // kd: Sin difusa
+            Color(0, 0.0, 0),  // kd: Sin difusa
             Color(0.1, 0.1, 0.1),  // ks: Baja reflectividad
-            Color(0.7, 0.9, 0.7),  // kt: Alta transparencia
+            Color(0.9, 0.9, 0.9),  // kt: Alta transparencia
             1.5                    // ior (índice de refracción)
         )
     );
