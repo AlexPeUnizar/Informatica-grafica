@@ -22,7 +22,7 @@ public:
 };
 
 Matrix identity();
-Matrix traslation(double new_x, double new_y, double new_z);
+Matrix translation(double new_x, double new_y, double new_z);
 
 Matrix rotationX(double angle);
 Matrix rotationY(double angle);

@@ -1,5 +1,8 @@
+#define _USE_MATH_DEFINES
 #include "PathTracing.hpp"
 #include <iostream>
+#include <math.h>
+
 
 using namespace std;
 
@@ -12,6 +15,42 @@ int main(){
         z -> front(-)-back(+)
     */
     Color gris = Color::fromRGB(211,211,211);
+
+    //auto p1 = std::make_shared<Point>(-1, -1, -1);
+    //auto p2 = std::make_shared<Point>(1, -1, -1);
+    //auto p3 = std::make_shared<Point>(1, -1, 1);
+    //auto p4 = std::make_shared<Point>(-1, -1, 1);
+//
+    //std::vector<int> indices = {
+    //    0, 1, 2, // triángulo 1
+    //    0, 2, 3  // triángulo 2
+    //};
+//
+    //std::vector<std::shared_ptr<Point>> vertices = {p1, p2, p3, p4};
+//
+    //auto grayMaterial = std::make_shared<Material>(gris);
+    //
+    //TriangleMesh floorPlaneMesh(vertices, indices, grayMaterial);
+    //
+    //TriangleMesh ceilingPlaneMesh(vertices, indices, grayMaterial);
+    //ceilingPlaneMesh.applyTransform(translation(0, 2, 0));  // y = -1 → y = 1
+    //ceilingPlaneMesh.applyTransform(scale(1, -1, 1));        // Voltea normal hacia abajo
+//
+    //// Pared izquierda (x = -1)
+    //TriangleMesh leftPlaneMesh(vertices, indices, std::make_shared<Material>(Color::fromRGB(255,0,0)));
+    //leftPlaneMesh.applyTransform(rotationZ(- M_PI / 2));      // Plano vertical YZ
+    //leftPlaneMesh.applyTransform(translation(-1, 0, 0));     // x = -1
+//
+    //// Pared derecha (x = 1)
+    //TriangleMesh rightPlaneMesh(vertices, indices, std::make_shared<Material>(Color::fromRGB(0,255,0)));
+    //rightPlaneMesh.applyTransform(rotationZ(M_PI / 2));      // Plano vertical YZ
+    //rightPlaneMesh.applyTransform(translation(1, 0, 0));     // x = 1
+//
+    //// Pared de fondo (z = 1)
+    //TriangleMesh backPlaneMesh(vertices, indices, grayMaterial);
+    //backPlaneMesh.applyTransform(rotationX(M_PI / 2));       // Plano vertical XY
+    //backPlaneMesh.applyTransform(translation(0, 0, 1));      // z = 1
+
     Plane leftPlane(Vector(1, 0, 0), 1, std::make_shared<Material>(Color::fromRGB(255,0,0)));
     Plane rightPlane(Vector(-1, 0, 0), 1, std::make_shared<Material>(Color::fromRGB(0,255,0)));
     Plane floorPlane(Vector(0, 1, 0), 1, std::make_shared<Material>(gris));
@@ -50,8 +89,8 @@ int main(){
         Point(-0.5, -0.7, 0.25),
         0.3,
         std::make_shared<Material>(
-            Color(0.0, 0.6, 0.6),  // kd: Azul
-            Color(0.4, 0.4, 0.4),  // ks: Moderada reflectividad
+            Color(0.0, 0.7, 0.7),  // kd: Azul
+            Color(0.3, 0.3, 0.3),  // ks: Moderada reflectividad
             Color(0.0, 0.0, 0.0),  // kt: Sin refracción
             1.0                    // ior
         )
@@ -97,8 +136,7 @@ Cylinder glassCylinder2(
     FigureCollection figures(vector<Figure*>(
         {
             &leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, 
-            &leftSphere, &rightSphere,
-    &glassCylinder1, &glassCylinder2
+            &leftSphere, &rightSphere
         }
     ));
 
@@ -163,20 +201,20 @@ Cylinder glassCylinder2(
     Vector cameraLeftVector(-1, 0, 0);
     Vector cameraUpVector(0, 1, 0);
     Vector cameraForwardVector(0, 0, 3);
-    size_t width = 512;
-    size_t height = 512;
+    size_t width = IMAGE_WIDTH;
+    size_t height = IMAGE_WIDTH;
     Camera camera(cameraUpVector, cameraLeftVector, cameraForwardVector, cameraOrigin);
     camera.setHeight(height);
     camera.setWidth(width);
     
 
-    leftSphere.applyTransform(
-        traslation(0,0.7,0) 
-    );
-
-    leftSphere.applyTransform(
-        scale(2, 2, 2)
-    );
+    //leftSphere.applyTransform(
+    //    translation(0,0.7,0) 
+    //);
+//
+    //leftSphere.applyTransform(
+    //    scale(2, 2, 2)
+    //);
 
     //triangle.setVisible(false);
     //leftSphere.setVisible(false);
@@ -194,7 +232,13 @@ Cylinder glassCylinder2(
     image.save();
     
     cout << "Done." << endl;
-    system("\"C:/Program Files/GIMP 3/bin/gimp-3.0.exe\" out.ppm");
+    
+    try{
+        system("\"C:/Program Files/GIMP 3/bin/gimp-3.0.exe\" out.ppm");
+    }catch(const std::exception& e){
+        cerr << "Error opening GIMP: " << e.what() << endl;
+    }
+
     return 0;
 }   
 

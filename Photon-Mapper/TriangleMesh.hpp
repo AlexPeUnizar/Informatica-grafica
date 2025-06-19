@@ -23,7 +23,7 @@ public:
     virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const override;
     virtual void applyTransform(const Matrix& t) override;
 
-    void addTriangle(const Point& v0, const Point& v1, const Point& v2);
+    void addTriangle(const std::shared_ptr<Point>& v0, const std::shared_ptr<Point>& v1, const std::shared_ptr<Point>& v2);
 };
 
 #endif /* TRIANGLEMESH_HPP */

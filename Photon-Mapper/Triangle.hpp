@@ -6,10 +6,10 @@
 
 class Triangle : public Figure {
 private:
-    Point v0, v1, v2; // Los tres vértices del triángulo
+    std::shared_ptr<Point> v0, v1, v2; // Los tres vértices del triángulo
 
 public:
-    Triangle(const Point& v0, const Point& v1, const Point& v2, const std::shared_ptr<Material>& material)
+    Triangle(const std::shared_ptr<Point>& v0, const std::shared_ptr<Point>& v1, const std::shared_ptr<Point>& v2, const std::shared_ptr<Material>& material)
         : Figure(material), v0(v0), v1(v1), v2(v2) {}
     virtual ~Triangle() = default;
 

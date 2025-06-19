@@ -6,9 +6,6 @@
 #include "Light.hpp"
 #include "PhotonMap.hpp"
 
-const int MAX_BOUNCES = 6;
-const int MAX_PATHS = 1;
-
 class Intersection;
 class IntersectableFigure;
 

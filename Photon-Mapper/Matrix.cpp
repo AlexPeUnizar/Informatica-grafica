@@ -68,7 +68,7 @@ Matrix transpose(const Matrix& m){
     return result;
 }
 
-Matrix traslation(const double new_x, const double new_y, const double new_z){
+Matrix translation(const double new_x, const double new_y, const double new_z){
     Matrix m = identity();
     m[0][3] = new_x;
     m[1][3] = new_y;

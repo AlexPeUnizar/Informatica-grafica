@@ -6,7 +6,7 @@ Photon::Photon(const Point &pos, const Vector& incident, const Color& flux){
     this->flux = flux;    
 }
 
-PhotonMap newPhotonMap(const std::list<Photon>& photons){
+PhotonMap newPhotonMap(const std::vector<Photon>& photons){
     return PhotonMap(photons, PhotonAxisPosition());
 }
 

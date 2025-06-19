@@ -3,8 +3,8 @@
 
 bool Triangle::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const {
     // Calcula los bordes del triángulo
-    Vector edge1 = v1 - v0;
-    Vector edge2 = v2 - v0;
+    Vector edge1 = *v1 - *v0;
+    Vector edge2 = *v2 - *v0;
 
     // Calcula el determinante con el producto cruzado
     Vector h = crossProduct(ray.dir, edge2);
@@ -16,7 +16,7 @@ bool Triangle::isIntersectedBy(const Ray& ray, double tMin, double tMax, Interse
     double invDet = 1.0 / det;
 
     // Vector desde el vértice v0 hasta el origen del rayo
-    Vector s = ray.origin - v0;
+    Vector s = ray.origin - *v0;
 
     // Calcula la coordenada baricéntrica u
     double u = dotProduct(s, h) * invDet;
@@ -42,7 +42,7 @@ bool Triangle::isIntersectedBy(const Ray& ray, double tMin, double tMax, Interse
 }
 
 void Triangle::applyTransform(const Matrix& m) {
-    v0 = m * v0;
-    v1 = m * v1;
-    v2 = m * v2;
+    *v0 = m * *v0;
+    *v1 = m * *v1;
+    *v2 = m * *v2;
 }

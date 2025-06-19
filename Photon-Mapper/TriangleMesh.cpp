@@ -10,7 +10,7 @@ TriangleMesh::TriangleMesh(const std::vector<std::shared_ptr<Point>>& vertices,
         auto v0 = vertices[indices[i]];
         auto v1 = vertices[indices[i + 1]];
         auto v2 = vertices[indices[i + 2]];
-        triangles.push_back(std::make_shared<Triangle>(*v0, *v1, *v2, material));
+        triangles.push_back(std::make_shared<Triangle>(v0, v1, v2, material));
     }
 }
 
@@ -22,7 +22,7 @@ TriangleMesh::~TriangleMesh(){
     indices.clear();
 }
 
-void TriangleMesh::addTriangle(const Point& v0, const Point& v1, const Point& v2) {
+void TriangleMesh::addTriangle(const std::shared_ptr<Point>& v0, const std::shared_ptr<Point>& v1, const std::shared_ptr<Point>& v2) {
     triangles.push_back(std::make_shared<Triangle>(v0, v1, v2, material));
 }
 

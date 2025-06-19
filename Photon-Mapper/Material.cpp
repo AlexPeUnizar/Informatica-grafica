@@ -163,7 +163,7 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
             }
            
         } else{
-            auto nearestPhotons = search_nearest(photonMap, randomRayIntersection.intersectionPoint, 100); // 50 fotones y radio de 0.1
+            auto nearestPhotons = search_nearest(photonMap, randomRayIntersection.intersectionPoint, MAX_NEIGHBORS); // 50 fotones y radio de 0.1
             luzIndirecta = calculateIllumination(nearestPhotons, randomRayIntersection);
         }
         

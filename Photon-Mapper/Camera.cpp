@@ -8,8 +8,6 @@
 #include "ScopedTimer.hpp"
 #include <math.h>
 
-const size_t MAX_RAYS_PER_PIXEL = 64;
-
 Camera::Camera(const Vector& up,const Vector& left,const Vector& front,const Point& o){
     this->up = up;
     this->left = left;
@@ -82,18 +80,30 @@ PPM Camera::render(const FigureCollection& scene, const std::vector<std::shared_
         ScopedTimer timer("PhotonMap Generation Timer");
         photonMap = generatePhotonMap(scene, lights, MAX_PHOTONS);
     }
-    #define th 1
-    #if th
+    const int total = this->height * this->width;
+    std::atomic<int> pixels_done{0};
+    progressbar pb(this->height * this->width);
+    
     const int numThreads = std::thread::hardware_concurrency();
     ThreadPool pool(numThreads);
     std::vector<std::future<void>> futures;
-    #endif
-    
+
+    std::thread reporter([&]() {
+        while (true) {
+            int done = pixels_done.load(std::memory_order_relaxed);
+            if (done >= total) break;
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            pb.setProgress(done, total);
+        }
+        // rematar al 100% y salto de línea
+        pb.setProgress(total, total);
+        pb.finish();  
+    });
+
     for (size_t y = 0; y < this->height; y++){
         for (size_t x = 0; x < this->width; x++){
-            #if th
             futures.emplace_back(pool.enqueue([&, x, y]() {
-            #endif
+            
             Color color(0,0,0);
 
             for(size_t i = 0; i < MAX_RAYS_PER_PIXEL; i++){
@@ -110,24 +120,20 @@ PPM Camera::render(const FigureCollection& scene, const std::vector<std::shared_
             color /= double(MAX_RAYS_PER_PIXEL);
             //std::cout<<"Final: "<<color.r<<" "<<color.g<<" "<<color.b<<" "<<std::endl;
             image[y][x] = std::make_shared<PPM::Pixel>(color);
-            #if !th
-            //pb.update();
-            #endif
-            #if th                    
+            pixels_done.fetch_add(1, std::memory_order_relaxed);
+    
             }));
-            #endif
         }
     }
-    #if th
+    reporter.join();
     for (auto &f : futures) {
         f.get();
     }
-    #endif
     return image;
 }
 
 PhotonMap Camera::generatePhotonMap(const FigureCollection& scene, const std::vector<std::shared_ptr<Light>>& lights, size_t totalPhotons){
-    std::list<Photon> photons;
+    std::vector<Photon> photons;
     double totalPower = 0;
     for (const auto& light : lights) {
         totalPower += light->intensity();
