@@ -17,7 +17,7 @@
 const size_t MAX_BOUNCES = 6;
 const size_t MAX_PATHS = 1;
 
-const size_t MAX_RAYS_PER_PIXEL = 512;
+const size_t MAX_RAYS_PER_PIXEL = 64;
 const size_t IMAGE_WIDTH = 1024;
 const size_t IMAGE_HEIGHT = 1024;
 
