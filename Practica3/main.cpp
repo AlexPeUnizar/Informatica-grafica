@@ -17,7 +17,11 @@
 
 using namespace std;
 
-int main(){
+void parseArgs(int argc, char* argv[]);
+
+int main(int argc, char* argv[]){
+    parseArgs(argc, argv);
+
     srand(time(NULL));
     /* FIGURES */
     /*
@@ -43,7 +47,6 @@ int main(){
         )
     );
 
-    
     Sphere rightSphere(
         Point(0.5, -0.7, -0.25),
         0.3,
@@ -51,6 +54,17 @@ int main(){
             Color(0, 0.0, 0),  // kd: Sin difusa
             Color(0.1, 0.1, 0.1),  // ks: Baja reflectividad
             Color(0.9, 0.9, 0.9),  // kt: Alta transparencia
+            1.5                    // ior (índice de refracción)
+        )
+    );
+
+    Sphere middleSphere(
+        Point(0,0.4,0),
+        0.2,
+        std::make_shared<Material>(
+            Color(0.15, 0.0, 0.15),  // kd: Sin difusa
+            Color(0.15, 0.15, 0.15),  // ks: Baja reflectividad
+            Color(0.7, 0.85, 0.7),  // kt: Alta transparencia
             1.5                    // ior (índice de refracción)
         )
     );
@@ -66,7 +80,7 @@ int main(){
 
 
     /* LIGHTS */
-    Light light(Point(0, 0.5, 0), Color(1, 1 ,1));
+    Light light(Point(0, 0.7, 0), Color(1,1,1));
     //Light light2(Point(0, 05, 0), Color(1,0,1));
     vector<shared_ptr<Light>> lights = vector<shared_ptr<Light>>({
         make_shared<Light>(light)
@@ -77,8 +91,8 @@ int main(){
     Vector cameraLeftVector(-1, 0, 0);
     Vector cameraUpVector(0, 1, 0);
     Vector cameraForwardVector(0, 0, 3);
-    size_t width = IMAGE_WIDTH;
-    size_t height = IMAGE_WIDTH;
+    size_t width = settings.IMAGE_WIDTH;
+    size_t height = settings.IMAGE_HEIGHT;
     Camera camera(cameraUpVector, cameraLeftVector, cameraForwardVector, cameraOrigin);
     camera.setHeight(height);
     camera.setWidth(width);
@@ -86,18 +100,57 @@ int main(){
     PPM image;
     {
         ScopedTimer timer("Render Timer");
+        std::cout << "Rendering..." << std::endl;
         image = camera.render(figures, lights);
     }
 
+    std::cout << "Tone Mapping...\n" << std::endl;
     gammaAndClamping(image, 2.2, 1);
-    image.save();
+    std::cout << "Saving image...\n" << std::endl;
+    image.save(settings.OUTPUT_FILE);
     
-    cout << "Done." << endl;
-    try{
-        system("\"C:/Program Files/GIMP 3/bin/gimp-3.0.exe\" out.ppm");
-    }catch(const std::exception& e){
-        cerr << "Error opening GIMP: " << e.what() << endl;
+    std::cout << "Done.\n" << endl;
+
+    if(settings.OPEN_IMAGE_VIEWER_AFTER_RENDER){
+        std::cout << "Opening image...\n" << std::endl;
+        try{
+            std::string cmd = "start " + settings.IMAGE_VIEWER_PATH + " " +  settings.OUTPUT_FILE;
+            system(cmd.c_str());
+            
+        }catch(const std::exception& e){
+            cerr << "Error opening Image: " << e.what() << endl;
+        }
     }
     return 0;
 }   
 
+/**
+ * @brief Parsea los argumentos de la línea de comandos y actualiza las configuraciones globales.
+ * 
+ * Esta función utiliza `parse_command_line` para procesar los argumentos proporcionados
+ * en la línea de comandos y ajustar las configuraciones globales del programa.
+ * En caso de error, imprime un mensaje y muestra la ayuda.
+ * 
+ * @param argc Número de argumentos.
+ * @param argv Array de argumentos.
+ */
+void parseArgs(int argc, char* argv[]){
+    try {
+        parse_command_line(argc, argv);
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << "\n\n";
+        print_help(argv[0]);
+        exit(1);
+    }
+    std::cout << "================== Configuration ==================\n";
+    std::cout << "MAX_BOUNCES = " << settings.MAX_BOUNCES << "\n"
+              << "MAX_PATHS   = " << settings.MAX_PATHS << "\n"
+              << "RPP         = " << settings.MAX_RAYS_PER_PIXEL << "\n"
+              << "WIDTH       = " << settings.IMAGE_WIDTH << "\n"
+              << "HEIGHT      = " << settings.IMAGE_HEIGHT << "\n"
+              << "OUTPUT_FILE = " << settings.OUTPUT_FILE << "\n"
+              << "VIEWER_PATH = " << settings.IMAGE_VIEWER_PATH << "\n"
+              << "OPEN_VIEWER = " << (settings.OPEN_IMAGE_VIEWER_AFTER_RENDER ? "true" : "false") << "\n";
+    std::cout << "===================================================\n" << std::endl;
+
+}

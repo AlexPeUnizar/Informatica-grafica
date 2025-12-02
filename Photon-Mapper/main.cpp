@@ -55,7 +55,12 @@ int main(){
     Plane rightPlane(Vector(-1, 0, 0), 1, std::make_shared<Material>(Color::fromRGB(0,255,0)));
     Plane floorPlane(Vector(0, 1, 0), 1, std::make_shared<Material>(gris));
     Plane ceilingPlane(Vector(0, -1, 0), 1, std::make_shared<Material>(gris));
-    Plane backPlane(Vector(0, 0, -1), 1, std::make_shared<Material>(gris));
+    Plane backPlane(Vector(0, 0, -1), 1, std::make_shared<Material>(
+        Color(0.0, 0, 0),  // kd: Azul
+        Color(1, 1, 1),  // ks: Moderada reflectividad
+        Color(0.0, 0.0, 0.0),  // kt: Sin refracción
+        1.0                    // ior
+    ));
             
     /*
     Sphere leftSphere(Point(-0.5, -0.7, 0.25), 0.3, std::make_shared<Materials::Lambertian>(Color::fromRGB(255,0,255)));
@@ -108,29 +113,6 @@ int main(){
         )
     );
 
-    auto glassMaterial = std::make_shared<Material>(
-        Color(0, 0.5, 0.5),    // kd: sin difusa
-        Color(1, 0.5, 0.5), // ks: reflejo débil
-        Color(0, 0, 0), // kt: casi totalmente transparente
-        1.5                     // ior: como el vidrio real
-    );
-
-    Cylinder glassCylinder1(
-    Point(-0.5, -0.85, 0.0),          // base más cerca del espectador
-    Vector(0, 0, 1),                  // eje hacia el fondo
-    0.3,                              // radio
-    0.6,                              // longitud (en z)
-    glassMaterial
-);
-
-// Cilindro diagonal inclinado
-Cylinder glassCylinder2(
-    Point(0.4, -1.0, 0.2),            // base sobre el suelo
-    normalize(Vector(1, 1, -1)),      // eje diagonal (hacia arriba y atrás)
-    0.3,
-    0.5,
-    glassMaterial
-);
 
     // Integración en el FigureCollection
     FigureCollection figures(vector<Figure*>(
@@ -207,20 +189,6 @@ Cylinder glassCylinder2(
     camera.setHeight(height);
     camera.setWidth(width);
     
-
-    //leftSphere.applyTransform(
-    //    translation(0,0.7,0) 
-    //);
-//
-    //leftSphere.applyTransform(
-    //    scale(2, 2, 2)
-    //);
-
-    //triangle.setVisible(false);
-    //leftSphere.setVisible(false);
-    //rightSphere.setVisible(false);
-    glassCylinder1.setVisible(false);
-    glassCylinder2.setVisible(false);
     PPM image;
     
     {
@@ -234,7 +202,7 @@ Cylinder glassCylinder2(
     cout << "Done." << endl;
     
     try{
-        system("\"C:/Program Files/GIMP 3/bin/gimp-3.0.exe\" out.ppm");
+        system("\"C:/Program Files/GIMP 2/bin/gimp-2.10.exe\" out.ppm");
     }catch(const std::exception& e){
         cerr << "Error opening GIMP: " << e.what() << endl;
     }

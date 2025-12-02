@@ -7,6 +7,10 @@
 #include "Utils.hpp"
 #include <cstdlib>
 #include <time.h>
+#include <iostream>
+#include <stdexcept>
+
+Settings settings;
 
 /**
  * @brief Genera un número aleatorio de tipo double en un rango específico.
@@ -33,3 +37,105 @@ double randomDouble(){
     return randomDouble(0.0, 1.0);
 }
 
+
+/**
+ * @brief Muestra el mensaje de uso del programa con las opciones disponibles.
+ * 
+ * @param progname Nombre del programa (generalmente argv[0]).
+ * 
+ * Este método imprime en la salida estándar un mensaje detallado sobre cómo usar
+ * el programa, incluyendo las opciones disponibles y sus descripciones. Las opciones
+ * incluyen configuraciones como el número máximo de rebotes, paths, rayos por píxel,
+ * dimensiones de la imagen, nombre del archivo de salida, ruta al visor de imágenes,
+ * y la posibilidad de abrir el visor automáticamente después de renderizar.
+ */
+static void print_usage(const char* progname) {
+    std::cout << "Uso: " << progname << " [opciones]\n\n"
+              << "Opciones:\n"
+              << "  --help                       Muestra esta ayuda\n"
+              << "  --max-bounces N              Numero maximo de rebotes (size_t)\n"
+              << "  --max-paths N                Numero maximo de paths (size_t)\n"
+              << "  --max-rays-per-pixel N       Rays por pixel (size_t)\n"
+              << "  --width N                    Ancho de imagen (size_t)\n"
+              << "  --height N                   Alto de imagen (size_t)\n"
+              << "  --output FILE                Nombre de fichero de salida\n"
+              << "  --viewer-path PATH           Ruta al programa visor de imagen\n"
+              << "  --open-viewer                Abrir visor despues de renderizar\n";
+}
+
+/**
+ * @brief Muestra el mensaje de ayuda del programa.
+ * 
+ * @param progname Nombre del programa (generalmente argv[0]).
+ * 
+ * Este método llama a print_usage para mostrar el mensaje de uso del programa.
+ */
+void print_help(const char* progname) {
+    print_usage(progname);
+}
+
+/**
+ * @brief Parsea los argumentos de línea de comandos para configurar las opciones del programa.
+ * 
+ * @param argc Número de argumentos.
+ * @param argv Array de cadenas que representan los argumentos.
+ * 
+ * Esta función procesa los argumentos proporcionados en la línea de comandos
+ * y ajusta las configuraciones globales del programa en consecuencia. Soporta
+ * varias opciones como el número máximo de rebotes, paths, rayos por píxel,
+ * dimensiones de la imagen, nombre del archivo de salida, ruta al visor de imágenes,
+ * y la opción de abrir el visor automáticamente después de renderizar.
+ * Si se encuentra una opción desconocida o falta un valor requerido, se lanza
+ * una excepción std::runtime_error.
+ */
+void parse_command_line(int argc, char* argv[]) {
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+
+        auto need_value = [&](const char* opt_name) {
+            if (i + 1 >= argc) {
+                throw std::runtime_error(
+                    std::string("Falta valor para ") + opt_name);
+            }
+        };
+
+        if (arg == "--help") {
+            print_usage(argv[0]);
+            std::exit(0);
+        }
+        else if (arg == "--max-bounces") {
+            need_value("--max-bounces");
+            settings.MAX_BOUNCES = static_cast<std::size_t>(std::stoul(argv[++i]));
+        }
+        else if (arg == "--max-paths") {
+            need_value("--max-paths");
+            settings.MAX_PATHS = static_cast<std::size_t>(std::stoul(argv[++i]));
+        }
+        else if (arg == "--max-rays-per-pixel") {
+            need_value("--max-rays-per-pixel");
+            settings.MAX_RAYS_PER_PIXEL = static_cast<std::size_t>(std::stoul(argv[++i]));
+        }
+        else if (arg == "--width") {
+            need_value("--width");
+            settings.IMAGE_WIDTH = static_cast<std::size_t>(std::stoul(argv[++i]));
+        }
+        else if (arg == "--height") {
+            need_value("--height");
+            settings.IMAGE_HEIGHT = static_cast<std::size_t>(std::stoul(argv[++i]));
+        }
+        else if (arg == "--output") {
+            need_value("--output");
+            settings.OUTPUT_FILE = argv[++i];
+        }
+        else if (arg == "--viewer-path") {
+            need_value("--viewer-path");
+            settings.IMAGE_VIEWER_PATH = argv[++i];
+        }
+        else if (arg == "--open-viewer") {
+            settings.OPEN_IMAGE_VIEWER_AFTER_RENDER = true;
+        }
+        else {
+            throw std::runtime_error("Opcion desconocida: " + arg);
+        }
+    }
+}

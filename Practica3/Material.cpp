@@ -203,12 +203,12 @@ Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, con
  * @return Color Resultado del color calculado en el punto de intersección.
  */
 Color Material::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth) const{
-    if (depth >= MAX_BOUNCES) return Color(0, 0, 0);
+    if (depth >= settings.MAX_BOUNCES) return Color(0, 0, 0);
 
     Color final(0,0,0);
     Color luzDirecta = this->nextEvent(lights, intersection, scene);
     
-    for(int path = 0; path < MAX_PATHS; path++){
+    for(int path = 0; path < settings.MAX_PATHS; path++){
         Color luzIndirecta(0,0,0);
 
         RR_Event event = russianRoulette(kd, ks, kt);
@@ -221,14 +221,14 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
         Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
         Intersection randomRayIntersection;
 
-        if(depth < MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
+        if(depth < settings.MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
             luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, depth+1);            
         }
         
         final += luzDirecta + (luzIndirecta * bsdf(randomRay, intersection, event) ) ;
         
     }
-    final /= double(MAX_PATHS);
+    final /= double(settings.MAX_PATHS);
     return final;
 }
 

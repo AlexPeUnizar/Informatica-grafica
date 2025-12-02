@@ -12,17 +12,29 @@
 #define UTILS_HPP
 #include <iostream>
 #include <cstdint>
+
 /* SETTINGS */
+struct Settings{
+    size_t      MAX_BOUNCES                     = 6;
+    size_t      MAX_PATHS                       = 1;
 
-const size_t MAX_BOUNCES = 6;
-const size_t MAX_PATHS = 1;
+    size_t      MAX_RAYS_PER_PIXEL              = 64;
 
-const size_t MAX_RAYS_PER_PIXEL = 64;
-const size_t IMAGE_WIDTH = 1024;
-const size_t IMAGE_HEIGHT = 1024;
+    size_t      IMAGE_WIDTH                     = 1024;
+    size_t      IMAGE_HEIGHT                    = 1024;
+    std::string OUTPUT_FILE                     = "out.ppm";
+    
+    std::string IMAGE_VIEWER_PATH               = "\"C:/Program Files/GIMP 2/bin/gimp-2.10.exe\"";
+    bool        OPEN_IMAGE_VIEWER_AFTER_RENDER  = false;
+};
+
+extern Settings settings;
 
 /* FUNCTIONS */
 double randomDouble(double min, double max);
 double randomDouble();
+
+void parse_command_line(int argc, char* argv[]);
+void print_help(const char* progname);
 
 #endif /* UTILS_HPP */
