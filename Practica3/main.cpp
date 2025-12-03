@@ -145,12 +145,13 @@ void parseArgs(int argc, char* argv[]){
     std::cout << "================== Configuration ==================\n";
     std::cout << "MAX_BOUNCES = " << settings.MAX_BOUNCES << "\n"
               << "MAX_PATHS   = " << settings.MAX_PATHS << "\n"
-              << "RPP         = " << settings.MAX_RAYS_PER_PIXEL << "\n"
+              << "RAYS_PER_PX = " << settings.MAX_RAYS_PER_PIXEL << "\n"
               << "WIDTH       = " << settings.IMAGE_WIDTH << "\n"
               << "HEIGHT      = " << settings.IMAGE_HEIGHT << "\n"
               << "OUTPUT_FILE = " << settings.OUTPUT_FILE << "\n"
               << "VIEWER_PATH = " << settings.IMAGE_VIEWER_PATH << "\n"
-              << "OPEN_VIEWER = " << (settings.OPEN_IMAGE_VIEWER_AFTER_RENDER ? "true" : "false") << "\n";
+              << "OPEN_VIEWER = " << (settings.OPEN_IMAGE_VIEWER_AFTER_RENDER ? "true" : "false") << "\n"
+              << "SCENE       = " << settings.SCENE_NUMBER << "\n";
     std::cout << "===================================================\n" << std::endl;
 
 }

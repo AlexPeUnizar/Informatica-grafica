@@ -60,7 +60,13 @@ static void print_usage(const char* progname) {
               << "  --height N                   Alto de imagen (size_t)\n"
               << "  --output FILE                Nombre de fichero de salida\n"
               << "  --viewer-path PATH           Ruta al programa visor de imagen\n"
-              << "  --open-viewer                Abrir visor despues de renderizar\n";
+              << "  --open-viewer                Abrir visor despues de renderizar\n"
+              << "  --scene N                    Seleccionar escena [1,2,3,4]\n"
+              << "      Las escenas son:\n"
+              << "          -1: ...\n"
+              << "          -2: ...\n"
+              << "          -3: ...\n"
+              << "          -4: ...\n";
 }
 
 /**
@@ -133,6 +139,14 @@ void parse_command_line(int argc, char* argv[]) {
         }
         else if (arg == "--open-viewer") {
             settings.OPEN_IMAGE_VIEWER_AFTER_RENDER = true;
+        }
+        else if (arg == "--scene") {
+            need_value("--scene");
+            int scene_number = std::stoi(argv[++i]);
+            if (scene_number < 1 || scene_number > 4) {
+                throw std::runtime_error("Numero de escena invalido: " + std::to_string(scene_number));
+            }
+            settings.SCENE_NUMBER = scene_number;
         }
         else {
             throw std::runtime_error("Opcion desconocida: " + arg);
