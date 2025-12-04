@@ -1,9 +1,9 @@
 /**
  * @file Figure.cpp
- * @brief Implementación de la clase Figure para la gestión de figuras gráficas y sus materiales.
+ * @brief Implementacion de la clase Figure para la gestion de figuras gráficas y sus materiales.
  * 
- * Este archivo contiene las definiciones de los métodos de la clase Figure, 
- * permitiendo la manipulación de materiales, colores y visibilidad de las figuras.
+ * Este archivo contiene las definiciones de los metodos de la clase Figure, 
+ * permitiendo la manipulacion de materiales, colores y visibilidad de las figuras.
  * 
  * @author Alex
  * @date 18-6-2025

@@ -1,8 +1,8 @@
 /**
  * @file Ray.hpp
- * @brief Declaración de la clase Ray para representar un rayo en el espacio 3D.
+ * @brief Declaracion de la clase Ray para representar un rayo en el espacio 3D.
  * 
- * Este archivo contiene la definición de la clase Ray, que modela un rayo a partir de un punto de origen y una dirección.
+ * Este archivo contiene la definicion de la clase Ray, que modela un rayo a partir de un punto de origen y una direccion.
  * Utilizado en aplicaciones de informática gráfica y trazado de rayos.
  * 
  * @author Alex
@@ -17,8 +17,8 @@
  * @class Ray
  * @brief Clase que representa un rayo en el espacio tridimensional.
  * 
- * Esta clase define un rayo mediante un punto de origen y una dirección, permitiendo calcular puntos a lo largo del rayo
- * y sobrecargar el operador de inserción para facilitar la impresión.
+ * Esta clase define un rayo mediante un punto de origen y una direccion, permitiendo calcular puntos a lo largo del rayo
+ * y sobrecargar el operador de insercion para facilitar la impresion.
  */
 class Ray{
 private:

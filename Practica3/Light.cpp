@@ -1,9 +1,9 @@
 /**
  * @file Light.cpp
- * @brief Implementación de la clase Light para la gestión de fuentes de luz en la escena.
+ * @brief Implementacion de la clase Light para la gestion de fuentes de luz en la escena.
  * 
- * Este archivo contiene la definición de los métodos de la clase Light, que representa una fuente de luz
- * con una posición y una potencia de color en el espacio 3D.
+ * Este archivo contiene la definicion de los metodos de la clase Light, que representa una fuente de luz
+ * con una posicion y una potencia de color en el espacio 3D.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -46,7 +46,7 @@ Light::~Light(){
 /**
  * @brief Obtiene el centro de la fuente de luz.
  * 
- * Este método devuelve el punto que representa el centro de la luz.
+ * Este metodo devuelve el punto que representa el centro de la luz.
  * 
  * @return Punto que representa el centro de la luz.
  */
@@ -57,7 +57,7 @@ Point Light::getCenter() const{
 /**
  * @brief Obtiene la potencia de la fuente de luz.
  * 
- * Este método devuelve el color que representa la potencia de la luz.
+ * Este metodo devuelve el color que representa la potencia de la luz.
  * 
  * @return Color que representa la potencia de la luz.
  */

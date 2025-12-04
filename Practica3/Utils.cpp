@@ -1,6 +1,6 @@
 /**
  * @file Utils.cpp
- * @brief Implementación de funciones utilitarias para generación de números aleatorios.
+ * @brief Implementacion de funciones utilitarias para generacion de numeros aleatorios.
  * @author Alex
  * @date 18-6-2025
  */
@@ -13,25 +13,25 @@
 Settings settings;
 
 /**
- * @brief Genera un número aleatorio de tipo double en un rango específico.
+ * @brief Genera un numero aleatorio de tipo double en un rango especifico.
  * 
- * Esta función genera un número aleatorio entre los valores min y max.
+ * Esta funcion genera un numero aleatorio entre los valores min y max.
  * 
- * @param min Valor mínimo del rango.
- * @param max Valor máximo del rango.
- * @return double Número aleatorio generado en el rango [min, max].
+ * @param min Valor minimo del rango.
+ * @param max Valor maximo del rango.
+ * @return double Numero aleatorio generado en el rango [min, max].
  */
 double randomDouble(double min, double max){
     return min + static_cast<double>(rand()) / (static_cast<double>(RAND_MAX / (max - min)));
 }
 
 /**
- * @brief Genera un número aleatorio de tipo double en el rango [0.0, 1.0].
+ * @brief Genera un numero aleatorio de tipo double en el rango [0.0, 1.0].
  * 
- * Esta función es una sobrecarga de la función randomDouble sin parámetros,
- * que devuelve un número aleatorio entre 0.0 y 1.0.
+ * Esta funcion es una sobrecarga de la funcion randomDouble sin parametros,
+ * que devuelve un numero aleatorio entre 0.0 y 1.0.
  * 
- * @return double Número aleatorio generado en el rango [0.0, 1.0].
+ * @return double Numero aleatorio generado en el rango [0.0, 1.0].
  */
 double randomDouble(){
     return randomDouble(0.0, 1.0);
@@ -43,11 +43,11 @@ double randomDouble(){
  * 
  * @param progname Nombre del programa (generalmente argv[0]).
  * 
- * Este método imprime en la salida estándar un mensaje detallado sobre cómo usar
+ * Este metodo imprime en la salida estandar un mensaje detallado sobre como usar
  * el programa, incluyendo las opciones disponibles y sus descripciones. Las opciones
- * incluyen configuraciones como el número máximo de rebotes, paths, rayos por píxel,
- * dimensiones de la imagen, nombre del archivo de salida, ruta al visor de imágenes,
- * y la posibilidad de abrir el visor automáticamente después de renderizar.
+ * incluyen configuraciones como el numero maximo de rebotes, paths, rayos por pixel,
+ * dimensiones de la imagen, nombre del archivo de salida, ruta al visor de imagenes,
+ * y la posibilidad de abrir el visor automaticamente despues de renderizar.
  */
 static void print_usage(const char* progname) {
     std::cout << "Uso: " << progname << " [opciones]\n\n"
@@ -74,25 +74,25 @@ static void print_usage(const char* progname) {
  * 
  * @param progname Nombre del programa (generalmente argv[0]).
  * 
- * Este método llama a print_usage para mostrar el mensaje de uso del programa.
+ * Este metodo llama a print_usage para mostrar el mensaje de uso del programa.
  */
 void print_help(const char* progname) {
     print_usage(progname);
 }
 
 /**
- * @brief Parsea los argumentos de línea de comandos para configurar las opciones del programa.
+ * @brief Parsea los argumentos de linea de comandos para configurar las opciones del programa.
  * 
- * @param argc Número de argumentos.
+ * @param argc Numero de argumentos.
  * @param argv Array de cadenas que representan los argumentos.
  * 
- * Esta función procesa los argumentos proporcionados en la línea de comandos
+ * Esta funcion procesa los argumentos proporcionados en la linea de comandos
  * y ajusta las configuraciones globales del programa en consecuencia. Soporta
- * varias opciones como el número máximo de rebotes, paths, rayos por píxel,
- * dimensiones de la imagen, nombre del archivo de salida, ruta al visor de imágenes,
- * y la opción de abrir el visor automáticamente después de renderizar.
- * Si se encuentra una opción desconocida o falta un valor requerido, se lanza
- * una excepción std::runtime_error.
+ * varias opciones como el numero maximo de rebotes, paths, rayos por pixel,
+ * dimensiones de la imagen, nombre del archivo de salida, ruta al visor de imagenes,
+ * y la opcion de abrir el visor automaticamente despues de renderizar.
+ * Si se encuentra una opcion desconocida o falta un valor requerido, se lanza
+ * una excepcion std::runtime_error.
  */
 void parse_command_line(int argc, char* argv[]) {
     for (int i = 1; i < argc; ++i) {

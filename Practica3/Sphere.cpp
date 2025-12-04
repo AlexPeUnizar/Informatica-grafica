@@ -1,8 +1,8 @@
 /**
  * @file Sphere.cpp
- * @brief Implementación de la clase Sphere para la representación y manejo de esferas en un sistema de gráficos por computadora.
+ * @brief Implementacion de la clase Sphere para la representacion y manejo de esferas en un sistema de gráficos por computadora.
  * 
- * Este archivo contiene la definición de los métodos de la clase Sphere, que permite crear esferas, gestionar su intersección con rayos y almacenar información relevante para el renderizado.
+ * Este archivo contiene la definicion de los metodos de la clase Sphere, que permite crear esferas, gestionar su interseccion con rayos y almacenar informacion relevante para el renderizado.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -33,16 +33,16 @@ Sphere::~Sphere(){
 }
 
 /**
- * @brief Método que verifica si un rayo intersecta con la esfera.
+ * @brief Metodo que verifica si un rayo intersecta con la esfera.
  * 
- * Este método calcula la intersección entre un rayo y la esfera, determinando si el rayo intersecta dentro de los límites especificados (tMin y tMax).
- * Si hay una intersección, se llena la estructura de Intersection con los detalles de la intersección.
+ * Este metodo calcula la interseccion entre un rayo y la esfera, determinando si el rayo intersecta dentro de los limites especificados (tMin y tMax).
+ * Si hay una interseccion, se llena la estructura de Intersection con los detalles de la interseccion.
  * 
- * @param ray Rayo que se está verificando para la intersección.
- * @param tMin Valor mínimo de t para considerar la intersección.
- * @param tMax Valor máximo de t para considerar la intersección.
- * @param intersection Estructura donde se almacenarán los detalles de la intersección si ocurre.
- * @return bool Verdadero si hay una intersección válida, falso en caso contrario.
+ * @param ray Rayo que se está verificando para la interseccion.
+ * @param tMin Valor minimo de t para considerar la interseccion.
+ * @param tMax Valor máximo de t para considerar la interseccion.
+ * @param intersection Estructura donde se almacenarán los detalles de la interseccion si ocurre.
+ * @return bool Verdadero si hay una interseccion válida, falso en caso contrario.
  */
 bool Sphere::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const{
     if(!this->visible){

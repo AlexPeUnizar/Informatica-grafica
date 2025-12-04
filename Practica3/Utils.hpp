@@ -1,8 +1,8 @@
 /**
  * @file Utils.hpp
- * @brief Declaraciones de utilidades para generación de números aleatorios.
+ * @brief Declaraciones de utilidades para generacion de numeros aleatorios.
  * 
- * Este archivo contiene las declaraciones de funciones auxiliares para la generación de números aleatorios
+ * Este archivo contiene las declaraciones de funciones auxiliares para la generacion de numeros aleatorios
  * en un rango determinado o en el rango por defecto.
  * 
  * @author Alex

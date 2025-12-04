@@ -1,7 +1,7 @@
 
 /**
  * @file Color.hpp
- * @brief Definición de la clase Color, que representa un color RGB y hereda de Coordinate.
+ * @brief Definicion de la clase Color, que representa un color RGB y hereda de Coordinate.
  * @author Alex
  * @date 18-6-2025
  *
@@ -13,7 +13,7 @@
 
 /**
  * @class Color
- * @brief Representa un color RGB como una especialización de la clase Coordinate.
+ * @brief Representa un color RGB como una especializacion de la clase Coordinate.
  *
  * La clase Color utiliza referencias a los miembros x, y, z de Coordinate para representar
  * los componentes rojo (r), verde (g) y azul (b) de un color, respectivamente.

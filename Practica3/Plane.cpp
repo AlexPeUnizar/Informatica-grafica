@@ -1,9 +1,9 @@
 /**
  * @file Plane.cpp
- * @brief Implementación de la clase Plane para representar planos en el espacio 3D.
+ * @brief Implementacion de la clase Plane para representar planos en el espacio 3D.
  * 
- * Este archivo contiene la definición de los métodos de la clase Plane, que permite
- * modelar planos y calcular intersecciones con rayos, útil en aplicaciones de gráficos
+ * Este archivo contiene la definicion de los metodos de la clase Plane, que permite
+ * modelar planos y calcular intersecciones con rayos, util en aplicaciones de gráficos
  * por computadora y trazado de rayos.
  * 
  * @author Alex
@@ -45,17 +45,17 @@ Plane::Plane(const Vector& normal){
 */
 
 /**
- * @brief Método que verifica si un rayo intersecta con el plano.
+ * @brief Metodo que verifica si un rayo intersecta con el plano.
  * 
- * Este método calcula la intersección entre un rayo y el plano, determinando si el rayo
- * intersecta dentro de los límites especificados (tMin y tMax). Si hay una intersección,
- * se llena la estructura de Intersection con los detalles de la intersección.
+ * Este metodo calcula la interseccion entre un rayo y el plano, determinando si el rayo
+ * intersecta dentro de los limites especificados (tMin y tMax). Si hay una interseccion,
+ * se llena la estructura de Intersection con los detalles de la interseccion.
  * 
- * @param ray Rayo que se está verificando para la intersección.
- * @param tMin Valor mínimo de t para considerar la intersección.
- * @param tMax Valor máximo de t para considerar la intersección.
- * @param intersection Estructura donde se almacenarán los detalles de la intersección si ocurre.
- * @return bool Verdadero si hay una intersección válida, falso en caso contrario.
+ * @param ray Rayo que se está verificando para la interseccion.
+ * @param tMin Valor minimo de t para considerar la interseccion.
+ * @param tMax Valor máximo de t para considerar la interseccion.
+ * @param intersection Estructura donde se almacenarán los detalles de la interseccion si ocurre.
+ * @return bool Verdadero si hay una interseccion válida, falso en caso contrario.
  */
 bool Plane::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const{
     if(!this->visible){

@@ -1,9 +1,9 @@
 /**
  * @file Point.hpp
- * @brief Declaración de la clase Point para representar puntos en el espacio 3D.
+ * @brief Declaracion de la clase Point para representar puntos en el espacio 3D.
  * 
  * Este archivo define la clase Point, que hereda de Coordinate y proporciona
- * operaciones y constructores específicos para puntos en el contexto de gráficos
+ * operaciones y constructores especificos para puntos en el contexto de graficos
  * por computadora.
  * 
  * @author Alex
@@ -20,8 +20,8 @@
  * @class Point
  * @brief Clase que representa un punto en el espacio tridimensional.
  * 
- * Esta clase hereda de Coordinate y define un punto con coordenadas (x, y, z) y una componente homogénea w.
- * Proporciona operaciones para la resta de puntos, suma con escalares, impresión y multiplicación con vectores.
+ * Esta clase hereda de Coordinate y define un punto con coordenadas (x, y, z) y una componente homogenea w.
+ * Proporciona operaciones para la resta de puntos, suma con escalares, impresion y multiplicacion con vectores.
  * 
  * @see Coordinate
  */

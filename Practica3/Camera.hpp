@@ -1,11 +1,11 @@
 
 /**
  * @file Camera.hpp
- * @brief Definición de la clase Camera para la representación y renderizado de escenas 3D.
+ * @brief Definicion de la clase Camera para la representacion y renderizado de escenas 3D.
  *
- * Este archivo contiene la declaración de la clase Camera, que representa una cámara en un espacio 3D.
- * La clase permite definir la orientación, posición y resolución de la cámara, así como generar rayos
- * a través de los píxeles de la imagen y renderizar una escena utilizando técnicas de ray tracing.
+ * Este archivo contiene la declaracion de la clase Camera, que representa una cámara en un espacio 3D.
+ * La clase permite definir la orientacion, posicion y resolucion de la cámara, asi como generar rayos
+ * a traves de los pixeles de la imagen y renderizar una escena utilizando tecnicas de ray tracing.
  *
  * @autor: Alex
  * @date 18-6-2025
@@ -20,11 +20,11 @@
 #include "Light.hpp"
 
 /**
- * @brief Clase Camera para la representación de una cámara en un espacio 3D.
+ * @brief Clase Camera para la representacion de una cámara en un espacio 3D.
  *
- * La clase Camera permite definir la orientación (vectores up, left, front), la posición (punto o),
- * y la resolución (height, width) de la cámara. Proporciona métodos para obtener rayos a través de
- * los píxeles de la imagen y para renderizar una escena 3D utilizando ray tracing.
+ * La clase Camera permite definir la orientacion (vectores up, left, front), la posicion (punto o),
+ * y la resolucion (height, width) de la cámara. Proporciona metodos para obtener rayos a traves de
+ * los pixeles de la imagen y para renderizar una escena 3D utilizando ray tracing.
  */
 class Camera{
 private:

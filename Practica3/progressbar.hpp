@@ -202,8 +202,8 @@ inline void progressbar::update() {
 /**
  * @brief Establece manualmente el progreso de la barra.
  * 
- * @param done Número de elementos completados.
- * @param total Número total de elementos a completar.
+ * @param done Numero de elementos completados.
+ * @param total Numero total de elementos a completar.
  */
 void progressbar::setProgress(int done, int total) {
     std::lock_guard<std::mutex> lock(mtx);
@@ -217,9 +217,9 @@ void progressbar::setProgress(int done, int total) {
     int done_chars = (perc * bar_width) / 100;
     int todo_chars = bar_width - done_chars;
 
-    // Monta la línea completa en memoria
+    // Monta la linea completa en memoria
     std::ostringstream oss;
-    oss << '\r'                                // vuelta al inicio de línea
+    oss << '\r'                                // vuelta al inicio de linea
         << opening_bracket_char               // “[”
         << std::string(done_chars,
                        done_char.empty() ? '=' : done_char[0])

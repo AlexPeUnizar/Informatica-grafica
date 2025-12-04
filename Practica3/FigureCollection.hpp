@@ -1,10 +1,10 @@
 /**
  * @file FigureCollection.hpp
- * @brief Declaración de la clase FigureCollection, que representa una colección de figuras geométricas.
+ * @brief Declaracion de la clase FigureCollection, que representa una coleccion de figuras geometricas.
  * 
- * Esta clase permite gestionar un conjunto de objetos de tipo Figure, proporcionando métodos para añadir,
+ * Esta clase permite gestionar un conjunto de objetos de tipo Figure, proporcionando metodos para añadir,
  * eliminar y recorrer las figuras almacenadas. Además, implementa la interfaz para comprobar intersecciones
- * con un rayo, útil en aplicaciones de gráficos por computadora y trazado de rayos.
+ * con un rayo, util en aplicaciones de gráficos por computadora y trazado de rayos.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -17,10 +17,10 @@
 
 /**
  * @class FigureCollection
- * @brief Clase que representa una colección de figuras geométricas.
+ * @brief Clase que representa una coleccion de figuras geometricas.
  * 
- * Esta clase hereda de Figure y permite almacenar múltiples objetos de tipo Figure,
- * proporcionando métodos para añadir, eliminar y verificar intersecciones con rayos.
+ * Esta clase hereda de Figure y permite almacenar multiples objetos de tipo Figure,
+ * proporcionando metodos para añadir, eliminar y verificar intersecciones con rayos.
  * 
  * @see Figure
  */

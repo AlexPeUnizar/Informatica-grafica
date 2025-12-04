@@ -1,13 +1,13 @@
 /**
  * @file main.cpp
- * @brief Punto de entrada principal para la aplicación de renderizado Path Tracing.
+ * @brief Punto de entrada principal para la aplicacion de renderizado Path Tracing.
  *
  * Este programa configura una escena 3D sencilla con planos y esferas, define materiales,
  * una fuente de luz y renderiza la escena usando un algoritmo de path tracing.
- * La imagen renderizada se guarda en formato PPM y se abre automáticamente con GIMP.
+ * La imagen renderizada se guarda en formato PPM y se abre automaticamente con GIMP.
  *
  * Dependencias:
- * - PathTracing.hpp y clases relacionadas de escena, materiales y geometría.
+ * - PathTracing.hpp y clases relacionadas de escena, materiales y geometria.
  *
  * @author Alex
  * @date 18-6-2025
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
         std::make_shared<Material>(
             Color(0.0, 0.7, 0.7),  // kd: Azul
             Color(0.3, 0.3, 0.3),  // ks: Moderada reflectividad
-            Color(0.0, 0.0, 0.0),  // kt: Sin refracción
+            Color(0.0, 0.0, 0.0),  // kt: Sin refraccion
             1.0                    // ior
         )
     );
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]){
             Color(0, 0.0, 0),  // kd: Sin difusa
             Color(0.1, 0.1, 0.1),  // ks: Baja reflectividad
             Color(0.9, 0.9, 0.9),  // kt: Alta transparencia
-            1.5                    // ior (índice de refracción)
+            1.5                    // ior (indice de refraccion)
         )
     );
 
@@ -65,12 +65,12 @@ int main(int argc, char* argv[]){
             Color(0.15, 0.0, 0.15),  // kd: Sin difusa
             Color(0.15, 0.15, 0.15),  // ks: Baja reflectividad
             Color(0.7, 0.85, 0.7),  // kt: Alta transparencia
-            1.5                    // ior (índice de refracción)
+            1.5                    // ior (indice de refraccion)
         )
     );
 
 
-    // Integración en el FigureCollection
+    // Integracion en el FigureCollection
     FigureCollection figures(vector<Figure*>(
         {
             &leftPlane, &rightPlane, &ceilingPlane, &floorPlane, &backPlane, 
@@ -125,13 +125,13 @@ int main(int argc, char* argv[]){
 }   
 
 /**
- * @brief Parsea los argumentos de la línea de comandos y actualiza las configuraciones globales.
+ * @brief Parsea los argumentos de la linea de comandos y actualiza las configuraciones globales.
  * 
- * Esta función utiliza `parse_command_line` para procesar los argumentos proporcionados
- * en la línea de comandos y ajustar las configuraciones globales del programa.
+ * Esta funcion utiliza `parse_command_line` para procesar los argumentos proporcionados
+ * en la linea de comandos y ajustar las configuraciones globales del programa.
  * En caso de error, imprime un mensaje y muestra la ayuda.
  * 
- * @param argc Número de argumentos.
+ * @param argc Numero de argumentos.
  * @param argv Array de argumentos.
  */
 void parseArgs(int argc, char* argv[]){

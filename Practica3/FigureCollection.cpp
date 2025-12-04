@@ -1,10 +1,10 @@
 /**
  * @file FigureCollection.cpp
- * @brief Implementación de la clase FigureCollection para la gestión de colecciones de figuras geométricas.
+ * @brief Implementacion de la clase FigureCollection para la gestion de colecciones de figuras geometricas.
  * 
- * Este archivo contiene la implementación de los métodos de la clase FigureCollection, 
- * que permite almacenar, gestionar y operar sobre un conjunto de figuras geométricas, 
- * facilitando operaciones como la adición, eliminación y detección de intersecciones con rayos.
+ * Este archivo contiene la implementacion de los metodos de la clase FigureCollection, 
+ * que permite almacenar, gestionar y operar sobre un conjunto de figuras geometricas, 
+ * facilitando operaciones como la adicion, eliminacion y deteccion de intersecciones con rayos.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -16,7 +16,7 @@
  * @brief Constructores de la clase FigureCollection.
  * 
  * Este bloque contiene las implementaciones de los constructores de la clase FigureCollection,
- * que permiten crear una colección vacía o inicializarla con una lista de figuras.
+ * que permiten crear una coleccion vacia o inicializarla con una lista de figuras.
  */
 FigureCollection::FigureCollection(){
     this->figureList = std::vector<Figure*>();
@@ -33,9 +33,9 @@ FigureCollection::FigureCollection(Figure figureList[], size_t size){
 /**
  * @brief Constructor de la clase FigureCollection con una lista de figuras.
  * 
- * Crea una nueva colección de figuras geométricas a partir de un vector de punteros a figuras.
+ * Crea una nueva coleccion de figuras geometricas a partir de un vector de punteros a figuras.
  * 
- * @param figureList Vector de punteros a objetos Figure que se añadirán a la colección.
+ * @param figureList Vector de punteros a objetos Figure que se añadirán a la coleccion.
  */
 FigureCollection::FigureCollection(std::vector<Figure*> figureList){
     this->figureList = figureList;
@@ -44,7 +44,7 @@ FigureCollection::FigureCollection(std::vector<Figure*> figureList){
 /**
  * @brief Destructor de la clase FigureCollection.
  * 
- * Libera los recursos asociados con la colección de figuras, eliminando cada figura almacenada.
+ * Libera los recursos asociados con la coleccion de figuras, eliminando cada figura almacenada.
  */
 FigureCollection::~FigureCollection(){
     for(size_t i = 0; i < figureList.size(); i++){
@@ -54,40 +54,40 @@ FigureCollection::~FigureCollection(){
 }
 
 /**
- * @brief Añade una figura a la colección.
+ * @brief Añade una figura a la coleccion.
  * 
- * Este método permite añadir un puntero a un objeto Figure a la colección de figuras.
+ * Este metodo permite añadir un puntero a un objeto Figure a la coleccion de figuras.
  * 
- * @param figure Puntero al objeto Figure que se añadirá a la colección.
+ * @param figure Puntero al objeto Figure que se añadirá a la coleccion.
  */
 void FigureCollection::add(Figure* figure){
     this->figureList.push_back(figure);
 }
 
 /**
- * @brief Elimina todas las figuras de la colección.
+ * @brief Elimina todas las figuras de la coleccion.
  * 
- * Este método limpia la lista de figuras, eliminando todas las referencias a los objetos Figure almacenados.
+ * Este metodo limpia la lista de figuras, eliminando todas las referencias a los objetos Figure almacenados.
  */
 void FigureCollection::deleteAll(){
     this->figureList.clear();
 }
 
 /**
- * @brief Devuelve el número de figuras en la colección.
+ * @brief Devuelve el numero de figuras en la coleccion.
  * 
- * Este método retorna el tamaño actual de la colección de figuras, es decir, cuántas figuras están almacenadas.
+ * Este metodo retorna el tamaño actual de la coleccion de figuras, es decir, cuántas figuras están almacenadas.
  * 
- * @return Número de figuras en la colección.
+ * @return Numero de figuras en la coleccion.
  */
 size_t FigureCollection::size(){
     return this->figureList.size();
 }
 
 /**
- * @brief Devuelve un iterador para recorrer la colección de figuras.
+ * @brief Devuelve un iterador para recorrer la coleccion de figuras.
  * 
- * Este método proporciona un iterador que permite recorrer la lista de figuras almacenadas en la colección.
+ * Este metodo proporciona un iterador que permite recorrer la lista de figuras almacenadas en la coleccion.
  * 
  * @return Iterador para la lista de figuras.
  */
@@ -96,15 +96,15 @@ std::vector<Figure*>::iterator FigureCollection::iterator(){
 }
 
 /**
- * @brief Verifica si un rayo intersecta con alguna figura de la colección.
+ * @brief Verifica si un rayo intersecta con alguna figura de la coleccion.
  * 
- * Este método recorre todas las figuras en la colección y verifica si el rayo intersecta con alguna de ellas,
- * actualizando el objeto Intersection con los detalles de la intersección más cercana.
+ * Este metodo recorre todas las figuras en la coleccion y verifica si el rayo intersecta con alguna de ellas,
+ * actualizando el objeto Intersection con los detalles de la interseccion más cercana.
  * 
- * @param ray El rayo a verificar para la intersección.
- * @param tMin El valor mínimo de t para considerar la intersección.
- * @param tMax El valor máximo de t para considerar la intersección.
- * @param intersection Objeto Intersection donde se almacenarán los detalles de la intersección si ocurre.
+ * @param ray El rayo a verificar para la interseccion.
+ * @param tMin El valor minimo de t para considerar la interseccion.
+ * @param tMax El valor máximo de t para considerar la interseccion.
+ * @param intersection Objeto Intersection donde se almacenarán los detalles de la interseccion si ocurre.
  * @return true Si al menos una figura es intersectada por el rayo, false en caso contrario.
  */
 bool FigureCollection::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const{
@@ -124,40 +124,40 @@ bool FigureCollection::isIntersectedBy(const Ray& ray, double tMin, double tMax,
 }
 
 /**
- * @brief Métodos para obtener iteradores de la colección de figuras.
+ * @brief Metodos para obtener iteradores de la coleccion de figuras.
  * 
- * Estos métodos permiten obtener iteradores para recorrer la colección de figuras, tanto en modo mutable como constante.
+ * Estos metodos permiten obtener iteradores para recorrer la coleccion de figuras, tanto en modo mutable como constante.
  */
 std::vector<Figure*>::iterator FigureCollection::begin(){
     return this->figureList.begin();    
 }
 
 /**
- * @brief Método para obtener un iterador constante al inicio de la colección de figuras.
+ * @brief Metodo para obtener un iterador constante al inicio de la coleccion de figuras.
  * 
- * Este método permite obtener un iterador constante que apunta al primer elemento de la colección de figuras.
+ * Este metodo permite obtener un iterador constante que apunta al primer elemento de la coleccion de figuras.
  * 
- * @return Iterador constante al inicio de la colección.
+ * @return Iterador constante al inicio de la coleccion.
  */
 std::vector<Figure*>::const_iterator FigureCollection::begin() const{
     return this->figureList.begin();    
 }
 
 /**
- * @brief Métodos para obtener iteradores al final de la colección de figuras.
+ * @brief Metodos para obtener iteradores al final de la coleccion de figuras.
  * 
- * Estos métodos permiten obtener iteradores que apuntan al final de la colección de figuras, tanto en modo mutable como constante.
+ * Estos metodos permiten obtener iteradores que apuntan al final de la coleccion de figuras, tanto en modo mutable como constante.
  */
 std::vector<Figure*>::iterator FigureCollection::end(){
     return this->figureList.end();    
 }
 
 /**
- * @brief Método para obtener un iterador constante al final de la colección de figuras.
+ * @brief Metodo para obtener un iterador constante al final de la coleccion de figuras.
  * 
- * Este método permite obtener un iterador constante que apunta al final de la colección de figuras.
+ * Este metodo permite obtener un iterador constante que apunta al final de la coleccion de figuras.
  * 
- * @return Iterador constante al final de la colección.
+ * @return Iterador constante al final de la coleccion.
  */
 std::vector<Figure*>::const_iterator FigureCollection::end() const{
     return this->figureList.end();    

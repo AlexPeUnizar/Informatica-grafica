@@ -1,9 +1,9 @@
 /**
  * @file ThreadPool.cpp
- * @brief Implementación de la clase ThreadPool para la gestión de un grupo de hilos de ejecución.
+ * @brief Implementacion de la clase ThreadPool para la gestion de un grupo de hilos de ejecucion.
  * 
- * Este archivo contiene la implementación de los métodos de la clase ThreadPool, 
- * que permite la ejecución concurrente de tareas utilizando múltiples hilos.
+ * Este archivo contiene la implementacion de los metodos de la clase ThreadPool, 
+ * que permite la ejecucion concurrente de tareas utilizando multiples hilos.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -15,7 +15,7 @@
  * 
  * Este constructor inicializa un grupo de hilos que estarán disponibles para ejecutar tareas en paralelo.
  * 
- * @param numThreads Número de hilos que se crearán en el grupo.
+ * @param numThreads Numero de hilos que se crearán en el grupo.
  */
 ThreadPool::ThreadPool(size_t numThreads){
     for (size_t i = 0; i < numThreads; ++i) {
@@ -39,7 +39,7 @@ ThreadPool::ThreadPool(size_t numThreads){
 /**
  * @brief Destructor de la clase ThreadPool.
  * 
- * Este destructor detiene todos los hilos del grupo y espera a que terminen su ejecución antes de liberar los recursos.
+ * Este destructor detiene todos los hilos del grupo y espera a que terminen su ejecucion antes de liberar los recursos.
  */
 ThreadPool::~ThreadPool() {
     {

@@ -1,6 +1,6 @@
 /**
  * @file Color.cpp
- * @brief Implementación de los métodos de la clase Color.
+ * @brief Implementacion de los metodos de la clase Color.
  * @author Alex
  * @date 18-6-2025
  */
@@ -31,7 +31,7 @@ Color& Color::operator=(const Color& c){
 /**
  * @brief Operador de salida sobrecargado para la clase Color.
  * 
- * Esta función permite imprimir el objeto Color en un formato legible.
+ * Esta funcion permite imprimir el objeto Color en un formato legible.
  * 
  * @param os Flujo de salida donde escribir.
  * @param c Objeto Color que se va a imprimir.
@@ -45,7 +45,7 @@ std::ostream& operator<<(std::ostream& os, const Color &c){
 /**
  * @brief Crea un objeto Color a partir de valores RGB.
  * 
- * Este método estático convierte valores RGB (0-255) en un objeto Color con valores normalizados (0.0-1.0).
+ * Este metodo estático convierte valores RGB (0-255) en un objeto Color con valores normalizados (0.0-1.0).
  * 
  * @param r_ Componente rojo (0-255).
  * @param g_ Componente verde (0-255).

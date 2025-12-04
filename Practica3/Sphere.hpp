@@ -1,6 +1,6 @@
 /**
  * @file Sphere.hpp
- * @brief Declaración de la clase Sphere para la representación de esferas en gráficos por computadora.
+ * @brief Declaracion de la clase Sphere para la representacion de esferas en gráficos por computadora.
  * 
  * Esta clase hereda de Figure y permite definir esferas en el espacio 3D, especificando su origen, radio y material.
  * 
@@ -18,7 +18,7 @@
  * @brief Clase que representa una esfera en el espacio tridimensional.
  * 
  * Esta clase define una esfera mediante un punto de origen, un radio y un material asociado.
- * Permite verificar si un rayo intersecta con la esfera y proporciona información sobre la intersección.
+ * Permite verificar si un rayo intersecta con la esfera y proporciona informacion sobre la interseccion.
  * 
  * @see Figure
  */

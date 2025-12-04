@@ -1,9 +1,9 @@
 /**
  * @file Vector.cpp
- * @brief Implementación de operaciones y utilidades para la clase Vector en 3D.
+ * @brief Implementacion de operaciones y utilidades para la clase Vector en 3D.
  * 
- * Este archivo contiene la definición de operadores y funciones auxiliares para el manejo de vectores tridimensionales,
- * incluyendo suma, resta, producto escalar, producto vectorial, normalización, reflexión y refracción, entre otros.
+ * Este archivo contiene la definicion de operadores y funciones auxiliares para el manejo de vectores tridimensionales,
+ * incluyendo suma, resta, producto escalar, producto vectorial, normalizacion, reflexion y refraccion, entre otros.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -12,7 +12,7 @@
 #include <math.h>
 
 /** 
- * @brief Sobrecarga del operador de inserción para imprimir un vector.
+ * @brief Sobrecarga del operador de insercion para imprimir un vector.
  * 
  * Este operador permite imprimir un vector en un formato legible, mostrando sus componentes x, y, z.
  * 
@@ -54,7 +54,7 @@ Vector operator-(const Vector &v1, const Vector &v2){
 /**
  * @brief Calcula el producto cruzado de dos vectores.
  * 
- * Esta función calcula el producto cruzado entre dos vectores tridimensionales,
+ * Esta funcion calcula el producto cruzado entre dos vectores tridimensionales,
  * devolviendo un nuevo vector perpendicular a ambos.
  * 
  * @param v1 Primer vector.
@@ -70,7 +70,7 @@ Vector crossProduct(const Vector &v1, const Vector &v2){
 /**
  * @brief Calcula el producto escalar de dos vectores.
  * 
- * Esta función calcula el producto escalar entre dos vectores tridimensionales,
+ * Esta funcion calcula el producto escalar entre dos vectores tridimensionales,
  * devolviendo un valor escalar que representa la magnitud del coseno del ángulo entre ellos.
  * 
  * @param v1 Primer vector.
@@ -82,48 +82,48 @@ double dotProduct(const Vector &v1, const Vector &v2){
 }
 
 /**
- * @brief Sobrecarga del operador de multiplicación para escalar un vector.
+ * @brief Sobrecarga del operador de multiplicacion para escalar un vector.
  * 
  * Este operador permite multiplicar un vector por un escalar, escalando sus componentes.
  * 
  * @param v Vector a escalar.
  * @param s Escalar por el cual se multiplica el vector.
- * @return Vector Resultado de la multiplicación del vector por el escalar.
+ * @return Vector Resultado de la multiplicacion del vector por el escalar.
  */
 Vector operator*(const Vector &v, const double s){
     return Vector(v.x * s, v.y * s, v.z * s);
 }
 
 /**
- * @brief Sobrecarga del operador de multiplicación para escalar un vector.
+ * @brief Sobrecarga del operador de multiplicacion para escalar un vector.
  * 
  * Este operador permite multiplicar un escalar por un vector, escalando sus componentes.
  * 
  * @param s Escalar por el cual se multiplica el vector.
  * @param v Vector a escalar.
- * @return Vector Resultado de la multiplicación del escalar por el vector.
+ * @return Vector Resultado de la multiplicacion del escalar por el vector.
  */
 Vector operator*(const double s, const Vector &v){
     return v*s;
 }
 
 /**
- * @brief Sobrecarga del operador de división para escalar un vector.
+ * @brief Sobrecarga del operador de division para escalar un vector.
  * 
  * Este operador permite dividir un vector por un escalar, escalando sus componentes.
  * 
  * @param v Vector a dividir.
  * @param s Escalar por el cual se divide el vector.
- * @return Vector Resultado de la división del vector por el escalar.
+ * @return Vector Resultado de la division del vector por el escalar.
  */
 Vector operator/(const Vector &v, const double s){
     return Vector(v.x / s, v.y / s, v.z / s);
 }
 
 /**
- * @brief Calcula la magnitud (módulo) de un vector.
+ * @brief Calcula la magnitud (modulo) de un vector.
  * 
- * Esta función calcula la magnitud del vector utilizando la fórmula de la raíz cuadrada de la suma de los cuadrados
+ * Esta funcion calcula la magnitud del vector utilizando la formula de la raiz cuadrada de la suma de los cuadrados
  * de sus componentes.
  * 
  * @param v Vector del cual se desea calcular la magnitud.
@@ -136,7 +136,7 @@ double module(const Vector &v){
 /**
  * @brief Calcula el ángulo entre dos vectores.
  * 
- * Esta función calcula el ángulo en radianes entre dos vectores utilizando el producto escalar y las magnitudes de los vectores.
+ * Esta funcion calcula el ángulo en radianes entre dos vectores utilizando el producto escalar y las magnitudes de los vectores.
  * 
  * @param v1 Primer vector.
  * @param v2 Segundo vector.
@@ -147,9 +147,9 @@ double angle(const Vector &v1, const Vector &v2){
 }
 
 /**
- * @brief Normaliza un vector, convirtiéndolo en un vector unitario.
+ * @brief Normaliza un vector, convirtiendolo en un vector unitario.
  * 
- * Esta función divide cada componente del vector por su magnitud, devolviendo un vector con una magnitud de 1.
+ * Esta funcion divide cada componente del vector por su magnitud, devolviendo un vector con una magnitud de 1.
  * 
  * @param v Vector a normalizar.
  * @return Vector Vector normalizado.
@@ -161,8 +161,8 @@ Vector normalize(const Vector &v){
 /**
  * @brief Refleja un vector incidente respecto a una normal.
  * 
- * Esta función calcula el vector reflejado de un vector incidente dado una normal,
- * utilizando la fórmula de reflexión.
+ * Esta funcion calcula el vector reflejado de un vector incidente dado una normal,
+ * utilizando la formula de reflexion.
  * 
  * @param incident Vector incidente.
  * @param normal Normal respecto a la cual se refleja el vector incidente.
@@ -173,15 +173,15 @@ Vector reflect(const Vector& incident, const Vector& normal) {
 }
 
 /**
- * @brief Refracta un vector incidente respecto a una normal y un índice de refracción.
+ * @brief Refracta un vector incidente respecto a una normal y un indice de refraccion.
  * 
- * Esta función calcula el vector refractado de un vector incidente dado una normal y un índice de refracción,
+ * Esta funcion calcula el vector refractado de un vector incidente dado una normal y un indice de refraccion,
  * utilizando la ley de Snell.
  * 
  * @param incident Vector incidente.
  * @param normal Normal respecto a la cual se refracta el vector incidente.
- * @param ior_ratio Índice de refracción del medio al que se está refractando.
- * @return Vector Vector refractado, o un vector nulo si ocurre reflexión total interna.
+ * @param ior_ratio indice de refraccion del medio al que se está refractando.
+ * @return Vector Vector refractado, o un vector nulo si ocurre reflexion total interna.
  */
 Vector refract(const Vector& incident, const Vector& normal, double ior_ratio) {
     Vector incidentNorm = normalize(incident);
@@ -202,14 +202,14 @@ Vector refract(const Vector& incident, const Vector& normal, double ior_ratio) {
     double k = 1.0 - eta * eta * (1.0 - cosi * cosi);
 
     if (k < 0.0) {
-        return Vector(0, 0, 0);  // Reflexión total interna
+        return Vector(0, 0, 0);  // Reflexion total interna
     }
 
     return eta * incidentNorm + (eta * cosi - sqrt(k)) * normalNorm;
 }
 
 /**
- * @brief Sobrecarga del operador de negación para invertir un vector.
+ * @brief Sobrecarga del operador de negacion para invertir un vector.
  * 
  * Este operador permite invertir las componentes de un vector, devolviendo un nuevo vector con los signos opuestos.
  * 

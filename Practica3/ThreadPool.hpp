@@ -1,8 +1,8 @@
 /**
  * @file ThreadPool.hpp
- * @brief Declaración de la clase ThreadPool para la paralelización de tareas mediante un grupo de hilos.
+ * @brief Declaracion de la clase ThreadPool para la paralelizacion de tareas mediante un grupo de hilos.
  *
- * Esta cabecera define la clase ThreadPool, que permite ejecutar múltiples tareas en paralelo utilizando un conjunto fijo de hilos.
+ * Esta cabecera define la clase ThreadPool, que permite ejecutar multiples tareas en paralelo utilizando un conjunto fijo de hilos.
  * Proporciona una interfaz sencilla para encolar trabajos y gestionar la concurrencia de manera eficiente.
  *
  * @author Alex
@@ -22,10 +22,10 @@
 
 /**
  * @class ThreadPool
- * @brief Clase que representa un grupo de hilos para la ejecución paralela de tareas.
+ * @brief Clase que representa un grupo de hilos para la ejecucion paralela de tareas.
  *
- * Esta clase permite crear un grupo de hilos que pueden ejecutar tareas en paralelo, facilitando la gestión de concurrencia
- * y la ejecución de trabajos en segundo plano. Proporciona métodos para encolar tareas y esperar su finalización.
+ * Esta clase permite crear un grupo de hilos que pueden ejecutar tareas en paralelo, facilitando la gestion de concurrencia
+ * y la ejecucion de trabajos en segundo plano. Proporciona metodos para encolar tareas y esperar su finalizacion.
  */
 class ThreadPool {
 private:

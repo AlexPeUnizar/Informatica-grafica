@@ -1,8 +1,8 @@
 /**
  * @file Ray.cpp
- * @brief Implementación de la clase Ray para la gestión de rayos en gráficos por computadora.
+ * @brief Implementacion de la clase Ray para la gestion de rayos en gráficos por computadora.
  * 
- * Este archivo contiene la implementación de los métodos de la clase Ray, que representa un rayo definido por un punto de origen y una dirección en el espacio tridimensional.
+ * Este archivo contiene la implementacion de los metodos de la clase Ray, que representa un rayo definido por un punto de origen y una direccion en el espacio tridimensional.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -12,10 +12,10 @@
 /**
  * @brief Constructor de la clase Ray.
  * 
- * Inicializa un rayo con un punto de origen y una dirección normalizada.
+ * Inicializa un rayo con un punto de origen y una direccion normalizada.
  * 
  * @param origin Punto de origen del rayo.
- * @param dir Dirección del rayo, que será normalizada.
+ * @param dir Direccion del rayo, que será normalizada.
  */
 Ray::Ray(const Point& origin, const Vector& dir){
     this->origin = origin;
@@ -25,7 +25,7 @@ Ray::Ray(const Point& origin, const Vector& dir){
 /**
  * @brief Destructor de la clase Ray.
  * 
- * Este destructor libera los recursos asociados con el punto de origen y la dirección del rayo.
+ * Este destructor libera los recursos asociados con el punto de origen y la direccion del rayo.
  */
 Ray::~Ray(){
     origin.~Point();
@@ -33,9 +33,9 @@ Ray::~Ray(){
 }
 
 /**
- * @brief Sobrecarga del operador de inserción para imprimir un rayo.
+ * @brief Sobrecarga del operador de insercion para imprimir un rayo.
  * 
- * Este operador permite imprimir un rayo en un formato legible, mostrando su origen y dirección.
+ * Este operador permite imprimir un rayo en un formato legible, mostrando su origen y direccion.
  * 
  * @param os Flujo de salida donde se imprimirá el rayo.
  * @param r Rayo a imprimir.
@@ -47,9 +47,9 @@ std::ostream& operator<<(std::ostream& os, const Ray &r){
 }
 
 /**
- * @brief Método que calcula un punto a lo largo del rayo en una distancia t.
+ * @brief Metodo que calcula un punto a lo largo del rayo en una distancia t.
  * 
- * Este método devuelve un punto en el rayo a una distancia t desde el origen, siguiendo la dirección del rayo.
+ * Este metodo devuelve un punto en el rayo a una distancia t desde el origen, siguiendo la direccion del rayo.
  * 
  * @param t Distancia desde el origen del rayo.
  * @return Point Punto en el rayo a la distancia t.

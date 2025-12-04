@@ -1,8 +1,8 @@
 /**
  * @file Cylinder.hpp
- * @brief Declaración de la clase Cylinder para representar un cilindro finito en el espacio 3D.
+ * @brief Declaracion de la clase Cylinder para representar un cilindro finito en el espacio 3D.
  * 
- * Este archivo contiene la definición de la clase Cylinder, que hereda de Figure y permite
+ * Este archivo contiene la definicion de la clase Cylinder, que hereda de Figure y permite
  * modelar un cilindro mediante su base, eje, radio y altura, para aplicaciones de gráficos
  * por computadora y trazado de rayos.
  * 
@@ -19,13 +19,13 @@
 /** @brief Clase Cylinder que representa un cilindro en el espacio 3D.
  * 
  * Esta clase hereda de Figure y define un cilindro mediante su base, eje, radio y altura.
- * Implementa el método isIntersectedBy para determinar si un rayo intersecta con el cilindro.
+ * Implementa el metodo isIntersectedBy para determinar si un rayo intersecta con el cilindro.
  * @see Figure
  */
 class Cylinder : public Figure {
 private:
     Point baseCenter; // Centro de la base del cilindro
-    Vector axis;      // Dirección del eje del cilindro (debe ser normalizada)
+    Vector axis;      // Direccion del eje del cilindro (debe ser normalizada)
     double radius;    // Radio del cilindro
     double height;    // Altura del cilindro
 

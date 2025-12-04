@@ -1,9 +1,9 @@
 /**
  * @file Material.cpp
- * @brief Implementación de la clase Material y funciones relacionadas para el cálculo de la dispersión de la luz en un motor de renderizado basado en trayectorias.
+ * @brief Implementacion de la clase Material y funciones relacionadas para el cálculo de la dispersion de la luz en un motor de renderizado basado en trayectorias.
  * 
- * Este archivo contiene la lógica para la simulación de materiales, incluyendo la selección de eventos mediante ruleta rusa,
- * la generación de vectores dispersados, el cálculo de la iluminación directa e indirecta, y la evaluación de las funciones BRDF y BSDF.
+ * Este archivo contiene la logica para la simulacion de materiales, incluyendo la seleccion de eventos mediante ruleta rusa,
+ * la generacion de vectores dispersados, el cálculo de la iluminacion directa e indirecta, y la evaluacion de las funciones BRDF y BSDF.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -13,14 +13,14 @@
 #include "Material.hpp"
 
 /** 
- * @brief Función que implementa la ruleta rusa para seleccionar un evento de dispersión basado en las propiedades del material.
+ * @brief Funcion que implementa la ruleta rusa para seleccionar un evento de dispersion basado en las propiedades del material.
  * 
- * Esta función calcula la probabilidad de cada tipo de evento (difusa, especular, refractiva y absorción) y selecciona uno al azar,
+ * Esta funcion calcula la probabilidad de cada tipo de evento (difusa, especular, refractiva y absorcion) y selecciona uno al azar,
  * devolviendo un evento con su tipo y probabilidad.
  * 
- * @param kdWeight Color que representa el peso de la reflexión difusa.
- * @param ksWeight Color que representa el peso de la reflexión especular.
- * @param ktWeight Color que representa el peso de la refracción.
+ * @param kdWeight Color que representa el peso de la reflexion difusa.
+ * @param ksWeight Color que representa el peso de la reflexion especular.
+ * @param ktWeight Color que representa el peso de la refraccion.
  * @return RR_Event Estructura que contiene el tipo de evento seleccionado y su probabilidad.
  */
 RR_Event russianRoulette(Color kdWeight, Color ksWeight, Color ktWeight){
@@ -40,13 +40,13 @@ RR_Event russianRoulette(Color kdWeight, Color ksWeight, Color ktWeight){
 /**
  * @brief Genera un vector dispersado basado en el tipo de evento seleccionado por la ruleta rusa.
  * 
- * Dependiendo del tipo de evento (difusa, especular, refractiva o absorción), esta función calcula y devuelve un vector
- * que representa la dirección de la luz dispersada.
+ * Dependiendo del tipo de evento (difusa, especular, refractiva o absorcion), esta funcion calcula y devuelve un vector
+ * que representa la direccion de la luz dispersada.
  * 
- * @param ray Rayo incidente que interactúa con el material.
- * @param intersection Información sobre la intersección del rayo con el material.
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
  * @param event Evento seleccionado por la ruleta rusa que determina el comportamiento del material.
- * @return Vector Dirección del rayo dispersado según el tipo de evento.
+ * @return Vector Direccion del rayo dispersado segun el tipo de evento.
  */
 Vector Material::getSacterredVector(const Ray &ray, const Intersection &intersection, const RR_Event event) const{
     switch (event.eventType){
@@ -68,9 +68,9 @@ Vector Material::getSacterredVector(const Ray &ray, const Intersection &intersec
 /**
  * @brief Constructor por defecto de la clase Material.
  * 
- * Este constructor inicializa un material con valores predeterminados para sus propiedades ópticas.
+ * Este constructor inicializa un material con valores predeterminados para sus propiedades opticas.
  * 
- * @param color Color que representa la reflexión difusa del material.
+ * @param color Color que representa la reflexion difusa del material.
  */
 Material::Material(const Color& color){
     this->kd = color;    
@@ -80,15 +80,15 @@ Material::Material(const Color& color){
 }
 
 /**
- * @brief Constructor de la clase Material que inicializa las propiedades ópticas del material.
+ * @brief Constructor de la clase Material que inicializa las propiedades opticas del material.
  * 
- * Este constructor permite crear un material con componentes de reflexión difusa (kd), especular (ks),
- * refractiva (kt) y un índice de refracción (ior) especificados.
+ * Este constructor permite crear un material con componentes de reflexion difusa (kd), especular (ks),
+ * refractiva (kt) y un indice de refraccion (ior) especificados.
  * 
- * @param kd Color que representa la reflexión difusa del material.
- * @param ks Color que representa la reflexión especular del material.
- * @param kt Color que representa la refracción del material.
- * @param ior Índice de refracción del material.
+ * @param kd Color que representa la reflexion difusa del material.
+ * @param ks Color que representa la reflexion especular del material.
+ * @param kt Color que representa la refraccion del material.
+ * @param ior indice de refraccion del material.
  */
 Material::Material(const Color& kd, const Color& ks, const Color& kt, double ior){
     this->kd = kd;    
@@ -100,7 +100,7 @@ Material::Material(const Color& kd, const Color& ks, const Color& kt, double ior
 /**
  * @brief Establece el color del material.
  * 
- * Este método permite cambiar el color de reflexión difusa del material a un nuevo valor.
+ * Este metodo permite cambiar el color de reflexion difusa del material a un nuevo valor.
  * 
  * @param color Nuevo color que se asignará al material.
  */
@@ -109,14 +109,14 @@ void Material::setColor(const Color& color){
 }
 
 /**
- * @brief Genera una dirección aleatoria para la dispersión de luz en un material difuso.
+ * @brief Genera una direccion aleatoria para la dispersion de luz en un material difuso.
  * 
- * Esta función calcula una dirección aleatoria en el espacio tridimensional, teniendo en cuenta la normal
- * en el punto de intersección y asegurando que la dirección generada sea ortogonal a la normal del material.
+ * Esta funcion calcula una direccion aleatoria en el espacio tridimensional, teniendo en cuenta la normal
+ * en el punto de interseccion y asegurando que la direccion generada sea ortogonal a la normal del material.
  * 
- * @param ray Rayo incidente que interactúa con el material.
- * @param intersection Información sobre la intersección del rayo con el material.
- * @return Vector Dirección aleatoria generada para la dispersión de luz.
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
+ * @return Vector Direccion aleatoria generada para la dispersion de luz.
  */
 Vector Material::randomDirection(const Ray& ray, const Intersection& intersection) const{
     Vector random;
@@ -147,15 +147,15 @@ Vector Material::randomDirection(const Ray& ray, const Intersection& intersectio
 }
 
 /**
- * @brief Calcula la iluminación directa en un punto de intersección utilizando el método de eventos siguientes.
+ * @brief Calcula la iluminacion directa en un punto de interseccion utilizando el metodo de eventos siguientes.
  * 
- * Este método evalúa la contribución de cada fuente de luz a la iluminación del punto de intersección,
+ * Este metodo evalua la contribucion de cada fuente de luz a la iluminacion del punto de interseccion,
  * considerando si hay sombras y aplicando las funciones BRDF y BSDF correspondientes.
  * 
  * @param lights Lista de fuentes de luz en la escena.
- * @param intersection Información sobre la intersección del rayo con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
  * @param scene Escena que contiene las figuras intersectables.
- * @return Color Resultado de la iluminación directa en el punto de intersección.
+ * @return Color Resultado de la iluminacion directa en el punto de interseccion.
  */
 Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, const Intersection& intersection, const IntersectableFigure& scene) const{
     Color finalColor;
@@ -190,17 +190,17 @@ Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, con
 }
 
 /**
- * @brief Calcula el color resultante de un material en un punto de intersección dado, considerando la iluminación directa e indirecta.
+ * @brief Calcula el color resultante de un material en un punto de interseccion dado, considerando la iluminacion directa e indirecta.
  * 
- * Este método implementa el algoritmo de trazado de rayos para calcular el color final en un punto de intersección,
- * utilizando la ruleta rusa para decidir si se absorbe, refleja o refracta la luz, y recursivamente calcula la iluminación indirecta.
+ * Este metodo implementa el algoritmo de trazado de rayos para calcular el color final en un punto de interseccion,
+ * utilizando la ruleta rusa para decidir si se absorbe, refleja o refracta la luz, y recursivamente calcula la iluminacion indirecta.
  * 
- * @param ray Rayo incidente que interactúa con el material.
- * @param intersection Información sobre la intersección del rayo con el material.
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
  * @param lights Lista de fuentes de luz en la escena.
  * @param scene Escena que contiene las figuras intersectables.
- * @param depth Profundidad actual del rayo en el trazado (para evitar recursión infinita).
- * @return Color Resultado del color calculado en el punto de intersección.
+ * @param depth Profundidad actual del rayo en el trazado (para evitar recursion infinita).
+ * @return Color Resultado del color calculado en el punto de interseccion.
  */
 Color Material::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth) const{
     if (depth >= settings.MAX_BOUNCES) return Color(0, 0, 0);
@@ -233,13 +233,13 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
 }
 
 /**
- * @brief Calcula la función BRDF (Bidirectional Reflectance Distribution Function) para un material dado.
+ * @brief Calcula la funcion BRDF (Bidirectional Reflectance Distribution Function) para un material dado.
  * 
- * Esta función devuelve el valor de la BRDF del material, que es una medida de cómo se distribuye la luz reflejada
- * en diferentes direcciones en relación con la dirección de incidencia y la normal en el punto de intersección.
+ * Esta funcion devuelve el valor de la BRDF del material, que es una medida de como se distribuye la luz reflejada
+ * en diferentes direcciones en relacion con la direccion de incidencia y la normal en el punto de interseccion.
  * 
- * @param ray Rayo incidente que interactúa con el material.
- * @param intersection Información sobre la intersección del rayo con el material.
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
  * @return Color Valor de la BRDF del material.
  */
 Color Material::brdf(const Ray& ray, const Intersection& intersection) const{
@@ -247,16 +247,16 @@ Color Material::brdf(const Ray& ray, const Intersection& intersection) const{
 }
 
 /**
- * @brief Calcula la función BSDF (Bidirectional Scattering Distribution Function) para un material dado.
+ * @brief Calcula la funcion BSDF (Bidirectional Scattering Distribution Function) para un material dado.
  * 
- * Esta función devuelve el valor de la BSDF del material, que es una medida de cómo se distribuye la luz
- * en diferentes direcciones en relación con la dirección de incidencia y la normal en el punto de intersección,
+ * Esta funcion devuelve el valor de la BSDF del material, que es una medida de como se distribuye la luz
+ * en diferentes direcciones en relacion con la direccion de incidencia y la normal en el punto de interseccion,
  * considerando el tipo de evento seleccionado por la ruleta rusa.
  * 
- * @param ray Rayo incidente que interactúa con el material.
- * @param intersection Información sobre la intersección del rayo con el material.
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
  * @param event Evento seleccionado por la ruleta rusa que determina el comportamiento del material.
- * @return Color Valor de la BSDF del material según el tipo de evento.
+ * @return Color Valor de la BSDF del material segun el tipo de evento.
  */
 Color Material::bsdf(const Ray& ray, const Intersection& intersection, const RR_Event event) const{
     switch (event.eventType){

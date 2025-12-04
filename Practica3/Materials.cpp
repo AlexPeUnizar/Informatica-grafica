@@ -1,9 +1,9 @@
 /**
  * @file Materials.cpp
- * @brief Implementación de los materiales para el sistema de renderizado, incluyendo modelos Lambertiano y Metálico.
+ * @brief Implementacion de los materiales para el sistema de renderizado, incluyendo modelos Lambertiano y Metálico.
  * 
- * Este archivo contiene la definición de los métodos asociados a los materiales utilizados en la simulación de iluminación,
- * tales como Lambertian y Metal, permitiendo calcular el color resultante en función de la interacción de los rayos de luz
+ * Este archivo contiene la definicion de los metodos asociados a los materiales utilizados en la simulacion de iluminacion,
+ * tales como Lambertian y Metal, permitiendo calcular el color resultante en funcion de la interaccion de los rayos de luz
  * con las superficies de las figuras de la escena.
  * 
  * @author Alex
@@ -19,7 +19,7 @@
 /**
  * @brief Constructor de la clase Material.
  * 
- * Inicializa un material con un color específico.
+ * Inicializa un material con un color especifico.
  * 
  * @param color Color del material.
  */
@@ -43,18 +43,18 @@ Materials::Lambertian::Lambertian(double r, double g, double b): Material(Color:
 }
 
 /**
- * @brief Método que calcula el color resultante de un rayo en una intersección con un material Lambertiano.
+ * @brief Metodo que calcula el color resultante de un rayo en una interseccion con un material Lambertiano.
  * 
- * Este método implementa el algoritmo de path tracing para calcular la iluminación directa e indirecta
- * en una intersección, utilizando la ruleta rusa para seleccionar eventos de dispersión y generando rayos aleatorios
+ * Este metodo implementa el algoritmo de path tracing para calcular la iluminacion directa e indirecta
+ * en una interseccion, utilizando la ruleta rusa para seleccionar eventos de dispersion y generando rayos aleatorios
  * para simular la luz difusa.
  * 
- * @param ray Rayo incidente que interactúa con el material.
- * @param intersection Información sobre la intersección del rayo con el material.
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
  * @param lights Lista de luces presentes en la escena.
  * @param scene Escena que contiene las figuras y sus materiales.
  * @param depth Profundidad actual del rayo en el trazado de rayos.
- * @return Color Resultado del color calculado en la intersección.
+ * @return Color Resultado del color calculado en la interseccion.
  */
 Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth) const{
     Color final(0,0,0);
@@ -81,13 +81,13 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
 }
 
 /**
- * @brief Método que calcula la función BRDF (Bidirectional Reflectance Distribution Function) para un material Lambertiano.
+ * @brief Metodo que calcula la funcion BRDF (Bidirectional Reflectance Distribution Function) para un material Lambertiano.
  * 
- * Este método devuelve el valor de la BRDF para un material Lambertiano, que es constante y se define como
+ * Este metodo devuelve el valor de la BRDF para un material Lambertiano, que es constante y se define como
  * el color difuso dividido por pi (M_PI).
  * 
  * @param ray Rayo incidente.
- * @param intersection Información sobre la intersección del rayo con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
  * @return Color Resultado de la BRDF para el material Lambertiano.
  */
 Color Materials::Lambertian::brdf(const Ray& ray, const Intersection& intersection) const{
@@ -97,7 +97,7 @@ Color Materials::Lambertian::brdf(const Ray& ray, const Intersection& intersecti
 /**
  * @brief Constructor de la clase Metal.
  * 
- * Inicializa un material metálico con un color específico.
+ * Inicializa un material metálico con un color especifico.
  * 
  * @param color Color del material metálico.
  */
@@ -121,18 +121,18 @@ Materials::Metal::Metal(double r, double g, double b): Material(Color::fromRGB(r
 }
 
 /**
- * @brief Método que calcula el color resultante de un rayo en una intersección con un material metálico.
+ * @brief Metodo que calcula el color resultante de un rayo en una interseccion con un material metálico.
  * 
- * Este método implementa el algoritmo de path tracing para calcular la iluminación directa e indirecta
- * en una intersección, utilizando la ruleta rusa para seleccionar eventos de reflexión especular y generando rayos reflejados
+ * Este metodo implementa el algoritmo de path tracing para calcular la iluminacion directa e indirecta
+ * en una interseccion, utilizando la ruleta rusa para seleccionar eventos de reflexion especular y generando rayos reflejados
  * para simular la luz especular.
  * 
- * @param ray Rayo incidente que interactúa con el material.
- * @param intersection Información sobre la intersección del rayo con el material.
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
  * @param lights Lista de luces presentes en la escena.
  * @param scene Escena que contiene las figuras y sus materiales.
  * @param depth Profundidad actual del rayo en el trazado de rayos.
- * @return Color Resultado del color calculado en la intersección.
+ * @return Color Resultado del color calculado en la interseccion.
  */
 Color Materials::Metal::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth) const{
     Color final(0,0,0);
@@ -157,13 +157,13 @@ Color Materials::Metal::getColor(const Ray& ray, const Intersection& intersectio
 }
 
 /**
- * @brief Método que calcula la función BRDF (Bidirectional Reflectance Distribution Function) para un material metálico.
+ * @brief Metodo que calcula la funcion BRDF (Bidirectional Reflectance Distribution Function) para un material metálico.
  * 
- * Este método devuelve el valor de la BRDF para un material metálico, que es constante y se define como
+ * Este metodo devuelve el valor de la BRDF para un material metálico, que es constante y se define como
  * el color difuso dividido por pi (M_PI).
  * 
  * @param ray Rayo incidente.
- * @param intersection Información sobre la intersección del rayo con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
  * @return Color Resultado de la BRDF para el material metálico.
  */
 Color Materials::Metal::brdf(const Ray& ray, const Intersection& intersection) const{

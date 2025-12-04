@@ -1,10 +1,10 @@
 /**
  * @file Vector.hpp
- * @brief Declaración de la clase Vector para operaciones en el espacio 3D.
+ * @brief Declaracion de la clase Vector para operaciones en el espacio 3D.
  * 
  * Esta clase extiende la funcionalidad de la clase Coordinate para representar y manipular vectores en tres dimensiones,
  * proporcionando operadores y funciones amigas para operaciones vectoriales comunes como suma, resta, producto cruzado,
- * producto escalar, normalización, reflexión y refracción.
+ * producto escalar, normalizacion, reflexion y refraccion.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -20,7 +20,7 @@
  * @brief Clase que representa un vector en el espacio tridimensional.
  * 
  * Esta clase hereda de Coordinate y proporciona operaciones vectoriales como suma, resta, producto cruzado,
- * producto escalar, normalización, reflexión y refracción. También permite la impresión del vector en un formato legible.
+ * producto escalar, normalizacion, reflexion y refraccion. Tambien permite la impresion del vector en un formato legible.
  */
 class Vector: public Coordinate{
 private:

@@ -1,9 +1,9 @@
 /**
  * @file ScopedTimer.hpp
- * @brief Declaración de la clase ScopedTimer para medir el tiempo de ejecución de un bloque de código utilizando RAII.
+ * @brief Declaracion de la clase ScopedTimer para medir el tiempo de ejecucion de un bloque de codigo utilizando RAII.
  * 
- * Esta clase permite medir automáticamente el tiempo transcurrido entre la creación y destrucción de un objeto ScopedTimer,
- * mostrando el resultado por consola. Útil para tareas de profiling y optimización de código.
+ * Esta clase permite medir automáticamente el tiempo transcurrido entre la creacion y destruccion de un objeto ScopedTimer,
+ * mostrando el resultado por consola. util para tareas de profiling y optimizacion de codigo.
  * 
  * @author Alex
  * @date 18-6-2025
@@ -16,10 +16,10 @@
 
 /**
  * @class ScopedTimer
- * @brief Clase que mide el tiempo de ejecución de un bloque de código utilizando RAII.
+ * @brief Clase que mide el tiempo de ejecucion de un bloque de codigo utilizando RAII.
  * 
  * Esta clase inicia un temporizador al ser creada y lo detiene al ser destruida, imprimiendo el tiempo transcurrido.
- * Es útil para medir el rendimiento de secciones específicas del código sin necesidad de gestionar manualmente el tiempo.
+ * Es util para medir el rendimiento de secciones especificas del codigo sin necesidad de gestionar manualmente el tiempo.
  */
 class ScopedTimer {
 private:
