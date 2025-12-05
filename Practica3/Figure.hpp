@@ -33,6 +33,7 @@ public:
     Figure(const std::shared_ptr<Material>& material);
     virtual ~Figure() = default;
     void setColor(double r, double g, double b);
+    void setEmission(Color emission);
     void setMaterial(const std::shared_ptr<Material>& material);
     virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const override = 0;
     void setVisible(bool visible);

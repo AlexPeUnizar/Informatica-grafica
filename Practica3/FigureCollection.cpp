@@ -47,9 +47,11 @@ FigureCollection::FigureCollection(std::vector<Figure*> figureList){
  * Libera los recursos asociados con la coleccion de figuras, eliminando cada figura almacenada.
  */
 FigureCollection::~FigureCollection(){
+    /*
     for(size_t i = 0; i < figureList.size(); i++){
         figureList[i]->~Figure();
     }
+    */
     figureList.clear();
 }
 

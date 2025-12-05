@@ -26,7 +26,7 @@ private:
 public:
     Light(const Point& center, const Color& power);
     Light();
-    ~Light();
+    virtual ~Light() = default;
     Point getCenter() const;
     Color getPower() const;
 };

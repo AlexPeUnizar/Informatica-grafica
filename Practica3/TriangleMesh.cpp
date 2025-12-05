@@ -40,9 +40,11 @@ TriangleMesh::TriangleMesh(const std::vector<std::shared_ptr<Point>>& vertices,
  * Se asegura de llamar al destructor de cada triángulo y limpiar las listas de triángulos e indices.
  */
 TriangleMesh::~TriangleMesh(){
+    /*
     for(size_t i = 0; i < triangles.size(); i++){
         triangles[i]->~Triangle();
-    }
+    } 
+    */
     triangles.clear();
     indices.clear();
 }

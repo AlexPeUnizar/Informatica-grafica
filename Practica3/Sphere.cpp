@@ -23,14 +23,6 @@ Sphere::Sphere(const Point &origin, double r, const std::shared_ptr<Material>& m
     this->origin = origin;
     this->r = r;
 }
-/**
- * @brief Destructor de la clase Sphere.
- * 
- * Este destructor libera los recursos asociados con el punto de origen de la esfera.
- */
-Sphere::~Sphere(){
-    origin.~Point();
-}
 
 /**
  * @brief Metodo que verifica si un rayo intersecta con la esfera.

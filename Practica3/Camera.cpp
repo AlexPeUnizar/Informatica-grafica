@@ -36,19 +36,6 @@ Camera::Camera(const Vector& up,const Vector& left,const Vector& front,const Poi
 }
 
 /**
- * @brief Destructor de la clase Camera.
- * 
- * Libera los recursos utilizados por la camara, incluyendo los vectores de orientacion
- * y el punto de origen.
- */
-Camera::~Camera(){
-    this->up.~Vector();    
-    this->left.~Vector();    
-    this->front.~Vector();    
-    this->o.~Point();    
-}
-
-/**
  * @brief Obtiene el vector de direccion "arriba" de la camara.
  * 
  * @return Referencia al vector "up" de la camara.

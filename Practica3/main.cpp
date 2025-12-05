@@ -58,18 +58,6 @@ int main(int argc, char* argv[]){
         )
     );
 
-    Sphere middleSphere(
-        Point(0,0.4,0),
-        0.2,
-        std::make_shared<Material>(
-            Color(0.15, 0.0, 0.15),  // kd: Sin difusa
-            Color(0.15, 0.15, 0.15),  // ks: Baja reflectividad
-            Color(0.7, 0.85, 0.7),  // kt: Alta transparencia
-            1.5                    // ior (indice de refraccion)
-        )
-    );
-
-
     // Integracion en el FigureCollection
     FigureCollection figures(vector<Figure*>(
         {
@@ -78,8 +66,10 @@ int main(int argc, char* argv[]){
         }
     ));
 
+    
 
     /* LIGHTS */
+    //ceilingPlane.setEmission(Color(1,1,1)); // Luz ambiental suave desde el techo
     Light light(Point(0, 0.7, 0), Color(1,1,1));
     //Light light2(Point(0, 05, 0), Color(1,0,1));
     vector<shared_ptr<Light>> lights = vector<shared_ptr<Light>>({

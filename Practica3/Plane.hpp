@@ -36,7 +36,7 @@ public:
     Plane(const Vector& normal);
     */
     Plane() = default;
-    ~Plane();
+    ~Plane() = default;
     virtual bool isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const override;
 };
 

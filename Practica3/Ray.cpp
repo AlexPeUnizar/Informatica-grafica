@@ -23,16 +23,6 @@ Ray::Ray(const Point& origin, const Vector& dir){
 }
 
 /**
- * @brief Destructor de la clase Ray.
- * 
- * Este destructor libera los recursos asociados con el punto de origen y la direccion del rayo.
- */
-Ray::~Ray(){
-    origin.~Point();
-    dir.~Vector();
-}
-
-/**
  * @brief Sobrecarga del operador de insercion para imprimir un rayo.
  * 
  * Este operador permite imprimir un rayo en un formato legible, mostrando su origen y direccion.

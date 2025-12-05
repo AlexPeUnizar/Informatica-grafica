@@ -27,7 +27,7 @@ public:
     Vector dir;
     Ray(const Point& origin, const Vector& dir);
     Ray(/* args */) = default;
-    ~Ray();
+    ~Ray() = default;
     friend std::ostream& operator<<(std::ostream& os, const Ray &r);
     Point at(double t) const;
 };

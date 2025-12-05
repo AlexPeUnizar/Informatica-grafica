@@ -36,7 +36,7 @@ private:
     size_t width;
 public:
     Camera(const Vector& up, const Vector& left,const Vector& front, const Point& o);
-    ~Camera();
+    ~Camera() = default;
     Vector& getUp();    
     Vector& getLeft();    
     Vector& getFront();    

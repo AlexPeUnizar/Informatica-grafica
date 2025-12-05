@@ -35,6 +35,17 @@ void Figure::setColor(double r, double g, double b){
 }
 
 /**
+ * @brief Establece la emision de la figura.
+ * 
+ * Asigna un nuevo color de emision al material de la figura.
+ * 
+ * @param emission Color que representa la emision de la figura.
+ */
+void Figure::setEmission(Color emission){
+    this->material.get()->setEmission(emission);
+}
+
+/**
  * @brief Establece la visibilidad de la figura.
  * 
  * Cambia el estado de visibilidad de la figura, permitiendo que sea renderizada o no.

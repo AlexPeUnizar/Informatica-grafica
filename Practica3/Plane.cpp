@@ -12,14 +12,6 @@
 #include "Plane.hpp"
 
 /**
- * @brief Destructor de la clase Plane.
- * Este destructor libera los recursos asociados con el vector normal del plano.
- */
-Plane::~Plane(){
-    this->normal.~Vector();
-}
-
-/**
  * @brief Constructor de la clase Plane.
  * 
  * Inicializa un plano con un vector normal, una distancia desde el origen y un material asociado.

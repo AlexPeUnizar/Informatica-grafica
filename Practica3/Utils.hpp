@@ -26,7 +26,7 @@ struct Settings{
     
     std::string IMAGE_VIEWER_PATH               = "\"C:/Program Files/GIMP 2/bin/gimp-2.10.exe\"";
     bool        OPEN_IMAGE_VIEWER_AFTER_RENDER  = false;
-    uint8_t     SCENE_NUMBER                    = 1;
+    uint16_t    SCENE_NUMBER                    = 1;
 };
 
 extern Settings settings;
