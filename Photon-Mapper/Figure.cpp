@@ -15,3 +15,14 @@ void Figure::setVisible(bool visible){
 void Figure::setMaterial(const std::shared_ptr<Material>& material){
     this->material = material;
 }
+
+/**
+ * @brief Establece la emision de la figura.
+ * 
+ * Asigna un nuevo color de emision al material de la figura.
+ * 
+ * @param emission Color que representa la emision de la figura.
+ */
+void Figure::setEmission(Color emission){
+    this->material.get()->setEmission(emission);
+}

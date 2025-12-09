@@ -1,10 +1,5 @@
 #include "Plane.hpp"
 
-
-Plane::~Plane(){
-    this->normal.~Vector();
-}
-
 Plane::Plane(const Vector& normal, const double dist, const std::shared_ptr<Material>& material): Figure(material){
     this->normal = normal;
     this->dist = dist;

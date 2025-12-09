@@ -30,6 +30,7 @@ private:
     Color kd;
     Color ks;
     Color kt;
+    Color emission = Color(0,0,0);
     double ior;
 protected:
     Color color;
@@ -39,6 +40,8 @@ public:
     Material(const Color& kd, const Color& ks, const Color& kt, double ior);
     ~Material() = default;
     void setColor(const Color& color);
+    void setEmission(const Color& emission);
+    bool isEmissive() const;
     virtual Color getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, const PhotonMap& photonMap, int depth = 0) const;
     virtual Color brdf(const Ray& ray, const Intersection& intersection) const;
     Color nextEvent(const std::vector<std::shared_ptr<Light>>& lights, const Intersection& intersection, const IntersectableFigure& scene) const;

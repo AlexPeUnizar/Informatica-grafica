@@ -12,7 +12,7 @@ public:
     double x, y, z;
     Coordinate(double x, double y, double z, double w);
     Coordinate() = default;
-    virtual ~Coordinate();
+    virtual ~Coordinate() = default;
     friend std::ostream& operator<<(std::ostream& os, const Coordinate &c);
     friend Matrix baseChange(const Coordinate& origin, const Coordinate& u, const Coordinate& v, const Coordinate& w);
     friend Coordinate operator*(const Matrix& m, const Coordinate& c);

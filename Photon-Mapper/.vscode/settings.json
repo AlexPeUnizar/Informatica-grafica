@@ -12,7 +12,8 @@
     "-Wformat=2",
     "-Wcast-align",
     "-Wnull-dereference",
-    "-Wno-unused-parameter"
+    "-Wno-unused-parameter",
+    "-Wno-sign-compare"
   ],
   "C_Cpp_Runner.msvcWarnings": [
     "/W4",

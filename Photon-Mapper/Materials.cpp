@@ -20,7 +20,7 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
     /*Color final(0,0,0);
     Color luzDirecta = this->nextEvent(lights, intersection, scene);
     
-    for(int path = 0; path < MAX_PATHS; path++){
+    for(int path = 0; path < settings.settings.MAX_PATHS; path++){
         Color luzIndirecta(0,0,0);
 
         //random ray
@@ -28,17 +28,17 @@ Color Materials::Lambertian::getColor(const Ray& ray, const Intersection& inters
         Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
         Intersection randomRayIntersection;
 
-        if(depth < MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
+        if(depth < settings.MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
             luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, photonMap, depth+1);            
         }
 
         final += luzDirecta + (luzIndirecta * M_PI * this->brdf(ray,intersection));
 
     }
-    final /= double(MAX_PATHS);
+    final /= double(settings.MAX_PATHS);
     return final;*/
     
-    if (depth >= MAX_BOUNCES) return Color(0, 0, 0); // Caso base de recursión
+    if (depth >= settings.MAX_BOUNCES) return Color(0, 0, 0); // Caso base de recursión
 
     // Calcula la iluminación directa utilizando el método nextEvent
     Color directLighting = nextEvent(lights, intersection, scene);
@@ -70,21 +70,21 @@ Color Materials::Metal::getColor(const Ray& ray, const Intersection& intersectio
     Color final(0,0,0);
     Color luzDirecta = this->nextEvent(lights, intersection, scene);
     
-    for(int path = 0; path < MAX_PATHS; path++){
+    for(int path = 0; path < settings.MAX_PATHS; path++){
         Color luzIndirecta(0,0,0);
 
         Vector reflectedVector = reflect(ray.dir, intersection.normal);
         Ray reflectedRay = Ray(intersection.intersectionPoint, reflectedVector);
         Intersection reflectedRayIntersection;
 
-        if(depth < MAX_BOUNCES && scene.isIntersectedBy(reflectedRay, 0.00001f, INT_MAX, reflectedRayIntersection)){
+        if(depth < settings.MAX_BOUNCES && scene.isIntersectedBy(reflectedRay, 0.00001f, INT_MAX, reflectedRayIntersection)){
             luzIndirecta = reflectedRayIntersection.material->getColor(reflectedRay, reflectedRayIntersection, lights, scene, photonMap, depth+1);            
         }
 
         final += luzDirecta + (luzIndirecta * M_PI  *this->brdf(ray,intersection));
 
     }
-    final /= double(MAX_PATHS);
+    final /= double(settings.MAX_PATHS);
     return final;
 
 }

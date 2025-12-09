@@ -6,10 +6,6 @@ Sphere::Sphere(const Point &origin, double r, const std::shared_ptr<Material>& m
     this->r = r;
 }
 
-Sphere::~Sphere(){
-    origin.~Point();
-}
-
 bool Sphere::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const{
     if(!this->visible){
         return false;

@@ -78,7 +78,7 @@ PPM Camera::render(const FigureCollection& scene, const std::vector<std::shared_
     PhotonMap photonMap;
     {
         ScopedTimer timer("PhotonMap Generation Timer");
-        photonMap = generatePhotonMap(scene, lights, MAX_PHOTONS);
+        photonMap = generatePhotonMap(scene, lights, settings.MAX_PHOTONS);
     }
     const int total = this->height * this->width;
     std::atomic<int> pixels_done{0};
@@ -106,7 +106,7 @@ PPM Camera::render(const FigureCollection& scene, const std::vector<std::shared_
             
             Color color(0,0,0);
 
-            for(size_t i = 0; i < MAX_RAYS_PER_PIXEL; i++){
+            for(size_t i = 0; i < settings.MAX_RAYS_PER_PIXEL; i++){
                                 
                 Ray ray = this->getRayToPixel(x, y);
                 
@@ -117,7 +117,7 @@ PPM Camera::render(const FigureCollection& scene, const std::vector<std::shared_
                 }
             }
 
-            color /= double(MAX_RAYS_PER_PIXEL);
+            color /= double(settings.MAX_RAYS_PER_PIXEL);
             //std::cout<<"Final: "<<color.r<<" "<<color.g<<" "<<color.b<<" "<<std::endl;
             image[y][x] = std::make_shared<PPM::Pixel>(color);
             pixels_done.fetch_add(1, std::memory_order_relaxed);
@@ -154,7 +154,7 @@ PhotonMap Camera::generatePhotonMap(const FigureCollection& scene, const std::ve
             //photonRay = Ray(intersection.intersectionPoint, direction);
 
 
-            while (bounce < MAX_BOUNCES && scene.isIntersectedBy(photonRay, 1e-6f, INT_MAX, intersection)) {
+            while (bounce < settings.MAX_BOUNCES && scene.isIntersectedBy(photonRay, 1e-6f, INT_MAX, intersection)) {
                 RR_Event event = russianRoulette(*intersection.material);
                 
                 if(event.eventType == ABSORTION){

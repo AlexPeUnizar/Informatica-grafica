@@ -10,7 +10,7 @@ private:
 public:
     Light(const Point& center, const Color& power);
     Light();
-    ~Light();
+    ~Light() = default;
     Point getCenter() const;
     Color getPower() const;
     double intensity() const;

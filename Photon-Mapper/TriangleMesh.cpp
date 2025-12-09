@@ -15,9 +15,6 @@ TriangleMesh::TriangleMesh(const std::vector<std::shared_ptr<Point>>& vertices,
 }
 
 TriangleMesh::~TriangleMesh(){
-    for(size_t i = 0; i < triangles.size(); i++){
-        triangles[i]->~Triangle();
-    }
     triangles.clear();
     indices.clear();
 }

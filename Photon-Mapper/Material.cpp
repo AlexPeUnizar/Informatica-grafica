@@ -21,6 +21,18 @@ RR_Event russianRoulette(Material& material){
     return russianRoulette(material.kd, material.ks, material.kt);
 }
 
+/**
+ * @brief Establece la emision del material.
+ *
+ * Este metodo permite cambiar el color de emision del material a un nuevo valor.
+ *
+ * @param emission Nuevo color de emision que se asignará al material.
+ */
+void Material::setEmission(const Color &emission)
+{
+    this->emission = emission;
+}
+
 Vector Material::getSacterredVector(const Ray &ray, const Intersection &intersection, const RR_Event event) const{
     switch (event.eventType){
         case DIFUSSE:
@@ -57,6 +69,9 @@ void Material::setColor(const Color& color){
 }
 
 Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, const Intersection& intersection, const IntersectableFigure& scene) const{
+    if (maxComponent(emission) > 0.0){
+        return emission;
+    }
     Color finalColor;
 
     for(const auto& light : lights){
@@ -129,19 +144,25 @@ Color Material::calculateIllumination(const std::vector<const Photon*>& nearestP
     return result / (M_PI * r * r);
 }
 
+bool Material::isEmissive() const{
+    return maxComponent(this->emission) > 0.0;
+}
 
 Color Material::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, const PhotonMap& photonMap, int depth) const{
     
-    if (depth >= MAX_BOUNCES){
+    if (depth >= settings.MAX_BOUNCES){
         //auto nearestPhotons = search_nearest(photonMap, intersection.intersectionPoint, 50, 0.1); // 50 fotones y radio de 0.1
         //return calculateIllumination(nearestPhotons, intersection);
         return Color(0, 0, 0); // Caso base de recursión
     } 
 
+    if (maxComponent(emission) > 0.0){
+        return emission;
+    }
     Color final(0,0,0);
     //Color luzDirecta = this->nextEvent(lights, intersection, scene);
     
-    for(int path = 0; path < MAX_PATHS; path++){
+    for(int path = 0; path < settings.MAX_PATHS; path++){
         Color luzIndirecta(0,0,0);
 
         RR_Event event = russianRoulette(kd, ks, kt);
@@ -163,13 +184,13 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
             }
            
         } else{
-            auto nearestPhotons = search_nearest(photonMap, randomRayIntersection.intersectionPoint, MAX_NEIGHBORS); // 50 fotones y radio de 0.1
+            auto nearestPhotons = search_nearest(photonMap, randomRayIntersection.intersectionPoint, settings.MAX_NEIGHBORS); // 50 fotones y radio de 0.1
             luzIndirecta = calculateIllumination(nearestPhotons, randomRayIntersection);
         }
         
         final += (luzIndirecta * bsdf(randomRay, intersection, event)) ;      
     }
-    final /= double(MAX_PATHS);
+    final /= double(settings.MAX_PATHS);
     return final;
 }
 
@@ -196,7 +217,7 @@ Color Material::bsdf(const Ray& ray, const Intersection& intersection, const RR_
 
 /*
 Color Material::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth) const{
-    if (depth >= MAX_BOUNCES) return Color(0, 0, 0);
+    if (depth >= settings.MAX_BOUNCES) return Color(0, 0, 0);
 
     // Calcula las probabilidades para difuso, especular y refractivo
     double pDiffuse = maxComponent(this->kd);
@@ -217,7 +238,7 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
     Color final(0,0,0);
     Color luzDirecta = this->nextEvent(lights, intersection, scene);
     
-    for(int path = 0; path < MAX_PATHS; path++){
+    for(int path = 0; path < settings.MAX_PATHS; path++){
         Color luzIndirecta(0,0,0);
 
         //random ray
@@ -242,7 +263,7 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
         Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
         Intersection randomRayIntersection;
 
-        if(depth < MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
+        if(depth < settings.MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
             luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, depth+1);            
         }
         if (randomValue < pDiffuse) {
@@ -260,7 +281,7 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
         
 
     }
-    final /= double(MAX_PATHS);
+    final /= double(settings.MAX_PATHS);
     return final;
 }
 
