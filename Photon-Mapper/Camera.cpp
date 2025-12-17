@@ -163,7 +163,7 @@ PhotonMap Camera::generatePhotonMap(const FigureCollection& scene, const std::ve
 
                 flux = flux * intersection.material->bsdf(photonRay, intersection, event);
                 
-                if(event.eventType == DIFUSSE){
+                if(event.eventType == DIFUSSE /*&& bounce > 1*/){
                     photons.push_back(Photon(intersection.intersectionPoint, photonRay.dir, flux));
                 }
                 bounce++;

@@ -26,6 +26,8 @@
  * @return false Si no hay interseccion o si el rayo es paralelo al triángulo.
  */
 bool Triangle::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const {
+    if(!this->visible) return false;
+
     // Calcula los bordes del triángulo
     Vector edge1 = v1 - v0;
     Vector edge2 = v2 - v0;
@@ -58,7 +60,24 @@ bool Triangle::isIntersectedBy(const Ray& ray, double tMin, double tMax, Interse
     // Si hay interseccion, rellena la informacion en el objeto `intersection`
     intersection.t = t;
     intersection.intersectionPoint = ray.at(t);
-    intersection.normal = normalize(crossProduct(edge1, edge2));
+
+    intersection.b1 = u;
+    intersection.b2 = v;
+    intersection.b0 = 1.0 - u - v;
+
+    Vector faceN = normalize(crossProduct(edge1, edge2));
+
+    if (hasVertexNormals) {
+        Vector smoothN = (intersection.b0 * n0) + (intersection.b1 * n1) + (intersection.b2 * n2);
+        intersection.normal = normalize(smoothN);
+    } else {
+        intersection.normal = faceN;
+    }
+
+    if (dotProduct(intersection.normal, ray.dir) > 0.0) {
+        intersection.normal = -intersection.normal;
+    }
+
     intersection.material = this->material;
     intersection.figureName = "Triangle";
 

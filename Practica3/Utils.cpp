@@ -63,10 +63,10 @@ static void print_usage(const char* progname) {
               << "  --open-viewer                Abrir visor despues de renderizar\n"
               << "  --scene N                    Seleccionar escena [1,2,3,4]\n"
               << "      Las escenas son:\n"
-              << "          -1: ...\n"
-              << "          -2: ...\n"
-              << "          -3: ...\n"
-              << "          -4: ...\n";
+              << "          -1: Escena Normal - Una bola de cristal y una de plastico\n"
+              << "          -2: Escena con luz de area - Una bola de cristal y una de plastico\n"
+              << "          -3: Escena Normal - Dos pelotas difusas\n"
+              << "          -4: Conejo difuso \n";
 }
 
 /**

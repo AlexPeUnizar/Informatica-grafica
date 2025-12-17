@@ -24,7 +24,7 @@ struct Settings{
     size_t      IMAGE_HEIGHT                    = 1024;
     std::string OUTPUT_FILE                     = "out.ppm";
     
-    std::string IMAGE_VIEWER_PATH               = "\"C:/Program Files/GIMP 2/bin/gimp-2.10.exe\"";
+    std::string IMAGE_VIEWER_PATH               = "\"C:/Program Files/GIMP 3/bin/gimp-3.0.exe\"";
     bool        OPEN_IMAGE_VIEWER_AFTER_RENDER  = false;
     uint16_t    SCENE_NUMBER                    = 1;
 };

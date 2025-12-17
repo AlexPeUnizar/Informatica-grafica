@@ -30,6 +30,7 @@ struct Intersection{
         Point intersectionPoint = Point();
         std::shared_ptr<Material> material;
         std::string figureName = ""; 
+        double b0 = 0, b1 = 0, b2 = 0;  
 };
 
 /**

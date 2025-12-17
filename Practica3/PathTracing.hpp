@@ -36,5 +36,7 @@
 #include "Color.hpp"
 #include "ScopedTimer.hpp"
 #include "Utils.hpp"
+#include "Scene.hpp"
+#include "Scenes.hpp"
 
 #endif /* PATHTRACING_HPP */
