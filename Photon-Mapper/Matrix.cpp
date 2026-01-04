@@ -1,7 +1,22 @@
+/**
+ * @file Matrix.cpp
+ * @brief Implementacion de la clase Matrix para operaciones con matrices 4x4 utilizadas en transformaciones gráficas.
+ * 
+ * Este archivo contiene la implementacion de la clase Matrix, que proporciona funcionalidades para la creacion y manipulacion
+ * de matrices 4x4, incluyendo operaciones de identidad, traslacion, rotacion, escalado y multiplicacion de matrices.
+ * Está orientado a su uso en aplicaciones de informática gráfica y transformaciones en el espacio tridimensional.
+ * 
+ * @author Alex
+ * @date 18-6-2025
+ */
 #include "Matrix.hpp"
 #include <math.h>
 #include <iomanip>
 
+/**
+ * @brief Constructor por defecto de la clase Matrix.
+ *
+ */
 Matrix::Matrix(){
     for (size_t i = 0; i < 4; i++){
         for (size_t j = 0; j < 4; j++){
@@ -10,6 +25,11 @@ Matrix::Matrix(){
     }
 }
 
+/**
+ * @brief Destructor de la clase Matrix.
+ *
+ * Este destructor limpia los valores de la matriz a cero.
+ */
 Matrix::~Matrix(){
     for (size_t i = 0; i < 4; i++){ 
         for (size_t j = 0; j < 4; j++){
@@ -18,6 +38,15 @@ Matrix::~Matrix(){
     }
 }
 
+/**
+ * @brief Sobrecarga del operador de insercion para imprimir la matriz en un formato legible.
+ *
+ * Este operador permite imprimir la matriz en un formato estructurado, con bordes y tabulaciones.
+ * 
+ * @param os Flujo de salida donde se imprimirá la matriz.
+ * @param m Matriz a imprimir.
+ * @return std::ostream& Flujo de salida modificado.
+ */
 std::ostream& operator<<(std::ostream& os, const Matrix &m){
     os << std::setprecision(2);
     for (size_t i = 0; i < 4; i++){
@@ -49,6 +78,14 @@ std::ostream& operator<<(std::ostream& os, const Matrix &m){
     return os;
 }
 
+/**
+ * @brief Crea una matriz identidad 4x4.
+ *
+ * Esta funcion genera una matriz identidad, que es una matriz cuadrada con unos en la diagonal principal
+ * y ceros en el resto de las posiciones.
+ * 
+ * @return Matrix Matriz identidad 4x4.
+ */
 Matrix identity(){
     Matrix m = Matrix();
     m[0][0] = 1;
@@ -58,6 +95,11 @@ Matrix identity(){
     return m;
 }
 
+/**
+ * @brief Transpone una matriz 4x4.
+ *
+ * Esta funcion intercambia las filas y columnas de una matriz
+ */ 
 Matrix transpose(const Matrix& m){
     Matrix result;
     for (std::size_t i = 0; i < 4; i++) {
@@ -68,7 +110,18 @@ Matrix transpose(const Matrix& m){
     return result;
 }
 
-Matrix translation(const double new_x, const double new_y, const double new_z){
+/**
+ * @brief Crea una matriz de traslacion 4x4.
+ *
+ * Esta funcion genera una matriz de traslacion que desplaza un punto en el espacio tridimensional
+ * por las distancias especificadas en los ejes x, y y z.
+ * 
+ * @param new_x Desplazamiento en el eje x.
+ * @param new_y Desplazamiento en el eje y.
+ * @param new_z Desplazamiento en el eje z.
+ * @return Matrix Matriz de traslacion 4x4.
+ */
+Matrix traslation(const double new_x, const double new_y, const double new_z){
     Matrix m = identity();
     m[0][3] = new_x;
     m[1][3] = new_y;
@@ -76,6 +129,15 @@ Matrix translation(const double new_x, const double new_y, const double new_z){
     return m;
 }
 
+/**
+ * @brief Crea una matriz de rotacion alrededor del eje X.
+ *
+ * Esta funcion genera una matriz de rotacion que rota un punto en el espacio tridimensional
+ * alrededor del eje X por un ángulo especificado en radianes.
+ * 
+ * @param angle Ángulo de rotacion en radianes.
+ * @return Matrix Matriz de rotacion alrededor del eje X 4x4.
+ */
 Matrix rotationX(const double angle){
     Matrix m = identity();
     m[1][1] = cos(angle);
@@ -85,6 +147,15 @@ Matrix rotationX(const double angle){
     return m;
 }
 
+/**
+ * @brief Crea una matriz de rotacion alrededor del eje Y.
+ *
+ * Esta funcion genera una matriz de rotacion que rota un punto en el espacio tridimensional
+ * alrededor del eje Y por un ángulo especificado en radianes.
+ * 
+ * @param angle Ángulo de rotacion en radianes.
+ * @return Matrix Matriz de rotacion alrededor del eje Y 4x4.
+ */
 Matrix rotationY(const double angle){
     Matrix m = identity();
     m[0][0] = cos(angle);
@@ -94,6 +165,15 @@ Matrix rotationY(const double angle){
     return m;
 }
 
+/**
+ * @brief Crea una matriz de rotacion alrededor del eje Z.
+ *
+ * Esta funcion genera una matriz de rotacion que rota un punto en el espacio tridimensional
+ * alrededor del eje Z por un ángulo especificado en radianes.
+ * 
+ * @param angle Ángulo de rotacion en radianes.
+ * @return Matrix Matriz de rotacion alrededor del eje Z 4x4.
+ */
 Matrix rotationZ(const double angle){
     Matrix m = identity();
     m[0][0] = cos(angle);
@@ -103,6 +183,17 @@ Matrix rotationZ(const double angle){
     return m;
 }
 
+/**
+ * @brief Crea una matriz de escalado 4x4.
+ *
+ * Esta funcion genera una matriz de escalado que escala un punto en el espacio tridimensional
+ * por los factores especificados en los ejes x, y y z.
+ * 
+ * @param x_scale Factor de escalado en el eje x.
+ * @param y_scale Factor de escalado en el eje y.
+ * @param z_scale Factor de escalado en el eje z.
+ * @return Matrix Matriz de escalado 4x4.
+ */
 Matrix scale(const double x_scale, const double y_scale, const double z_scale){
     Matrix m = identity();
     m[0][0] = x_scale;
@@ -111,6 +202,15 @@ Matrix scale(const double x_scale, const double y_scale, const double z_scale){
     return m;
 }
 
+/**
+ * @brief Sobrecarga del operador de multiplicacion de matrices.
+ *
+ * Este operador permite multiplicar dos matrices 4x4, realizando la operacion de producto matricial.
+ * 
+ * @param m1 Primera matriz a multiplicar.
+ * @param m2 Segunda matriz a multiplicar.
+ * @return Matrix Resultado de la multiplicacion de las dos matrices.
+ */
 Matrix operator*(const Matrix& m1, const Matrix& m2){
     Matrix result = Matrix();
 
@@ -125,6 +225,15 @@ Matrix operator*(const Matrix& m1, const Matrix& m2){
     return result;
 }
 
+/**
+ * @brief Sobrecarga del operador de multiplicacion de una matriz por un escalar.
+ *
+ * Este operador permite multiplicar una matriz 4x4 por un escalar, escalando todos sus elementos.
+ * 
+ * @param m Matriz a multiplicar.
+ * @param c Escalar por el cual se multiplica la matriz.
+ * @return Matrix Resultado de la multiplicacion de la matriz por el escalar.
+ */
 Matrix operator*(const Matrix& m, const double c){
     Matrix result = Matrix();
     for (size_t i = 0; i < 4; i++){
@@ -135,10 +244,27 @@ Matrix operator*(const Matrix& m, const double c){
     return result;
 }
 
+/**
+ * @brief Sobrecarga del operador de multiplicacion de un escalar por una matriz.
+ *
+ * Este operador permite multiplicar un escalar por una matriz 4x4, escalando todos sus elementos.
+ * 
+ * @param c Escalar por el cual se multiplica la matriz.
+ * @param m Matriz a multiplicar.
+ * @return Matrix Resultado de la multiplicacion del escalar por la matriz.
+ */
 Matrix operator*(const double c, const Matrix& m){
     return m * c;
 }
 
+/**
+ * @brief Calcula la inversa de una matriz 4x4.
+ *
+ * Esta funcion calcula la inversa de una matriz 4x4 utilizando el metodo de cofactores y determinantes.
+ * 
+ * @param m Matriz a invertir.
+ * @return Matrix Matriz inversa de la matriz dada.
+ */
 Matrix inverse(const Matrix& m){
     Matrix inv;
     double det;

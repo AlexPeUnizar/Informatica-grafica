@@ -10,30 +10,17 @@
 #include "TriangleMesh.hpp"
 #include "ObjectLoader.hpp"
 
-/** 
- * @brief Constructor de la clase TriangleMesh.
+/**
+ * @brief Calcula los límites de un triángulo específico en la malla.
  * 
- * Este constructor inicializa una malla de triángulos a partir de una lista de vertices y una lista de indices que definen los triángulos.
- * Tambien se asigna un material a toda la malla.
+ * Esta función toma el identificador de un triángulo en la malla y calcula
+ * su caja delimitadora (Axis-Aligned Bounding Box, AABB). La caja delimitadora
+ * está definida por los puntos mínimo y máximo en las coordenadas x, y, z
+ * de los vértices del triángulo.
  * 
- * @param vertices Lista de vertices que componen la malla.
- * @param indices Lista de indices que definen los triángulos en la malla.
- * @param material Material asociado a toda la malla.
- TriangleMesh::TriangleMesh(const std::vector<std::shared_ptr<Point>>& vertices, 
- const std::vector<int>& indices, 
- const std::shared_ptr<Material>& material) 
- : vertices(vertices), indices(indices), material(material) {
-    
- // Crear triángulos a partir de la lista de indices
- for (size_t i = 0; i < indices.size(); i += 3) {
-    auto v0 = vertices[indices[i]];
-    auto v1 = vertices[indices[i + 1]];
-    auto v2 = vertices[indices[i + 2]];
-    triangles.push_back(std::make_shared<Triangle>(*v0, *v1, *v2, material));
-    }
-}
-*/
-
+ * @param id Identificador del triángulo en la malla.
+ * @return AABB Caja delimitadora del triángulo especificado.
+ */
 AABB TriangleMesh::triBounds(int id) const {
     const auto& tri = triangles[ triIndex[id] ];
     const Point& a = tri->getV0();
@@ -45,6 +32,17 @@ AABB TriangleMesh::triBounds(int id) const {
     return AABB(mn, mx);
 }
 
+/**
+ * @brief Calcula el centroide de un triángulo específico en la malla.
+ * 
+ * Esta función toma el identificador de un triángulo en la malla y calcula
+ * su centroide, que es el punto medio entre sus tres vértices. El centroide
+ * se utiliza comúnmente en algoritmos de construcción de estructuras de datos
+ * espaciales, como los árboles BVH (Bounding Volume Hierarchy).
+ * 
+ * @param id Identificador del triángulo en la malla.
+ * @return Point Centroide del triángulo especificado.
+ */
 Point TriangleMesh::triCentroid(int id) const {
     const auto& tri = triangles[ triIndex[id] ];
     const Point& a = tri->getV0();
@@ -53,6 +51,15 @@ Point TriangleMesh::triCentroid(int id) const {
     return Point((a.x+b.x+c.x)/3.0, (a.y+b.y+c.y)/3.0, (a.z+b.z+c.z)/3.0);
 }
 
+/**
+ * @brief Construye la jerarquía de volúmenes delimitadores (BVH, Bounding Volume Hierarchy) 
+ * para la malla triangular.
+ * 
+ * Este método inicializa el índice de triángulos y construye la estructura BVH 
+ * para optimizar las consultas espaciales, como la detección de colisiones o 
+ * la intersección de rayos.
+ * 
+ */
 void TriangleMesh::buildBVH() {
     triIndex.resize(triangles.size());
     for (int i = 0; i < (int)triangles.size(); ++i) triIndex[i] = i;
@@ -60,6 +67,30 @@ void TriangleMesh::buildBVH() {
     root = buildNode(0, (int)triangles.size());
 }
 
+/**
+ * @brief Construye un nodo del BVH (Bounding Volume Hierarchy) para un rango de triángulos.
+ * 
+ * Este método construye un nodo del BVH dividiendo recursivamente un rango de triángulos
+ * en subrangos más pequeños, hasta que el número de triángulos en un rango sea menor o igual
+ * al tamaño máximo permitido para una hoja (leafSize). Cada nodo almacena una caja envolvente
+ * (AABB) que contiene todos los triángulos en su rango.
+ * 
+ * @param start Índice inicial del rango de triángulos.
+ * @param end Índice final (exclusivo) del rango de triángulos.
+ * @return int Índice del nodo creado en el vector de nodos.
+ * 
+ * @details
+ * - Si el rango contiene un número de triángulos menor o igual a leafSize, se crea un nodo hoja.
+ * - Si el rango contiene más triángulos, se divide en dos subrangos a lo largo del eje en el que
+ *   la caja envolvente tiene mayor extensión (x, y o z).
+ * - Los triángulos se ordenan según el centroide de sus vértices en el eje seleccionado.
+ * - Se crean nodos hijos recursivamente para los subrangos izquierdo y derecho.
+ * - Finalmente, se actualiza la caja envolvente del nodo actual como la unión de las cajas
+ *   envolventes de sus hijos.
+ * 
+ * @note Este método utiliza el algoritmo std::nth_element para dividir los triángulos
+ *       en dos subrangos según el eje seleccionado.
+ */
 int TriangleMesh::buildNode(int start, int end) {
     BVHNode node;
     // box del rango
@@ -119,7 +150,14 @@ int TriangleMesh::buildNode(int start, int end) {
     return idx;
 }
 
-
+/**
+ * @brief Agrega un triángulo a la malla triangular.
+ * 
+ * Este método añade un triángulo representado por un puntero compartido
+ * a la colección de triángulos que conforman la malla.
+ * 
+ * @param t Puntero compartido al triángulo que se desea agregar.
+ */
 void TriangleMesh::addTriangle(const std::shared_ptr<Triangle>& t) {
     triangles.push_back(t);
 }
@@ -172,6 +210,20 @@ bool TriangleMesh::isIntersectedBy(const Ray& ray, double tMin, double tMax, Int
     return hit;
 }
 
+/**
+ * @brief Crea una malla triangular a partir de un archivo OBJ.
+ * 
+ * Este metodo carga un archivo OBJ, procesa sus datos y crea una malla triangular
+ * que puede ser utilizada en el motor de renderizado. Permite opciones para suavizar
+ * las normales y aplicar transformaciones de escala y desplazamiento.
+ * 
+ * @param path Ruta al archivo OBJ.
+ * @param material Material asociado a la malla triangular.
+ * @param smoothNormals Indica si se deben calcular normales suaves por vértice.
+ * @param scaleFactor Factor de escala para los vértices.
+ * @param offset Vector de desplazamiento para los vértices.
+ * @return std::unique_ptr<TriangleMesh> Puntero único a la malla triangular creada.
+ */
 std::unique_ptr<TriangleMesh> TriangleMesh::fromOBJ(
     const std::string& path,
     const std::shared_ptr<Material>& material,
@@ -205,7 +257,14 @@ std::unique_ptr<TriangleMesh> TriangleMesh::fromOBJ(
     return mesh;
 }
 
-
+/**
+ * @brief Aplica una transformacion matricial a la malla triangular.
+ * 
+ * Este metodo transforma las posiciones de los vertices de todos los triángulos
+ * en la malla utilizando la matriz de transformacion proporcionada.
+ * 
+ * @param t Matriz de transformacion a aplicar.
+ */
 void TriangleMesh::applyTransform(const Matrix& t) {
     for (auto& triangle : triangles) {
         triangle->applyTransform(t);

@@ -1,3 +1,14 @@
+/**
+ * @file ToneMapping.hpp
+ * @brief Declaraciones de funciones para la aplicacion de tecnicas de tone mapping sobre imágenes en formato PPM.
+ *
+ * Este archivo contiene las declaraciones de las funciones necesarias para realizar operaciones de clamping,
+ * ecualizacion y correccion gamma sobre imágenes, asi como combinaciones de estas tecnicas. 
+ * Las funciones están diseñadas para trabajar con objetos de la clase PPM.
+ *
+ * @author Alex
+ * @date 18-6-2025
+ */
 #ifndef TONE_MAPPING_HPP
 #define TONE_MAPPING_HPP
 

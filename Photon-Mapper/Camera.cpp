@@ -1,3 +1,15 @@
+/**
+ * @file Camera.cpp
+ * @brief Implementacion de la clase Camera para renderizado por ray tracing.
+ *
+ * Este archivo contiene la implementacion de la clase Camera, responsable de
+ * generar rayos a traves de los pixeles, gestionar la orientacion y posicion de la camara,
+ * y renderizar una escena usando ray tracing. El proceso de renderizado soporta multihilo
+ * para mejorar el rendimiento.
+ * 
+ * @author Alex
+ * @date 18-6-2025
+ */
 #define _USE_MATH_DEFINES
 #include <future>
 #include <thread>
@@ -8,6 +20,17 @@
 #include "ScopedTimer.hpp"
 #include <math.h>
 
+/**
+ * @brief Constructores de la clase Camera.
+ * 
+ * Inicializa una nueva instancia de la clase Camera con los vectores de orientacion
+ * (up, left, front) y el punto de origen (o) especificados.
+ * 
+ * @param up    Vector que representa la direccion "arriba" de la camara.
+ * @param left  Vector que representa la direccion "izquierda" de la camara.
+ * @param front Vector que representa la direccion "frontal" de la camara.
+ * @param o     Punto de origen (posicion) de la camara.
+ */
 Camera::Camera(const Vector& up,const Vector& left,const Vector& front,const Point& o){
     this->up = up;
     this->left = left;
@@ -15,6 +38,11 @@ Camera::Camera(const Vector& up,const Vector& left,const Vector& front,const Poi
     this->o = o;
 }
 
+/**
+ * @brief Obtiene el vector de direccion "arriba" de la camara.
+ * 
+ * @return Referencia al vector "up" de la camara.
+ */
 Camera::~Camera(){
     this->up.~Vector();    
     this->left.~Vector();    
@@ -26,34 +54,80 @@ Vector& Camera::getUp(){
     return this->up;
 }   
 
+/**
+ * @brief Obtiene el vector de direccion "izquierda" de la camara.
+ * 
+ * @return Referencia al vector "left" de la camara.
+ */
 Vector& Camera::getLeft(){
     return this->left;
 }   
 
+/**
+ * @brief Obtiene el vector de direccion "frontal" de la camara.
+ * 
+ * @return Referencia al vector "front" de la camara.
+ */
 Vector& Camera::getFront(){
     return this->front;
 }   
 
+/**
+ * @brief Obtiene el punto de origen (posicion) de la camara.
+ * 
+ * @return Referencia al punto de origen (o) de la camara.
+ */
 Point& Camera::getO(){
     return this->o;
 }   
 
+/**
+ * @brief Obtiene la altura de la camara.
+ * 
+ * @return Referencia a la variable que almacena la altura de la camara.
+ */
 size_t& Camera::getHeight(){
     return this->height;
 }   
 
+/**
+ * @brief Obtiene el ancho de la camara.
+ * 
+ * @return Referencia a la variable que almacena el ancho de la camara.
+ */
 size_t& Camera::getWidth(){
     return this->width;
 }
 
+/**
+ * @brief Establece la altura de la camara.
+ * 
+ * @param height Nuevo valor para la altura de la camara.
+ */
 void Camera::setHeight(const size_t height){
     this->height = height;     
 }    
 
+/**
+ * @brief Establece el ancho de la camara.
+ * 
+ * @param width Nuevo valor para el ancho de la camara.
+ */
 void Camera::setWidth(const size_t width){
     this->width = width; 
 }
 
+/**
+ * @brief Genera un rayo desde la camara hacia un pixel especifico de la imagen.
+ * 
+ * Calcula un rayo que apunta desde el origen de la camara hacia un pixel
+ * en las coordenadas (x, y) especificadas. El rayo se ajusta para incluir
+ * una pequeña variacion aleatoria dentro del pixel.
+ * 
+ * @param x Coordenada horizontal del pixel.
+ * @param y Coordenada vertical del pixel.
+ * @return Ray Un rayo que apunta al pixel especificado.
+ */
 Ray Camera::getRayToPixel(size_t x, size_t y){
     Vector upperLeft = this->front + this->left + this->up;
 
@@ -73,6 +147,17 @@ Ray Camera::getRayToPixel(size_t x, size_t y){
     return ray;
 }
 
+/**
+ * @brief Renderiza una escena 3D utilizando ray tracing.
+ * 
+ * Recorre cada pixel de la imagen y genera un rayo hacia ese pixel. Luego, verifica
+ * si el rayo intersecta con algun objeto en la escena. Si hay una interseccion, calcula
+ * el color del pixel basado en el material del objeto y las luces presentes en la escena.
+ * 
+ * @param scene Referencia a la coleccion de figuras que componen la escena.
+ * @param lights Vector de punteros compartidos a las luces presentes en la escena.
+ * @return PPM Imagen renderizada en formato PPM.
+ */
 PPM Camera::render(const FigureCollection& scene, const std::vector<std::shared_ptr<Light>>& lights){
     PPM image(this->height, this->width);
     PhotonMap photonMap;
@@ -132,6 +217,18 @@ PPM Camera::render(const FigureCollection& scene, const std::vector<std::shared_
     return image;
 }
 
+/**
+ * @brief Genera un mapa de fotones para la escena dada.
+ * 
+ * Simula la emision y dispersion de fotones desde las luces en la escena.
+ * Los fotones se lanzan desde las luces en direcciones aleatorias y se
+ * almacenan en el mapa de fotones cuando interactuan con superficies difusas.
+ * 
+ * @param scene Referencia a la coleccion de figuras que componen la escena.
+ * @param lights Vector de punteros compartidos a las luces presentes en la escena.
+ * @param totalPhotons Numero total de fotones a generar.
+ * @return PhotonMap Mapa de fotones generado para la escena.
+ */
 PhotonMap Camera::generatePhotonMap(const FigureCollection& scene, const std::vector<std::shared_ptr<Light>>& lights, size_t totalPhotons){
     std::vector<Photon> photons;
     double totalPower = 0;

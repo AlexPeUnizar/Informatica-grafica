@@ -17,6 +17,12 @@
 #include "Figure.hpp"
 #include "AABB.hpp"
 
+/**
+ * @brief Estructura BVHNode que representa un nodo en la jerarquía de volúmenes delimitadores (BVH).
+ * 
+ * Esta estructura almacena la caja delimitadora (AABB) del nodo, los índices de los nodos hijo izquierdo y derecho,
+ * así como el rango de triángulos contenidos en el nodo si es una hoja.
+ */
 struct BVHNode {
     AABB box;
     int left = -1;

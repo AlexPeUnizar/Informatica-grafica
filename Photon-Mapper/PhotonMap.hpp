@@ -1,3 +1,10 @@
+/**
+ * @file PhotonMap.hpp
+ * @author Alex
+ * @brief Declaracion de la clase PhotonMap para el almacenamiento y busqueda de fotones utilizando un KDTree.
+ * @date 2025-01-04
+ * 
+ */
 #ifndef PHOTONMAP_HPP
 #define PHOTONMAP_HPP
 
@@ -8,6 +15,12 @@
 #include "Point.hpp"
 #include "Color.hpp"
 
+/**
+ * @class Photon
+ * @brief Clase que representa un foton en el mapa de fotones.
+ * 
+ * Esta clase almacena la posicion, la direccion incidente y el flujo del foton.
+ */
 class Photon{
 private:
     Point pos;
@@ -25,6 +38,12 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Photon &p);
 };
 
+/**
+ * @struct PhotonAxisPosition
+ * @brief Estructura para obtener la posicion de un foton en una dimension especifica.
+ * 
+ * Esta estructura define un operador que devuelve la coordenada del foton en la dimension dada.
+ */
 struct PhotonAxisPosition {
     double operator()(const Photon& p, std::size_t i) const {
         return p.position(i);

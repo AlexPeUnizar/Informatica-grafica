@@ -1,12 +1,13 @@
 /**
- * @file Direction.hpp
- * @author your name (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2024-09-11
+ * @file Vector.hpp
+ * @brief Declaracion de la clase Vector para operaciones en el espacio 3D.
  * 
- * @copyright Copyright (c) 2024
+ * Esta clase extiende la funcionalidad de la clase Coordinate para representar y manipular vectores en tres dimensiones,
+ * proporcionando operadores y funciones amigas para operaciones vectoriales comunes como suma, resta, producto cruzado,
+ * producto escalar, normalizacion, reflexion y refraccion.
  * 
+ * @author Alex
+ * @date 18-6-2025
  */
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
@@ -14,6 +15,13 @@
 #include <stdint.h>
 #include "Coordinate.hpp"
 
+/**
+ * @class Vector
+ * @brief Clase que representa un vector en el espacio tridimensional.
+ * 
+ * Esta clase hereda de Coordinate y proporciona operaciones vectoriales como suma, resta, producto cruzado,
+ * producto escalar, normalizacion, reflexion y refraccion. Tambien permite la impresion del vector en un formato legible.
+ */
 class Vector: public Coordinate{
 private:
 

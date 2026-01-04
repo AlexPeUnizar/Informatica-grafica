@@ -1,11 +1,41 @@
+/**
+ * @file Sphere.cpp
+ * @brief Implementacion de la clase Sphere para la representacion y manejo de esferas en un sistema de gráficos por computadora.
+ * 
+ * Este archivo contiene la definicion de los metodos de la clase Sphere, que permite crear esferas, gestionar su interseccion con rayos y almacenar informacion relevante para el renderizado.
+ * 
+ * @author Alex
+ * @date 18-6-2025
+ */
 #include "Sphere.hpp"
 #include <math.h>
 
+/**
+ * @brief Constructor de la clase Sphere.
+ * 
+ * Este constructor inicializa una esfera con un punto de origen, un radio y un material asociado.
+ * 
+ * @param origin Punto de origen de la esfera.
+ * @param r Radio de la esfera.
+ * @param material Material asociado a la esfera.
+ */
 Sphere::Sphere(const Point &origin, double r, const std::shared_ptr<Material>& material): Figure(material){
     this->origin = origin;
     this->r = r;
 }
 
+/**
+ * @brief Metodo que verifica si un rayo intersecta con la esfera.
+ * 
+ * Este metodo calcula la interseccion entre un rayo y la esfera, determinando si el rayo intersecta dentro de los limites especificados (tMin y tMax).
+ * Si hay una interseccion, se llena la estructura de Intersection con los detalles de la interseccion.
+ * 
+ * @param ray Rayo que se está verificando para la interseccion.
+ * @param tMin Valor minimo de t para considerar la interseccion.
+ * @param tMax Valor máximo de t para considerar la interseccion.
+ * @param intersection Estructura donde se almacenarán los detalles de la interseccion si ocurre.
+ * @return bool Verdadero si hay una interseccion válida, falso en caso contrario.
+ */
 bool Sphere::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersection& intersection) const{
     if(!this->visible){
         return false;
@@ -58,6 +88,14 @@ bool Sphere::isIntersectedBy(const Ray& ray, double tMin, double tMax, Intersect
     */
 }
 
+/**
+ * @brief Aplica una transformacion matricial a la esfera.
+ * 
+ * Este metodo transforma la posicion del origen de la esfera utilizando la matriz de transformacion proporcionada.
+ * Ademas, ajusta el radio de la esfera en funcion de las escalas aplicadas en cada eje.
+ * 
+ * @param m Matriz de transformacion a aplicar. 
+ */
 void Sphere::applyTransform(const Matrix& m) {
     origin = Point(m * origin);
 

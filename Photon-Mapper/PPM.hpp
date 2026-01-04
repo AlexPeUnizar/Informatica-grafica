@@ -1,3 +1,15 @@
+/**
+ * @file PPM.hpp
+ * @brief Definicion de la clase PPM para la manipulacion de imágenes en formato PPM.
+ * 
+ * Esta cabecera declara la clase PPM, que permite cargar, guardar y manipular imágenes
+ * en formato Portable Pixmap (PPM). Incluye funcionalidades para acceder y modificar
+ * pixeles, asi como operaciones de procesamiento de imagen como clamping, ecualizacion
+ * y correccion gamma.
+ * 
+ * @author Alex
+ * @date 18-6-2025
+ */
 #ifndef PPM_HPP
 #define PPM_HPP
 #include <iostream>
@@ -5,8 +17,22 @@
 #include <vector>
 #include "Color.hpp"
 
+/**
+ * @class PPM
+ * @brief Clase que representa una imagen en formato PPM (Portable Pixmap).
+ * 
+ * Esta clase permite cargar imágenes desde archivos PPM, manipular sus pixeles y guardarlas de nuevo.
+ * Tambien incluye funciones para aplicar transformaciones como clamping, ecualizacion y correccion gamma.
+ */
 class PPM{
 public:
+    /** 
+     * @struct Pixel
+     * @brief Estructura que representa un pixel en la imagen PPM.
+     * 
+     * Cada pixel contiene valores de color rojo, verde y azul (r, g, b) como componentes de tipo double.
+     * Permite crear pixeles a partir de un objeto Color o directamente con valores RGB.
+     */
     struct Pixel{
         double r, g, b;
         Pixel(Color color){

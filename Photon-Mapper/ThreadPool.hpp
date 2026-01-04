@@ -1,3 +1,13 @@
+/**
+ * @file ThreadPool.hpp
+ * @brief Declaracion de la clase ThreadPool para la paralelizacion de tareas mediante un grupo de hilos.
+ *
+ * Esta cabecera define la clase ThreadPool, que permite ejecutar multiples tareas en paralelo utilizando un conjunto fijo de hilos.
+ * Proporciona una interfaz sencilla para encolar trabajos y gestionar la concurrencia de manera eficiente.
+ *
+ * @author Alex
+ * @date 18-6-2025
+ */
 #ifndef THREADPOOL_HPP
 #define THREADPOOL_HPP
 
@@ -10,7 +20,13 @@
 #include <condition_variable>
 #include <future>
 
-// ThreadPool para paralelizar trabajos
+/**
+ * @class ThreadPool
+ * @brief Clase que representa un grupo de hilos para la ejecucion paralela de tareas.
+ *
+ * Esta clase permite crear un grupo de hilos que pueden ejecutar tareas en paralelo, facilitando la gestion de concurrencia
+ * y la ejecucion de trabajos en segundo plano. Proporciona metodos para encolar tareas y esperar su finalizacion.
+ */
 class ThreadPool {
 private:
     std::vector<std::thread> workers;

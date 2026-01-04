@@ -1,3 +1,9 @@
+/**
+ * @file Utils.cpp
+ * @brief Implementacion de funciones utilitarias para generacion de numeros aleatorios.
+ * @author Alex
+ * @date 18-6-2025
+ */
 #define _USE_MATH_DEFINES
 #include "Utils.hpp"
 #include <cstdlib>
@@ -6,10 +12,27 @@
 
 Settings settings;
 
+/**
+ * @brief Genera un numero aleatorio de tipo double en un rango especifico.
+ * 
+ * Esta funcion genera un numero aleatorio entre los valores min y max.
+ * 
+ * @param min Valor minimo del rango.
+ * @param max Valor maximo del rango.
+ * @return double Numero aleatorio generado en el rango [min, max].
+ */
 double randomDouble(double min, double max){
     return min + static_cast<double>(rand()) / (static_cast<double>(RAND_MAX / (max - min)));
 }
 
+/**
+ * @brief Genera un numero aleatorio de tipo double en el rango [0.0, 1.0].
+ * 
+ * Esta funcion es una sobrecarga de la funcion randomDouble sin parametros,
+ * que devuelve un numero aleatorio entre 0.0 y 1.0.
+ * 
+ * @return double Numero aleatorio generado en el rango [0.0, 1.0].
+ */
 double randomDouble(){
     return randomDouble(0.0, 1.0);
 }
@@ -24,6 +47,16 @@ Vector randomDirection(){
     );
 }
 
+/**
+ * @brief Genera un vector aleatorio en el hemisferio definido por una normal.
+ * 
+ * Esta funcion genera un vector aleatorio que se encuentra en el hemisferio
+ * definido por la normal proporcionada, utilizando coordenadas esfericas.
+ * 
+ * @param point Punto desde el cual se genera el vector.
+ * @param normal Normal que define el hemisferio.
+ * @return Vector Vector aleatorio generado en el hemisferio.
+ */
 Vector randomDirection(const Point& point, const Vector& normal){
     Vector random;
     double phi = 2 * M_PI * randomDouble(0, 1);

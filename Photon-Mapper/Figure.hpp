@@ -1,9 +1,28 @@
+/**
+ * @file Figure.hpp
+ * @brief Declaracion de la clase base abstracta Figure para figuras geometricas en gráficos por computadora.
+ * 
+ * Esta clase sirve como interfaz para figuras que pueden ser intersectadas por rayos, 
+ * proporcionando metodos para gestionar la visibilidad, el material y el color de la figura.
+ * 
+ * @author Alex
+ * @date 18-6-2025
+ */
 #ifndef FIGURE_HPP
 #define FIGURE_HPP
 #include "IntersectableFigure.hpp"
 #include "Color.hpp"
 #include "Material.hpp"
 
+/**
+ * @class Figure
+ * @brief Clase base abstracta para figuras geometricas que pueden ser intersectadas por rayos.
+ *
+ * Proporciona metodos para gestionar la visibilidad, el material y el color de la figura.
+ * Sirve como interfaz para figuras derivadas en gráficos por computadora.
+ * 
+ * @see IntersectableFigure
+ */
 class Figure: public IntersectableFigure{
 protected:
     bool visible = true;

@@ -1,8 +1,29 @@
+/**
+ * @file Material.cpp
+ * @brief Implementacion de la clase Material y funciones relacionadas para el cálculo de la dispersion de la luz en un motor de renderizado basado en trayectorias.
+ *
+ * Este archivo contiene la logica para la simulacion de materiales, incluyendo la seleccion de eventos mediante ruleta rusa,
+ * la generacion de vectores dispersados, el cálculo de la iluminacion directa e indirecta, y la evaluacion de las funciones BRDF y BSDF.
+ *
+ * @author Alex
+ * @date 18-6-2025
+ */
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "Material.hpp"
 #include "Utils.hpp"
 
+/**
+ * @brief Funcion que implementa la ruleta rusa para seleccionar un evento de dispersion basado en las propiedades del material.
+ *
+ * Esta funcion calcula la probabilidad de cada tipo de evento (difusa, especular, refractiva y absorcion) y selecciona uno al azar,
+ * devolviendo un evento con su tipo y probabilidad.
+ *
+ * @param kdWeight Color que representa el peso de la reflexion difusa.
+ * @param ksWeight Color que representa el peso de la reflexion especular.
+ * @param ktWeight Color que representa el peso de la refraccion.
+ * @return RR_Event Estructura que contiene el tipo de evento seleccionado y su probabilidad.
+ */
 RR_Event russianRoulette(Color kdWeight, Color ksWeight, Color ktWeight){
     double pDiffuse = maxComponent(kdWeight);
     double pSpecular = maxComponent(ksWeight);
@@ -17,6 +38,15 @@ RR_Event russianRoulette(Color kdWeight, Color ksWeight, Color ktWeight){
     else return {ABSORTION, rand};
 }
 
+/**
+ * @brief Funcion que implementa la ruleta rusa para seleccionar un evento de dispersion basado en las propiedades del material.
+ *
+ * Esta funcion calcula la probabilidad de cada tipo de evento (difusa, especular, refractiva y absorcion) y selecciona uno al azar,
+ * devolviendo un evento con su tipo y probabilidad.
+ *
+ * @param material Material cuyas propiedades se utilizaran para la seleccion del evento.
+ * @return RR_Event Estructura que contiene el tipo de evento seleccionado y su probabilidad.
+ */
 RR_Event russianRoulette(Material& material){
     return russianRoulette(material.kd, material.ks, material.kt);
 }
@@ -33,6 +63,17 @@ void Material::setEmission(const Color &emission)
     this->emission = emission;
 }
 
+/**
+ * @brief Genera un vector dispersado basado en el tipo de evento seleccionado por la ruleta rusa.
+ *
+ * Dependiendo del tipo de evento (difusa, especular, refractiva o absorcion), esta funcion calcula y devuelve un vector
+ * que representa la direccion de la luz dispersada.
+ *
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
+ * @param event Evento seleccionado por la ruleta rusa que determina el comportamiento del material.
+ * @return Vector Direccion del rayo dispersado segun el tipo de evento.
+ */
 Vector Material::getSacterredVector(const Ray &ray, const Intersection &intersection, const RR_Event event) const{
     switch (event.eventType){
         case DIFUSSE:
@@ -50,6 +91,13 @@ Vector Material::getSacterredVector(const Ray &ray, const Intersection &intersec
     }
 }
 
+/**
+ * @brief Constructor por defecto de la clase Material.
+ *
+ * Este constructor inicializa un material con valores predeterminados para sus propiedades opticas.
+ *
+ * @param color Color que representa la reflexion difusa del material.
+ */
 Material::Material(const Color& color){
     this->kd = color;    
     this->ks = Color(0, 0, 0);
@@ -64,10 +112,32 @@ Material::Material(const Color& kd, const Color& ks, const Color& kt, double ior
     this->ior = ior;
 }
 
+/**
+ * @brief Constructor de la clase Material que inicializa las propiedades opticas del material.
+ *
+ * Este constructor permite crear un material con componentes de reflexion difusa (kd), especular (ks),
+ * refractiva (kt) y un indice de refraccion (ior) especificados.
+ *
+ * @param kd Color que representa la reflexion difusa del material.
+ * @param ks Color que representa la reflexion especular del material.
+ * @param kt Color que representa la refraccion del material.
+ * @param ior indice de refraccion del material.
+ */
 void Material::setColor(const Color& color){
     this->color = color;
 }
 
+/**
+ * @brief Calcula la iluminacion directa del material utilizando el metodo de next event estimation.
+ *
+ * Este metodo evalua la contribucion de cada fuente de luz en la escena, considerando sombras y la BRDF del material,
+ * para calcular el color resultante de la iluminacion directa en el punto de interseccion.
+ *
+ * @param lights Vector de punteros compartidos a las luces presentes en la escena.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
+ * @param scene Referencia a la coleccion de figuras que componen la escena.
+ * @return Color Color resultante de la iluminacion directa en el punto de interseccion.
+ */
 Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, const Intersection& intersection, const IntersectableFigure& scene) const{
     if (maxComponent(emission) > 0.0){
         return emission;
@@ -103,6 +173,17 @@ Color Material::nextEvent(const std::vector<std::shared_ptr<Light>>& lights, con
     return finalColor;
 }
 
+/**
+ * @brief Calcula la iluminacion en un punto de interseccion utilizando fotones cercanos.
+ *
+ * Este metodo evalua la contribucion de los fotones almacenados en el mapa de fotones
+ * que estan cerca del punto de interseccion, aplicando un nucleo de suavizado para calcular
+ * el color resultante de la iluminacion indirecta.
+ *
+ * @param nearestPhotons Vector de punteros a los fotones cercanos al punto de interseccion.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
+ * @return Color Color resultante de la iluminacion indirecta en el punto de interseccion.
+ */
 Color Material::calculateIllumination(const std::vector<const Photon*>& nearestPhotons, const Intersection& intersection) const {
     Color result(0, 0, 0);
     int numPhotons = nearestPhotons.size();
@@ -144,10 +225,31 @@ Color Material::calculateIllumination(const std::vector<const Photon*>& nearestP
     return result / (M_PI * r * r);
 }
 
+/**
+ * @brief Verifica si el material es emisivo.
+ *
+ * Este metodo comprueba si el material tiene una componente de emision mayor que cero,
+ * lo que indica que el material emite luz por si mismo.
+ *
+ * @return bool True si el material es emisivo, false en caso contrario.
+ */
 bool Material::isEmissive() const{
     return maxComponent(this->emission) > 0.0;
 }
 
+/**
+ * @brief Calcula el color resultante de un material en un punto de interseccion dado, considerando la iluminacion directa e indirecta.
+ *
+ * Este metodo implementa el algoritmo de trazado de rayos para calcular el color final en un punto de interseccion,
+ * utilizando la ruleta rusa para decidir si se absorbe, refleja o refracta la luz, y recursivamente calcula la iluminacion indirecta.
+ *
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
+ * @param lights Lista de fuentes de luz en la escena.
+ * @param scene Escena que contiene las figuras intersectables.
+ * @param depth Profundidad actual del rayo en el trazado (para evitar recursion infinita).
+ * @return Color Resultado del color calculado en el punto de interseccion.
+ */
 Color Material::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, const PhotonMap& photonMap, int depth) const{
     
     if (depth >= settings.MAX_BOUNCES){
@@ -194,10 +296,31 @@ Color Material::getColor(const Ray& ray, const Intersection& intersection, const
     return final;
 }
 
+/**
+ * @brief Calcula la funcion de distribucion bidireccional de reflectancia (BRDF) para el material.
+ *
+ * Este metodo devuelve el valor de la BRDF del material en un punto de interseccion dado,
+ * que describe como la luz es reflejada difusamente por la superficie del material.
+ *
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
+ * @return Color Valor de la BRDF en el punto de interseccion.
+ */
 Color Material::brdf(const Ray& ray, const Intersection& intersection) const{
     return this->kd / M_PI;
 }
 
+/**
+ * @brief Calcula la funcion de distribucion bidireccional de dispersion (BSDF) para el material.
+ *
+ * Este metodo devuelve el valor de la BSDF del material en un punto de interseccion dado,
+ * que describe como la luz es dispersada por la superficie del material segun el tipo de evento.
+ *
+ * @param ray Rayo incidente que interactua con el material.
+ * @param intersection Informacion sobre la interseccion del rayo con el material.
+ * @param event Evento seleccionado por la ruleta rusa que determina el comportamiento del material.
+ * @return Color Valor de la BSDF en el punto de interseccion.
+ */
 Color Material::bsdf(const Ray& ray, const Intersection& intersection, const RR_Event event) const{
     switch (event.eventType){
         case DIFUSSE:
@@ -214,75 +337,3 @@ Color Material::bsdf(const Ray& ray, const Intersection& intersection, const RR_
             break;
     }
 }
-
-/*
-Color Material::getColor(const Ray& ray, const Intersection& intersection, const std::vector<std::shared_ptr<Light>>& lights, const IntersectableFigure& scene, int depth) const{
-    if (depth >= settings.MAX_BOUNCES) return Color(0, 0, 0);
-
-    // Calcula las probabilidades para difuso, especular y refractivo
-    double pDiffuse = maxComponent(this->kd);
-    double pSpecular = maxComponent(this->ks);
-    double pRefractive = maxComponent(this->kt);
-
-    double sum = pDiffuse + pSpecular + pRefractive;
-    if (sum > 0) {
-        pDiffuse /= sum;
-        pSpecular /= sum;
-        pRefractive /= sum;
-    } else {
-        pDiffuse = 0.0;
-        pSpecular = 0.0;
-        pRefractive = 0.0;
-    }
-
-    Color final(0,0,0);
-    Color luzDirecta = this->nextEvent(lights, intersection, scene);
-    
-    for(int path = 0; path < settings.MAX_PATHS; path++){
-        Color luzIndirecta(0,0,0);
-
-        //random ray
-        double randomValue = randomDouble();
-
-        Vector randomVector;
-        // Determina el evento según el valor aleatorio
-        if (randomValue < pDiffuse) {
-            // Evento difuso
-            randomVector = randomDirection(ray, intersection);
-        } else if (randomValue < pDiffuse + pSpecular) {
-            // Evento especular
-            randomVector = reflect(ray.dir, intersection.normal);
-            
-        } else if (randomValue < pDiffuse + pSpecular + pRefractive) {
-            // Evento refractivo
-            randomVector = refract(ray.dir, intersection.normal, this->ior);
-        } else{
-            return Color(0,0,0);
-        }
-
-        Ray randomRay = Ray(intersection.intersectionPoint, randomVector);
-        Intersection randomRayIntersection;
-
-        if(depth < settings.MAX_BOUNCES && scene.isIntersectedBy(randomRay, 0.00001f, INT_MAX, randomRayIntersection)){
-            luzIndirecta = randomRayIntersection.material->getColor(randomRay, randomRayIntersection, lights, scene, depth+1);            
-        }
-        if (randomValue < pDiffuse) {
-            // Evento difuso
-            final += luzDirecta + (luzIndirecta * kd);
-
-        } else if (randomValue < pDiffuse + pSpecular) {
-            // Evento especular
-            final += luzDirecta + (luzIndirecta * M_PI * ks);
-
-        } else {
-            // Evento refractivo
-            final += luzDirecta + (luzIndirecta * M_PI * kt);
-        }
-        
-
-    }
-    final /= double(settings.MAX_PATHS);
-    return final;
-}
-
- */

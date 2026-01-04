@@ -1,3 +1,10 @@
+/**
+ * @file ObjectLoader.hpp
+ * @author Alex
+ * @brief Declaracion de funciones para cargar archivos OBJ.
+ * @date 2026-01-04
+ * 
+ */
 #ifndef OBJLOADER_HPP
 #define OBJLOADER_HPP
 
@@ -10,6 +17,12 @@
 #include "Point.hpp"
 #include "Vector.hpp"
 
+/**
+ * @brief Estructura que contiene los datos cargados de un archivo OBJ.
+ * 
+ * Esta estructura almacena las posiciones de los vértices, las normales
+ * y los triángulos definidos en el archivo OBJ.
+ */
 struct ObjData {
     std::vector<Point> positions;
     std::vector<Vector> normals; // puede venir vacía
@@ -21,6 +34,16 @@ struct ObjData {
     std::vector<Tri> tris;
 };
 
+/**
+ * @brief Parsea un token de cara del archivo OBJ.
+ * 
+ * Esta función interpreta un token de cara del formato OBJ, extrayendo
+ * los índices de posición y normal correspondientes.
+ * 
+ * @param tok Token de cara a parsear.
+ * @param pIndex Referencia para almacenar el índice de posición.
+ * @param nIndex Referencia para almacenar el índice de normal.
+ */
 inline void parseFaceToken(const std::string& tok, int& pIndex, int& nIndex) {
     // formatos: v, v//vn, v/vt/vn
     pIndex = -1; nIndex = -1;
@@ -50,6 +73,17 @@ inline void parseFaceToken(const std::string& tok, int& pIndex, int& nIndex) {
     nIndex = (vn > 0) ? (vn - 1) : -1;
 }
 
+
+/**
+ * @brief Carga un archivo OBJ y devuelve sus datos.
+ * 
+ * Esta función lee un archivo OBJ desde la ruta especificada,
+ * parsea su contenido y devuelve una estructura ObjData con
+ * las posiciones, normales y triángulos definidos en el archivo.
+ * 
+ * @param path Ruta al archivo OBJ.
+ * @return ObjData Estructura que contiene los datos cargados del OBJ.
+ */
 inline ObjData loadOBJ(const std::string& path) {
     std::ifstream f(path);
     if (!f) throw std::runtime_error("No puedo abrir OBJ: " + path);

@@ -1,9 +1,21 @@
+/**
+ * @file Coordinate.hpp
+ * @brief Declaracion de la clase Coordinate para coordenadas 3D homogeneas.
+ * @author Alex
+ * @date 18-6-2025
+ */
 #ifndef COORDINATE_HPP
 #define COORDINATE_HPP
 
 #include <iostream>
 #include "Matrix.hpp"
 
+/**
+ * @brief Declaracion de la clase Coordinate.
+ * 
+ * Esta clase representa un punto o vector en coordenadas homogeneas 3D.
+ * Permite realizar operaciones aritmeticas y cambios de base.
+ */
 class Coordinate{
 private:
     double w;

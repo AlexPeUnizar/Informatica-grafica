@@ -1,3 +1,10 @@
+/**
+ * @file Scenes.cpp
+ * @author Alex
+ * @brief Implementacion de escenas para el motor de renderizado.
+ * @date 2026-01-04
+ * 
+ */
 #include "Scenes.hpp"
 #include "Plane.hpp"
 #include "Sphere.hpp"
@@ -5,6 +12,11 @@
 #include "Materials.hpp"
 #include "TriangleMesh.hpp"
 
+/**
+ * @brief Construye la escena 1 con figuras y luces predefinidas.
+ * 
+ * @return SceneData Estructura que contiene los datos de la escena, incluyendo figuras, luces y camara.
+ */
 SceneData buildScene1() {
     /* FIGURES */
     /*
@@ -80,6 +92,11 @@ SceneData buildScene1() {
     return scene;
 }
 
+/**
+ * @brief Construye la escena 2 con figuras y luces predefinidas.
+ * 
+ * @return SceneData Estructura que contiene los datos de la escena, incluyendo figuras, luces y camara.
+ */
 SceneData buildScene2() {
 
     /* FIGURES */
@@ -157,6 +174,11 @@ SceneData buildScene2() {
     return scene;
 }
 
+/**
+ * @brief Construye la escena 3 con figuras y luces predefinidas.
+ * 
+ * @return SceneData Estructura que contiene los datos de la escena, incluyendo figuras, luces y camara.
+ */
 SceneData buildScene3() {
     /* FIGURES */
     /*
@@ -222,6 +244,11 @@ SceneData buildScene3() {
     return scene;
 }
 
+/**
+ * @brief Construye la escena 4 con figuras y luces predefinidas.
+ * 
+ * @return SceneData Estructura que contiene los datos de la escena, incluyendo figuras, luces y camara.
+ */
 SceneData buildScene4() {
     /* FIGURES */
     /*

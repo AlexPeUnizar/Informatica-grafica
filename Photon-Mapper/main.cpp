@@ -1,3 +1,17 @@
+/**
+ * @file main.cpp
+ * @brief Punto de entrada principal para la aplicacion de renderizado Path Tracing.
+ *
+ * Este programa configura una escena 3D sencilla con planos y esferas, define materiales,
+ * una fuente de luz y renderiza la escena usando un algoritmo de path tracing.
+ * La imagen renderizada se guarda en formato PPM y se abre automaticamente con GIMP.
+ *
+ * Dependencias:
+ * - PathTracing.hpp y clases relacionadas de escena, materiales y geometria.
+ *
+ * @author Alex
+ * @date 18-6-2025
+ */
 #define _USE_MATH_DEFINES
 #include "PathTracing.hpp"
 #include <iostream>

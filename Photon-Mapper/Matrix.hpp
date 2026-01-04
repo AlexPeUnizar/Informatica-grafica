@@ -1,3 +1,14 @@
+/**
+ * @file Matrix.hpp
+ * @brief Definicion de la clase Matrix y funciones auxiliares para operaciones con matrices 4x4.
+ * 
+ * Este archivo contiene la declaracion de la clase Matrix, que representa matrices de 4x4 de tipo double,
+ * asi como las funciones y operadores necesarios para realizar operaciones comunes en gráficos por computadora,
+ * como identidad, traslacion, rotacion y escalado.
+ * 
+ * @author Alex
+ * @date 18-6-2025
+ */
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
 
@@ -5,6 +16,13 @@
 #include <iostream>
 #include <memory>
 
+/**
+ * @class Matrix
+ * @brief Clase que representa una matriz 4x4 de tipo double.
+ * 
+ * Esta clase proporciona metodos para crear matrices identidad, de traslacion, rotacion y escalado,
+ * asi como operadores para multiplicar matrices y escalar matrices por un escalar.
+ */
 class Matrix{
 private:
     double mat[4][4];    
